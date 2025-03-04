@@ -74,9 +74,18 @@ class Pessoa
 
     public function  logarPessoa()
     {
-        $sql = "select * from pessoas where documentoPessoa = '" . $this->getDocumentoPessoa() . "'  and pwd= '".$this->getPwd()."' ";
 
-     
+        $sql = "select  ps.nomePessoa as 'nome', un.nomeUnidade as 'nomeUnidade', st.descricaoStatus as 'descricaoStatus' , 
+        tp.descricaoTipoPessoa as 'tipoPessoa', ps.pwd, ps.documentoPessoa  as 'documentoPessoa',  ps.*, st.*, tp.*, un.*
+        from pessoas ps 
+        inner join unidade un on un.responsavelUnidade = ps.idPessoas  
+        inner join status st on st.idStatus = ps.statusPessoa 
+        inner join tipoPessoa tp on tp.idTipoPessoa = ps.tipoPessoa
+         where documentoPessoa = '" . $this->getDocumentoPessoa() . "'  and pwd= '" . $this->getPwd() . "' ";
+
+
+
+
 
         $executar = mysqli_query($this->getConexao(), $sql);
 
@@ -94,7 +103,7 @@ class Pessoa
         return $retorno;
     }
 
-    
+
 
 
 
@@ -124,9 +133,9 @@ class Pessoa
         try {
 
             $sql = "   INSERT INTO  pessoas ( `nomePessoa`, `tipoPessoa`,`statusPessoa`, `documentoPessoa`) 
-            VALUES ('".$this->getNomePessoa() ."', '".$this->getTipoPessoa() ."', '".$this->getStatusPessoa() ."', '".$this->getDocumentoPessoa() ."');";
+            VALUES ('" . $this->getNomePessoa() . "', '" . $this->getTipoPessoa() . "', '" . $this->getStatusPessoa() . "', '" . $this->getDocumentoPessoa() . "');";
 
-           
+
 
             $executar = mysqli_query($this->getConexao(), $sql);
 
@@ -144,7 +153,7 @@ class Pessoa
 
     /**
      * Get the value of idPessoas
-     */ 
+     */
     public function getIdPessoas()
     {
         return $this->idPessoas;
@@ -154,7 +163,7 @@ class Pessoa
      * Set the value of idPessoas
      *
      * @return  self
-     */ 
+     */
     public function setIdPessoas($idPessoas)
     {
         $this->idPessoas = $idPessoas;
@@ -164,7 +173,7 @@ class Pessoa
 
     /**
      * Get the value of nomePessoa
-     */ 
+     */
     public function getNomePessoa()
     {
         return $this->nomePessoa;
@@ -174,7 +183,7 @@ class Pessoa
      * Set the value of nomePessoa
      *
      * @return  self
-     */ 
+     */
     public function setNomePessoa($nomePessoa)
     {
         $this->nomePessoa = $nomePessoa;
@@ -184,7 +193,7 @@ class Pessoa
 
     /**
      * Get the value of tipoPessoa
-     */ 
+     */
     public function getTipoPessoa()
     {
         return $this->tipoPessoa;
@@ -194,7 +203,7 @@ class Pessoa
      * Set the value of tipoPessoa
      *
      * @return  self
-     */ 
+     */
     public function setTipoPessoa($tipoPessoa)
     {
         $this->tipoPessoa = $tipoPessoa;
@@ -204,7 +213,7 @@ class Pessoa
 
     /**
      * Get the value of statusPessoa
-     */ 
+     */
     public function getStatusPessoa()
     {
         return $this->statusPessoa;
@@ -214,7 +223,7 @@ class Pessoa
      * Set the value of statusPessoa
      *
      * @return  self
-     */ 
+     */
     public function setStatusPessoa($statusPessoa)
     {
         $this->statusPessoa = $statusPessoa;
@@ -224,7 +233,7 @@ class Pessoa
 
     /**
      * Get the value of documentoPessoa
-     */ 
+     */
     public function getDocumentoPessoa()
     {
         return $this->documentoPessoa;
@@ -234,7 +243,7 @@ class Pessoa
      * Set the value of documentoPessoa
      *
      * @return  self
-     */ 
+     */
     public function setDocumentoPessoa($documentoPessoa)
     {
         $this->documentoPessoa = $documentoPessoa;
@@ -244,7 +253,7 @@ class Pessoa
 
     /**
      * Get the value of pwd
-     */ 
+     */
     public function getPwd()
     {
         return $this->pwd;
@@ -254,7 +263,7 @@ class Pessoa
      * Set the value of pwd
      *
      * @return  self
-     */ 
+     */
     public function setPwd($pwd)
     {
         $this->pwd = $pwd;
