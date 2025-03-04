@@ -4,8 +4,7 @@ include_once '../classes/Pessoa.php';
 
 $objPessoaMovimentar = new Pessoa();
 
-//getNomePessoa() ."', '".$this->getTipoPessoa() ."', '".$this->getStatusPessoa() ."', '".$this->getDocumentoPessoa(
-
+//esse script apenas grava a pessoa
 
  
 

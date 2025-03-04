@@ -19,7 +19,6 @@ include_once 'includes/head.php'
 
             <div class="small-12 large-6 cell" id="exibiAgendamento">
 
-
                 <!-- primeiro formulario, consulta cpf -->
                 <div class="grid-x grid-padding-x" id="loginCPF">
                     <div class="small-12 large-12 cell">
@@ -41,8 +40,6 @@ include_once 'includes/head.php'
                         <br>
                     </div>
                 </div>
-
-
 
                 <!-- aqui faz o agendamento -->
 
@@ -111,13 +108,8 @@ include_once 'includes/head.php'
 
                 </div>
 
-
-
-
-
                 <img src="imgs/logoPrefeitura.png" />
             </div>
-
 
             <div class="auto cell">
 
@@ -174,14 +166,15 @@ include_once 'includes/head.php'
                     encode: true
                 })
                 .done(function(data) {
-                    console.log(data);
+                   
                     condicao = data.retornoCondicao.condicao;
                     if (condicao == false) {
+                        //condição retornou false, a pessoa não ta cadastrada, abre o nome para gravar
                         $('#loginCPF').hide();
                         $('#nomeUsuario').delay('fast').fadeIn();
 
                     } else {
-
+                        //condição retornou true, então pode seguir para o agendamento. ta fa
 
                         $('#loginCPF').hide();
                         $('#nomeUsuario').hide();

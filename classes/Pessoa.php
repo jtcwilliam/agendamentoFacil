@@ -20,6 +20,7 @@ class Pessoa
     private $tipoPessoa;
     private $statusPessoa;
     private $documentoPessoa;
+    private $pwd;
 
 
 
@@ -70,6 +71,30 @@ class Pessoa
 
         return $this;
     }
+
+    public function  logarPessoa()
+    {
+        $sql = "select * from pessoas where documentoPessoa = '" . $this->getDocumentoPessoa() . "'  and pwd= '".$this->getPwd()."' ";
+
+     
+
+        $executar = mysqli_query($this->getConexao(), $sql);
+
+        $retorno = array();
+
+        while ($row = mysqli_fetch_assoc($executar)) {
+            $dados[] = $row;
+            $retorno['condicao'] = true;
+            $retorno['dados'] = $dados;
+        }
+        if (!isset($dados)) {
+            $retorno['condicao'] = false;
+        }
+
+        return $retorno;
+    }
+
+    
 
 
 
@@ -213,6 +238,26 @@ class Pessoa
     public function setDocumentoPessoa($documentoPessoa)
     {
         $this->documentoPessoa = $documentoPessoa;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of pwd
+     */ 
+    public function getPwd()
+    {
+        return $this->pwd;
+    }
+
+    /**
+     * Set the value of pwd
+     *
+     * @return  self
+     */ 
+    public function setPwd($pwd)
+    {
+        $this->pwd = $pwd;
 
         return $this;
     }
