@@ -31,7 +31,7 @@ while ($i <= $qtdeMesas) {
         $todos['hora'] = $primeiroHorario;
         $todos['unidade'] = $unidade;
 
-        $todos['status'] = 1;
+        $todos['status'] = 0;
         $todos['protocolo'] = rand(1, 1907367) . '/2025';
         $todos['agendamento'] = $selectTipoAgendamento;
 

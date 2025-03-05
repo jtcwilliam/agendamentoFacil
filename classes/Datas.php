@@ -57,7 +57,8 @@ class DatasAgendamento
 
 
 
-            $stmt = $pdo->prepare("SELECT * FROM agendamento WHERE dia=:id  order by hora asc ");
+            $stmt = $pdo->prepare("SELECT * FROM agendamento WHERE dia=:id   and  idPessoa is null   and idStatus in (0 ,6)
+            and (select count(idAgendamento) from agendamento where idstatus=3) <2 order by hora asc ");
             $stmt->execute(array('id' => $data));
             $user = $stmt->fetchAll();
 

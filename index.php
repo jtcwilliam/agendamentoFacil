@@ -53,6 +53,14 @@ include_once 'includes/head.php'
                     </div>
 
                     <div class="small-12 cell large-12">
+                        <br>
+                        <label>
+                            idUsuario
+                            <input type="text" name="txtIdUsuario" id="txtIdUsuario" readonly />
+                        </label>
+                    </div>
+
+                    <div class="small-12 cell large-12">
                         <label>
                             Nome
                             <input type="text" name="txtNome" id="txtNome" value="" readonly />
@@ -211,6 +219,7 @@ include_once 'includes/head.php'
 
                         $('#txtNome').val(data.retornoCondicao.dados[0].nomePessoa);
                         $('#txtCPF').val(data.retornoCondicao.dados[0].documentoPessoa);
+                        $('#txtIdUsuario').val(data.retornoCondicao.dados[0].idPessoas);
 
 
 
