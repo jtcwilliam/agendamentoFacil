@@ -11,6 +11,7 @@ $qtdeMesas = $_POST['qtdeMesas'];
 $dataAgendamento = $_POST['dataAgendamento'];
 $unidade = $_POST['selectUnidade'];
 $i = 1;
+$selectTipoAgendamento = $_POST['selectTipoAgendamento'];
 
 //array que sera enviado para o banco
 $envio = array();
@@ -32,7 +33,7 @@ while ($i <= $qtdeMesas) {
 
         $todos['status'] = 1;
         $todos['protocolo'] = rand(1, 1907367) . '/2025';
-        $todos['agendamento'] = '2';
+        $todos['agendamento'] = $selectTipoAgendamento;
 
         array_push($envio, $todos);
 

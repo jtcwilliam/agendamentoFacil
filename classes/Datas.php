@@ -2,7 +2,7 @@
 
 
 
-class Adm
+class DatasAgendamento
 {
 
 
@@ -43,53 +43,29 @@ class Adm
         $this->setPwd($objConectar->getPwd());
     }
 
-    public function  inserirAgendamento($todos)
+    public function  trazerHorarios($data)
     {
         try {
 
 
- 
+
+
+
             $pdo = new PDO($this->getDns(), $this->getUser(), $this->getPwd());
 
-            //$pdo = new PDO("mysql:host='" . $host . "' ;dbname='" . $db . "', '" . $user, $password);
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 
 
-            $sql = ('INSERT INTO   agendamento  ( dia ,  hora ,  idUnidade ,    idStatus ,  protocolo ,   idTipoAgendamento ) 
-                                                        VALUES(:dia, :hora, :idUnidade,  :idStatus, :protocolo, :idTipoAgendamento )');
-
-            $stmt = $pdo->prepare($sql);
-
+            $stmt = $pdo->prepare("SELECT * FROM agendamento WHERE dia=:id  order by hora asc ");
+            $stmt->execute(array('id' => $data));
+            $user = $stmt->fetchAll();
 
 
-            $qtdeElementos = sizeof($todos);
-
-            $contador = 0;
 
 
-            foreach ($todos as $key => $value) {
-                $stmt->bindValue(':dia', $value['data'], PDO::PARAM_STR);
-                $stmt->bindValue(':hora', $value['hora'], PDO::PARAM_STR);
-                $stmt->bindValue(':idUnidade', $value['unidade'], PDO::PARAM_STR);
 
-                $stmt->bindValue(':idStatus', $value['status'], PDO::PARAM_STR);
-                $stmt->bindValue(':protocolo', $value['protocolo'], PDO::PARAM_STR);
-                $stmt->bindValue(':idTipoAgendamento', $value['agendamento'], PDO::PARAM_STR);
-                if ($stmt->execute()) {
-                    $contador++;
-                } else {
-
-                    $contador--;
-                }
-            }
-            if ($contador == $qtdeElementos) {
-                echo $contador . '    ' . $qtdeElementos;
-                return true;
-            } else {
-                echo $contador . '    ' . $qtdeElementos;
-                echo 'não saiu';
-            }
+            return $user;
         } catch (PDOException $e) {
             echo 'Error: ' . $e->getMessage();
         }
@@ -113,7 +89,7 @@ class Adm
 
 
 
-  
+
 
     /**
      * Get the value of dns

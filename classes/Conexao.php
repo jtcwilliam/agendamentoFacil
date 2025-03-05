@@ -17,21 +17,7 @@ class Conexao
                 $host = 'dbagenddev.mysql.dbaas.com.br';
 
       
-   
-   /*  
-            //Produção
-
-            $user = 'gramulhabanc';
-            $password = 'M@r1@He1en@';
-            $db = 'gramulhabanc';
-            $host = 'gramulhabanc.mysql.dbaas.com.br';
-
- */
-
-
-            //desenvolvimento online
-
-
+    
 
 
 

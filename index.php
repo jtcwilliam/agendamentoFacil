@@ -43,19 +43,19 @@ include_once 'includes/head.php'
 
                 <!-- aqui faz o agendamento -->
 
-                <div class="grid-x grid-padding-x" id="formularioAgendamento" >
+                <div class="grid-x grid-padding-x" id="formularioAgendamento">
                     <div class="small-12 cell large-12">
                         <br>
                         <label>
                             CPF
-                            <input type="text" name="txtCPF" id="txtCPF"   readonly />
+                            <input type="text" name="txtCPF" id="txtCPF" readonly />
                         </label>
                     </div>
 
                     <div class="small-12 cell large-12">
                         <label>
                             Nome
-                            <input type="text" name="txtNome" id="txtNome"  value="" readonly />
+                            <input type="text" name="txtNome" id="txtNome" value="" readonly />
                         </label>
                     </div>
 
@@ -81,15 +81,15 @@ include_once 'includes/head.php'
 
                     <div class="small-12 medium-12  large-7 cell">
                         <label>Data
-                            <input type="text" id="txtDataAtendimento" class="datepicker textoEntradas"></p>
+                            <input type="text" id="txtDataAtendimento" onchange="procuraHoras($('#txtDataAtendimento').val())" class="datepicker textoEntradas"></p>
 
                         </label>
                     </div>
 
                     <div class="small-12 medium-12  large-5 cell">
                         Hora
-                        <select>
-                            <option>04h00</option>
+                        <select id="comboHorarios">
+                            
                         </select>
                     </div>
 
@@ -136,6 +136,35 @@ include_once 'includes/head.php'
         })
 
 
+        //carregar combo das unidades
+        function procuraHoras(dia) {
+
+            console.log(dia);
+            
+            var formData = {
+                dia: dia
+            };
+
+            $.ajax({
+                    type: 'POST',
+                    url: 'ajax/agendamentoController.php',
+                    data: formData,
+                    dataType: 'html',
+                    encode: true
+                })
+                .done(function(data) {
+                    console.log(data);
+
+
+                    $('#comboHorarios').html(data);
+
+                });
+
+        }
+
+
+
+
 
         function mudarMascara(cpf) {
 
@@ -166,7 +195,7 @@ include_once 'includes/head.php'
                     encode: true
                 })
                 .done(function(data) {
-                   
+
                     condicao = data.retornoCondicao.condicao;
                     if (condicao == false) {
                         //condição retornou false, a pessoa não ta cadastrada, abre o nome para gravar
@@ -184,7 +213,7 @@ include_once 'includes/head.php'
                         $('#txtCPF').val(data.retornoCondicao.dados[0].documentoPessoa);
 
 
-                      
+
                     }
 
                 });

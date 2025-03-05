@@ -6,7 +6,7 @@
 include_once 'includes/head.php';
 
 
- 
+
 
 
 
@@ -33,8 +33,8 @@ session_start();
                     </div>
 
                     <div class="grid-x grid-padding-x">
-                        <div class="small-12 large-3 cell">
-                            <label for="dataAgendamento"> Data Para Agendamento
+                        <div class="small-12 large-2 cell">
+                            <label for="dataAgendamento"> Data
                                 <input type="text" class="datepicker" id="dataAgendamento" style="height: 2.8em;" />
                             </label>
                         </div>
@@ -57,7 +57,13 @@ session_start();
                             </label>
                         </div>
 
-                        <div class="small-12 large-3 cell">
+                        <div class="small-12 large-2 cell">
+                            <label for="selectTipoAgendamento">Tipo Agendamento
+                                <select id="selectTipoAgendamento" style="height: 2.8em;"> </select>
+                            </label>
+                        </div>
+
+                        <div class="small-12 large-2 cell">
                             <label for="qtdeMesas">&nbsp;<br>
                                 <a class="success button" style="height: 3em; width: 100%; color: white; font-weight: bold;" onclick="preencherHorarios()">Cadastrar</a>
                             </label>
@@ -95,7 +101,8 @@ session_start();
                 primeiroHorario: $('#primeiroHorario').val(),
                 ultimoHorario: $('#ultimoHorario').val(),
                 qtdeMesas: $('#qtdeMesas').val(),
-                selectUnidade: $('#selectUnidade').val() 
+                selectUnidade: $('#selectUnidade').val(),
+                selectTipoAgendamento: $('#selectTipoAgendamento').val()
             };
             var condicao;
             $.ajax({
@@ -116,12 +123,12 @@ session_start();
 
 
         //carregar combo das unidades
-        function trazerUnidades() {
+        function comboUnidades() {
 
             var formData = {
                 tipo: 1
             };
-            var condicao;
+         
             $.ajax({
                     type: 'POST',
                     url: 'ajax/unidadeController.php',
@@ -136,10 +143,34 @@ session_start();
                     $('#selectUnidade').html(data);
 
                 });
-            event.preventDefault();
+             
         }
 
-        trazerUnidades()
+        function comboTipoAgendamento() {
+
+            var formData = {
+                tipo: 1
+            };
+         
+            $.ajax({
+                    type: 'POST',
+                    url: 'ajax/tipoAgendamentoController.php',
+                    data: formData,
+                    dataType: 'html',
+                    encode: true
+                })
+                .done(function(data) {
+                    console.log(data);
+
+
+                    $('#selectTipoAgendamento').html(data);
+
+                });
+          
+        }
+
+        comboUnidades();
+        comboTipoAgendamento();
     </script>
 
 
