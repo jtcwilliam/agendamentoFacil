@@ -116,7 +116,7 @@ include_once 'includes/head.php'
                         $('#mensagemConfirmacao').html('<b>Olá.</b> <br>Vamos te redirecionar para<br> a Área Administrativa');
 
                         window.setTimeout(() => {
-                            window.location = "https://example.com";
+                            window.location = "areaAdm.php";
                         }, 3600);
 
                     }

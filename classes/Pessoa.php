@@ -103,10 +103,6 @@ class Pessoa
         return $retorno;
     }
 
-
-
-
-
     public function  pesquisarCPF($cpf)
     {
         $sql = "select * from pessoas where documentoPessoa = '" . $cpf . "'";
