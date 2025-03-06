@@ -47,30 +47,40 @@ class DatasAgendamento
     {
         try {
 
-
-
-
-
             $pdo = new PDO($this->getDns(), $this->getUser(), $this->getPwd());
 
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 
-
-            $stmt = $pdo->prepare("SELECT * FROM agendamento WHERE dia=:id   and  idPessoa is null   and idStatus in (0 ,6)
-            and (select count(idAgendamento) from agendamento where idstatus=3) <2 order by hora asc ");
+            $stmt = $pdo->prepare("SELECT * FROM agendamento WHERE dia=:id   and  idPessoa is null   and idStatus in (0 ,6)   order by hora asc ");
             $stmt->execute(array('id' => $data));
+
+
             $user = $stmt->fetchAll();
-
-
-
-
 
             return $user;
         } catch (PDOException $e) {
             echo 'Error: ' . $e->getMessage();
         }
     }
+
+
+    public function  verificarAgendamentoPrevio($idPessoa, $status)
+    {
+        try {
+
+            $pdo = new PDO($this->getDns(), $this->getUser(), $this->getPwd());
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $stmt = $pdo->prepare("SELECT idAgendamento FROM agendamento where idPessoa = :idPessoa and idStatus =  :idStatus ");
+            $stmt->execute(array('idPessoa' => $idPessoa, 'idStatus' => $status));
+            $user = $stmt->fetchAll();
+
+            return $user;
+        } catch (PDOException $e) {
+            echo 'Error: ' . $e->getMessage();
+        }
+    }
+
 
 
 

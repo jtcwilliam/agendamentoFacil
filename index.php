@@ -19,102 +19,118 @@ include_once 'includes/head.php'
 
             <div class="small-12 large-6 cell" id="exibiAgendamento">
 
-                <!-- primeiro formulario, consulta cpf -->
-                <div class="grid-x grid-padding-x" id="loginCPF">
-                    <div class="small-12 large-12 cell">
-                        <label style="font-weight: bold;"> Digite o CPF para Iniciar o Agendamento
-                            <input type="text" placeholder="Digite aqui seu CPF" class="cpf" id="cpf" onkeydown="mudarMascara(this.value)" />
-                        </label>
-                        <a class="button succes" href="#" onclick="consultarCPF()" style="width: 100%;">Consultar</a>
-                        <br>
-                    </div>
-                </div>
+                <div id="todosContainers">
 
-                <!-- segundo formulario, consulta inseere nome-->
-                <div class="grid-x grid-padding-x" id="nomeUsuario">
-                    <div class="small-12 large-12 cell">
-                        <label style="font-weight: bold;"> Vamos continuar seu agendamento! Digite seu nome por favor
-                            <input type="text" placeholder="Digite aqui seu Aqui" class="nomeAgendamento" id="nomeAgendamento" />
-                        </label>
-                        <a class="button succes" href="#" onclick="inserirUsuario()" style="width: 100%;">Seguir para Agendamento</a>
-                        <br>
-                    </div>
-                </div>
-
-                <!-- aqui faz o agendamento -->
-
-                <div class="grid-x grid-padding-x" id="formularioAgendamento">
-                    <div class="small-12 cell large-12">
-                        <br>
-                        <label>
-                            CPF
-                            <input type="text" name="txtCPF" id="txtCPF" readonly />
-                        </label>
+                    <!-- primeiro formulario, consulta cpf -->
+                    <div class="grid-x grid-padding-x" id="loginCPF">
+                        <div class="small-12 large-12 cell">
+                            <label style="font-weight: bold;"> Digite o CPF para Iniciar o Agendamento
+                                <input type="text" placeholder="Digite aqui seu CPF" class="cpf" id="cpf" onkeydown="mudarMascara(this.value)" />
+                            </label>
+                            <a class="button succes" href="#" onclick="consultarCPF()" style="width: 100%;">Consultar</a>
+                            <br>
+                        </div>
                     </div>
 
-                    <div class="small-12 cell large-12">
-                        <br>
-                        <label>
-                            idUsuario
-                            <input type="text" name="txtIdUsuario" id="txtIdUsuario" readonly />
-                        </label>
+                    <!-- segundo formulario, consulta inseere nome-->
+                    <div class="grid-x grid-padding-x" id="nomeUsuario">
+                        <div class="small-12 large-12 cell">
+                            <label style="font-weight: bold;"> Vamos continuar seu agendamento! Digite seu nome por favor
+                                <input type="text" placeholder="Digite aqui seu Aqui" class="nomeAgendamento" id="nomeAgendamento" />
+                            </label>
+                            <a class="button succes" href="#" onclick="inserirUsuario()" style="width: 100%;">Seguir para Agendamento</a>
+                            <br>
+                        </div>
                     </div>
 
-                    <div class="small-12 cell large-12">
-                        <label>
-                            Nome
-                            <input type="text" name="txtNome" id="txtNome" value="" readonly />
-                        </label>
-                    </div>
+                    <!-- aqui faz o agendamento -->
 
-                    <div class="small-12 cell large-12">
-                        <label>
-                            Escolha a Unidade para Atendimento
-                            <select>
-                                <option>Fácil São João</option>
+                    <div class="grid-x grid-padding-x" id="formularioAgendamento">
+                        <div class="small-12 cell large-12">
+                            <br>
+                            <label>
+                                CPF
+                                <input type="text" name="txtCPF" id="txtCPF" readonly />
+                            </label>
+                        </div>
+
+                        <div class="small-12 cell large-12">
+                            <br>
+                            <label>
+                                idUsuario
+                                <input type="text" name="txtIdUsuario" id="txtIdUsuario" readonly />
+                            </label>
+                        </div>
+
+                        <div class="small-12 cell large-12">
+                            <label>
+                                Nome
+                                <input type="text" name="txtNome" id="txtNome" value="" readonly />
+                            </label>
+                        </div>
+
+                        <div class="small-12 cell large-12">
+                            <label>
+                                Escolha a Unidade para Atendimento
+                                <select>
+                                    <option>Fácil São João</option>
+                                </select>
+                            </label>
+                        </div>
+
+                        <div class="small-12 cell large-12">
+                            <label>
+                                Escolha o tipo de Atendimento
+                                <select>
+                                    <option>PMG</option>
+                                </select>
+                            </label>
+                        </div>
+
+
+
+                        <div class="small-12 medium-12  large-7 cell">
+                            <label>Data
+                                <input type="text" id="txtDataAtendimento" onchange="procuraHoras($('#txtDataAtendimento').val())" class="datepicker textoEntradas"></p>
+
+                            </label>
+                        </div>
+
+                        <div class="small-12 medium-12  large-5 cell">
+                            Hora
+                            <select id="comboHorarios">
+
                             </select>
-                        </label>
-                    </div>
-
-                    <div class="small-12 cell large-12">
-                        <label>
-                            Escolha o tipo de Atendimento
-                            <select>
-                                <option>PMG</option>
-                            </select>
-                        </label>
-                    </div>
+                        </div>
 
 
+                        <div class="small-12 cell large-12">
+                            <Br>
 
-                    <div class="small-12 medium-12  large-7 cell">
-                        <label>Data
-                            <input type="text" id="txtDataAtendimento" onchange="procuraHoras($('#txtDataAtendimento').val())" class="datepicker textoEntradas"></p>
+                            <a class="button  " style="width: 100%; background-color: #28536b; color: white;">
+                                Concluir Agendamento
+                            </a>
 
-                        </label>
-                    </div>
-
-                    <div class="small-12 medium-12  large-5 cell">
-                        Hora
-                        <select id="comboHorarios">
-                            
-                        </select>
-                    </div>
+                        </div>
 
 
-                    <div class="small-12 cell large-12">
-                        <Br>
 
-                        <a class="button  " style="width: 100%; background-color: #28536b; color: white;">
-                            Concluir Agendamento
-                        </a>
 
                     </div>
-
-
 
 
                 </div>
+                <div class="grid-x grid-padding-x" id="campoMensagem">
+                    <div class="small-12 cell large-12">
+                        <br>
+                        <center>
+                            <h4>Olá. Você Ja possui 2 agendamentos ativos</h4>
+                            </h5> Após encerrar esses atendimentos, você poderá agendar novos Horários</h5>
+                        </center>
+                    </div>
+                </div>
+
+
 
                 <img src="imgs/logoPrefeitura.png" />
             </div>
@@ -141,6 +157,7 @@ include_once 'includes/head.php'
         $(document).ready(function() {
             $('#nomeUsuario').hide();
             $('#formularioAgendamento').hide();
+            $('#campoMensagem').hide();
         })
 
 
@@ -148,9 +165,10 @@ include_once 'includes/head.php'
         function procuraHoras(dia) {
 
             console.log(dia);
-            
+
             var formData = {
-                dia: dia
+                dia: dia,
+                verificarHora: 1
             };
 
             $.ajax({
@@ -220,6 +238,7 @@ include_once 'includes/head.php'
                         $('#txtNome').val(data.retornoCondicao.dados[0].nomePessoa);
                         $('#txtCPF').val(data.retornoCondicao.dados[0].documentoPessoa);
                         $('#txtIdUsuario').val(data.retornoCondicao.dados[0].idPessoas);
+                        verificarAgendamentoPrevio(data.retornoCondicao.dados[0].idPessoas);
 
 
 
@@ -252,6 +271,35 @@ include_once 'includes/head.php'
                     if (data.retorno == true) {
                         consultarCPF();
                     }
+
+                });
+            event.preventDefault();
+        }
+
+        function verificarAgendamentoPrevio(idPessoa) {
+            var formData = {
+
+                idPessoa: idPessoa,
+                idStatus: 3,
+                verificarDuasAgendas: '1'
+
+            };
+            var condicao;
+            $.ajax({
+                    type: 'POST',
+                    url: 'ajax/agendamentoController.php',
+                    data: formData,
+                    dataType: 'json',
+                    encode: true
+                })
+                .done(function(data) {
+
+                    if (data.retorno == false) {
+                        $('#todosContainers').hide();
+                        $('#campoMensagem').show();
+                    }
+
+
 
                 });
             event.preventDefault();
