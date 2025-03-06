@@ -15,6 +15,31 @@
             monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro']
         });
     });
+
+
+    //carregar combo das unidades
+    function comboUnidades() {
+
+        var formData = {
+            tipo: 1
+        };
+
+        $.ajax({
+                type: 'POST',
+                url: 'ajax/unidadeController.php',
+                data: formData,
+                dataType: 'html',
+                encode: true
+            })
+            .done(function(data) {
+                console.log(data);
+
+
+                $('#selectUnidade').html(data);
+
+            });
+
+    }
 </script>
 
 

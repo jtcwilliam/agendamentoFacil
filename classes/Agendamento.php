@@ -2,7 +2,7 @@
 
 
 
-class Unidade
+class Agendamento
 {
 
 
@@ -11,12 +11,10 @@ class Unidade
     private $dns;
     private $user;
     private $pwd;
-
-
+    private $idPessoas;
+    private $idStatus;
+    private $idAgendamento;
     private $idUnidade;
-    private $nomeUnidade;
-    private $statusUnidade;
-    private $responsavelUnidade;
 
 
     //mexer na conexão para retornar os dados conexao, usuario e senha
@@ -49,51 +47,34 @@ class Unidade
         $this->setPwd($objConectar->getPwd());
     }
 
-    public function  carregarTodasUnidades()
+    public function  registrarAgendamentoUsuario()
     {
         try {
 
-            $pdo = new PDO($this->getDns(), $this->getUser(), $this->getPwd(), array(
-                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-                PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"
-              ));
+            $pdo = new PDO($this->getDns(), $this->getUser(), $this->getPwd());
 
-             
+            //$pdo = new PDO("mysql:host='" . $host . "' ;dbname='" . $db . "', '" . $user, $password);
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-
-            $stmt = $pdo->prepare("SELECT * FROM  unidade");
-            $stmt->execute();
-
-            //$user = $stmt->fetchAll();
-        
+            $sql = "UPDATE agendamento SET idPessoa = :idPessoa , idStatus = :idStatus ,  idUnidade= :idUnidade  where idAgendamento= :idAgendamento  ";
 
 
-            $retorno = array();
+            $data = [
+                ':idPessoa' =>      $this->getIdPessoas(),
+                ':idStatus' =>       $this->getIdStatus(),
+                ':idAgendamento' =>  $this->getIdAgendamento(),
+                ':idUnidade' => $this->getIdUnidade()
+            ];
 
-            $dados = array();
-
-            $row = $stmt->fetchAll();
-
-            foreach ($row as $key => $value) {
-                $dados[] = $value;
-            }
-
- 
-            if (!isset($dados)) {
-                $retorno['condicao'] = false;
-            }
+            $stmt = $pdo->prepare($sql);
 
 
-                 
 
-            return $dados;
- 
+            $stmt->execute($data);
         } catch (PDOException $e) {
             echo 'Error: ' . $e->getMessage();
         }
     }
-
-
 
 
 
@@ -176,6 +157,71 @@ class Unidade
     }
 
     /**
+     * Get the value of idPessoas
+     */
+    public function getIdPessoas()
+    {
+        return $this->idPessoas;
+    }
+
+    /**
+     * Set the value of idPessoas
+     *
+     * @return  self
+     */
+    public function setIdPessoas($idPessoas)
+    {
+        $this->idPessoas = $idPessoas;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of idStatus
+     */
+    public function getIdStatus()
+    {
+        return $this->idStatus;
+    }
+
+    /**
+     * Set the value of idStatus
+     *
+     * @return  self
+     */
+    public function setIdStatus($idStatus)
+    {
+        $this->idStatus = $idStatus;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of idAgendamento
+     */
+    public function getIdAgendamento()
+    {
+        return $this->idAgendamento;
+    }
+
+    /**
+     * Set the value of idAgendamento
+     *
+     * @return  self
+     */
+    public function setIdAgendamento($idAgendamento)
+    {
+        $this->idAgendamento = $idAgendamento;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of unidade
+     */
+
+
+    /**
      * Get the value of idUnidade
      */
     public function getIdUnidade()
@@ -191,66 +237,6 @@ class Unidade
     public function setIdUnidade($idUnidade)
     {
         $this->idUnidade = $idUnidade;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of nomeUnidade
-     */
-    public function getNomeUnidade()
-    {
-        return $this->nomeUnidade;
-    }
-
-    /**
-     * Set the value of nomeUnidade
-     *
-     * @return  self
-     */
-    public function setNomeUnidade($nomeUnidade)
-    {
-        $this->nomeUnidade = $nomeUnidade;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of statusUnidade
-     */
-    public function getStatusUnidade()
-    {
-        return $this->statusUnidade;
-    }
-
-    /**
-     * Set the value of statusUnidade
-     *
-     * @return  self
-     */
-    public function setStatusUnidade($statusUnidade)
-    {
-        $this->statusUnidade = $statusUnidade;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of responsavelUnidade
-     */
-    public function getResponsavelUnidade()
-    {
-        return $this->responsavelUnidade;
-    }
-
-    /**
-     * Set the value of responsavelUnidade
-     *
-     * @return  self
-     */
-    public function setResponsavelUnidade($responsavelUnidade)
-    {
-        $this->responsavelUnidade = $responsavelUnidade;
 
         return $this;
     }

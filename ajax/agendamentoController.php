@@ -3,6 +3,9 @@
 
 
 include_once '../classes/Datas.php';
+include_once '../classes/Agendamento.php';
+
+$objAgendamento = new Agendamento();
 
 $objDatas = new DatasAgendamento();
 
@@ -30,9 +33,58 @@ if (isset($_POST['verificarDuasAgendas'])) {
 
     $agendamentos = sizeof($comboHoras);
 
-    if($agendamentos >= 2){
-        echo  json_encode(array('retorno'=>false, 'dados'=>$comboHoras));
+
+
+    //aqui muda a quantidade de agendamentos permitidos
+    if ($agendamentos >= 6) {
+        echo  json_encode(array('retorno' => false, 'dados' => $comboHoras));
     }
 }
 
+if (isset($_POST['registrarAgendamento'])) {
+
+
+    /*  registrarAgendamento:1,
+                idUsuario:    $('#txtIdUsuario').val(),
+                comboHorarios: $('#comboHorarios').val(),
+                idUnidade:$('#unidade').val()*/
+
+ 
+         
+
+
+                
+    $objAgendamento->setIdPessoas($_POST['idUsuario']);
+    $objAgendamento->setIdStatus($_POST['idStatus']);
+    $objAgendamento->setIdAgendamento($_POST['comboHorarios']);
+    $objAgendamento->setIdUnidade($_POST['selectUnidade']);
+
+
+
+    $objAgendamento->registrarAgendamentoUsuario();
+
+
+
+
+
+
+
+
+    /*
+        registrarAgendamento:1,
+        idUsuario:    $('#txtIdUsuario').val(),
+        comboHorarios: $('#comboHorarios').val()
+        */
+
+    exit();
+}
+
+
+
+
+
+
+
+
+//registrarAgendamento
 ?>

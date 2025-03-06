@@ -72,10 +72,23 @@ include_once 'includes/head.php'
                         <div class="small-12 cell large-12">
                             <label>
                                 Escolha a Unidade para Atendimento
-                                <select>
-                                    <option>Fácil São João</option>
+                                <select id="selectUnidade" onchange="datasNaUnidade()">
+
                                 </select>
                             </label>
+                        </div>
+                        <div class="small-12 cell large-12" id="aparecerDatas">
+                           
+                        </div>
+
+                       
+ 
+
+                        <div class="small-12 medium-12  large-12 cell">
+                            Hora
+                            <select id="comboHorarios">
+
+                            </select>
                         </div>
 
                         <div class="small-12 cell large-12">
@@ -88,26 +101,10 @@ include_once 'includes/head.php'
                         </div>
 
 
-
-                        <div class="small-12 medium-12  large-7 cell">
-                            <label>Data
-                                <input type="text" id="txtDataAtendimento" onchange="procuraHoras($('#txtDataAtendimento').val())" class="datepicker textoEntradas"></p>
-
-                            </label>
-                        </div>
-
-                        <div class="small-12 medium-12  large-5 cell">
-                            Hora
-                            <select id="comboHorarios">
-
-                            </select>
-                        </div>
-
-
                         <div class="small-12 cell large-12">
                             <Br>
 
-                            <a class="button  " style="width: 100%; background-color: #28536b; color: white;">
+                            <a class="button  " onclick="registrarAgendamento()" style="width: 100%; background-color: #28536b; color: white;">
                                 Concluir Agendamento
                             </a>
 
@@ -158,6 +155,7 @@ include_once 'includes/head.php'
             $('#nomeUsuario').hide();
             $('#formularioAgendamento').hide();
             $('#campoMensagem').hide();
+            comboUnidades();
         })
 
 
@@ -170,7 +168,6 @@ include_once 'includes/head.php'
                 dia: dia,
                 verificarHora: 1
             };
-
             $.ajax({
                     type: 'POST',
                     url: 'ajax/agendamentoController.php',
@@ -180,12 +177,8 @@ include_once 'includes/head.php'
                 })
                 .done(function(data) {
                     console.log(data);
-
-
                     $('#comboHorarios').html(data);
-
                 });
-
         }
 
 
@@ -303,6 +296,64 @@ include_once 'includes/head.php'
 
                 });
             event.preventDefault();
+        }
+
+        function registrarAgendamento() {
+            var formData = {
+                registrarAgendamento: 1,
+                idUsuario: $('#txtIdUsuario').val(),
+                comboHorarios: $('#comboHorarios').val(),
+                selectUnidade: $('#selectUnidade').val(),
+                idStatus: '3'
+
+
+            };
+            var condicao;
+            $.ajax({
+                    type: 'POST',
+                    url: 'ajax/agendamentoController.php',
+                    data: formData,
+                    dataType: 'html',
+                    encode: true
+                })
+                .done(function(data) {
+
+                    console.log(data);
+
+
+
+                });
+            event.preventDefault();
+        }
+
+
+
+        //retorno das datas disponiveis da unidade
+        function datasNaUnidade() {
+                $('#aparecerDatas').html('<h4>Estamos consultando pra você</h4>');
+
+
+            var formData = {
+                datasDaUnidade: 1,
+                idUnidade: $('#selectUnidade').val()
+
+            };
+            $.ajax({
+                    type: 'POST',
+                    url: 'ajax/unidadeController.php',
+                    data: formData,
+                    dataType: 'html',
+                    encode: true
+                })
+                .done(function(data) {
+                    console.log(data);
+
+                    // <label>Selecione a data de seu agendamento
+                             
+                    
+                    $('#aparecerDatas').html(' <label>Selecione a data de seu agendamento'+ data + "</label>");
+
+                });
         }
     </script>
 </body>
