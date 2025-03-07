@@ -75,7 +75,7 @@ include_once 'includes/head.php';
                             </label>
                         </div>
 
-                        <div class="small-12 cell large-12">
+                        <div class="small-12 cell large-12" style="display: none;">
                             <br>
                             <label>
                                 idUsuario
