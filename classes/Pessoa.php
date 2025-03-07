@@ -83,10 +83,6 @@ class Pessoa
         inner join tipoPessoa tp on tp.idTipoPessoa = ps.tipoPessoa
          where documentoPessoa = '" . $this->getDocumentoPessoa() . "'  and pwd= '" . $this->getPwd() . "' ";
 
-
-
-
-
         $executar = mysqli_query($this->getConexao(), $sql);
 
         $retorno = array();

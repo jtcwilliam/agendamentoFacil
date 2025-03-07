@@ -9,6 +9,29 @@ $objAgendamento = new Agendamento();
 
 $objDatas = new DatasAgendamento();
 
+
+if (isset($_POST['verificarAgendamentosAtivos'])) {
+
+    $agendamentos = $objAgendamento->verificarAgendamentosAtivos($_POST['idPessoa'], $_POST['idStatus']);
+
+
+    $qtdeAgendamentos =  sizeof($agendamentos);
+ 
+    $agendamentosAntigos = '';
+
+    foreach ($agendamentos as $key => $value) 
+    {
+        $agendamentosAntigos.=  "<div class='small-12 cell large-12'> <label> <b>Protocolo: </b>". $value['idAgendamento']."<br> <b> Dia e Hora: </b>".$value['dia']. "  às ". $value['hora']. "h00 no <b>". $value['nomeUnidade']. "</b></label>   <hr> </div> ";
+    }
+
+    echo  json_encode(array( 'qtdeAgendamentos'=>$qtdeAgendamentos   , 'agendamentoAntigo'=>$agendamentosAntigos, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT |  JSON_UNESCAPED_UNICODE ));
+
+
+
+
+    exit();
+}
+
 if (isset($_POST['verificarHora'])) {
 
     $comboHoras = $objDatas->trazerHorarios($_POST['dia']);
@@ -25,21 +48,6 @@ if (isset($_POST['verificarHora'])) {
     exit();
 }
 
-
-
-
-if (isset($_POST['verificarDuasAgendas'])) {
-    $comboHoras = $objDatas->verificarAgendamentoPrevio($_POST['idPessoa'], $_POST['idStatus']);
-
-    $agendamentos = sizeof($comboHoras);
-
-
-
-    //aqui muda a quantidade de agendamentos permitidos
-    if ($agendamentos >= 6) {
-        echo  json_encode(array('retorno' => false, 'dados' => $comboHoras));
-    }
-}
 
 if (isset($_POST['registrarAgendamento'])) {
 

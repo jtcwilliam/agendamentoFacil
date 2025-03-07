@@ -64,6 +64,31 @@ include_once 'includes/head.php';
                         </div>
                     </div>
 
+                    <div class="grid-x grid-padding-x" id="campoMensagemAgendamentosAtivos">
+                        <div class="small-12 cell large-12">
+                            <br>
+                            <center>
+                                <h4>Olá. Você Ja possui <span id="valorAgendamentos"></span> agendamentos ativos</h4>
+                                </h5> Após encerrar esses atendimentos, você poderá agendar novos Horários</h5>
+                            </center>
+                        </div>
+                    </div>
+
+                    <div class="grid-x grid-padding-x" id="agendamentosRealizadosAtivos">
+                        <div class="small-12 cell large-12">
+                            <fieldset class="fieldset">
+                                <Legend style="font-weight: 800;">Seus Agendamentos Ativos</Legend>
+
+                                <div class="grid-x grid-padding-x" id="exibirAgendamentosAntigos"></div>
+
+
+
+                        </div>
+                        </fieldset>
+                    </div>
+
+
+
                     <!-- aqui faz o agendamento -->
 
                     <div class="grid-x grid-padding-x" id="formularioAgendamento">
@@ -138,15 +163,7 @@ include_once 'includes/head.php';
 
 
                 </div>
-                <div class="grid-x grid-padding-x" id="campoMensagem">
-                    <div class="small-12 cell large-12">
-                        <br>
-                        <center>
-                            <h4>Olá. Você Ja possui 2 agendamentos ativos</h4>
-                            </h5> Após encerrar esses atendimentos, você poderá agendar novos Horários</h5>
-                        </center>
-                    </div>
-                </div>
+
 
 
 
@@ -175,7 +192,9 @@ include_once 'includes/head.php';
         $(document).ready(function() {
             $('#nomeUsuario').hide();
             $('#formularioAgendamento').hide();
-            $('#campoMensagem').hide();
+            $('#campoMensagemAgendamentosAtivos').hide();
+            
+            $('#agendamentosRealizadosAtivos').hide();
 
         })
 
@@ -201,10 +220,6 @@ include_once 'includes/head.php';
                     $('#comboHorarios').html(data);
                 });
         }
-
-
-
-
 
         function mudarMascara(cpf) {
 
@@ -253,8 +268,9 @@ include_once 'includes/head.php';
                         $('#txtNome').val(data.retornoCondicao.dados[0].nomePessoa);
                         $('#txtCPF').val(data.retornoCondicao.dados[0].documentoPessoa);
                         $('#txtIdUsuario').val(data.retornoCondicao.dados[0].idPessoas);
-                        verificarAgendamentoPrevio(data.retornoCondicao.dados[0].idPessoas);
+
                         comboUnidadesComum();
+                        agendamentosAtivos(data.retornoCondicao.dados[0].idPessoas);
 
 
 
@@ -263,8 +279,6 @@ include_once 'includes/head.php';
                 });
             event.preventDefault();
         }
-
-
 
         function inserirUsuario() {
             var formData = {
@@ -292,34 +306,7 @@ include_once 'includes/head.php';
             event.preventDefault();
         }
 
-        function verificarAgendamentoPrevio(idPessoa) {
-            var formData = {
 
-                idPessoa: idPessoa,
-                idStatus: 3,
-                verificarDuasAgendas: '1'
-
-            };
-            var condicao;
-            $.ajax({
-                    type: 'POST',
-                    url: 'ajax/agendamentoController.php',
-                    data: formData,
-                    dataType: 'json',
-                    encode: true
-                })
-                .done(function(data) {
-
-                    if (data.retorno == false) {
-                        $('#todosContainers').hide();
-                        $('#campoMensagem').show();
-                    }
-
-
-
-                });
-            event.preventDefault();
-        }
 
         function registrarAgendamento() {
 
@@ -345,6 +332,7 @@ include_once 'includes/head.php';
 
 
                     if (data.retorno == true) {
+                        $('#formularioAgendamento').hide();
                         $('#modalSucesso').foundation('open');
                         $('#protocoloAgendamento').html('Seu Protocolo de Atendimento: <b>' + $('#comboHorarios').val() + "/2025 </b><br>Vamos te redirecionar para o Portal do Fáci    l")
 
@@ -360,6 +348,46 @@ include_once 'includes/head.php';
                 });
             event.preventDefault();
         }
+
+
+
+        //retorno dos Agendamentos Ativos
+        function agendamentosAtivos(idPessoa) {
+
+
+
+            var formData = {
+                verificarAgendamentosAtivos: 1,
+                idPessoa: idPessoa,
+                idStatus: 3
+
+            };
+            $.ajax({
+                    type: 'POST',
+                    url: 'ajax/agendamentoController.php',
+                    data: formData,
+                    dataType: 'json',
+                    encode: true
+                })
+                .done(function(data) {
+
+
+                    console.log(data);
+
+                    if (data.qtdeAgendamentos >= 2) {
+                        $('#formularioAgendamento').hide();
+                        $('#campoMensagemAgendamentosAtivos').show();
+                    }
+
+                    $('#agendamentosRealizadosAtivos').show();
+                 
+
+                    $('#valorAgendamentos').html('<b>'+ data.qtdeAgendamentos + "</b>");
+
+                    $('#exibirAgendamentosAntigos').html(data.agendamentoAntigo);
+                });
+        }
+
 
 
 

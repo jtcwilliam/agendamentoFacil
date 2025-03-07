@@ -47,6 +47,29 @@ class Agendamento
         $this->setPwd($objConectar->getPwd());
     }
 
+    public function  verificarAgendamentosAtivos($idPessoa, $idStatus)
+    {
+        try {
+
+            $pdo = new PDO($this->getDns(), $this->getUser(), $this->getPwd(), array(
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"
+              ));
+            $stmt = $pdo->prepare(" SELECT * from agendamento ag inner join pessoas ps on ps.idpessoas = ag.idpessoa inner join
+             unidade un on un.idUnidade = ag.idUnidade  where idpessoa = :idPessoa and ag.idStatus = :idStatus order by ag.dia asc  ");
+            $stmt->execute(array('idPessoa' => $idPessoa, 'idStatus' => $idStatus ));
+            $datasDisponiveis = $stmt->fetchAll();
+
+ 
+
+        
+
+            return $datasDisponiveis;
+        } catch (PDOException $e) {
+            echo 'Error: ' . $e->getMessage();
+        }
+    }
+
     public function  registrarAgendamentoUsuario()
     {
         try {

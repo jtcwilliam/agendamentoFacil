@@ -65,27 +65,7 @@ class DatasAgendamento
             echo 'Error: ' . $e->getMessage();
         }
     }
-
-
-    public function  verificarAgendamentoPrevio($idPessoa, $status)
-    {
-        try {
-
-            $pdo = new PDO($this->getDns(), $this->getUser(), $this->getPwd(), array(
-                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-                PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"
-              ));
-            $stmt = $pdo->prepare("SELECT idAgendamento FROM agendamento where idPessoa = :idPessoa and idStatus =  :idStatus ");
-            $stmt->execute(array('idPessoa' => $idPessoa, 'idStatus' => $status));
-            $user = $stmt->fetchAll();
-
-            return $user;
-        } catch (PDOException $e) {
-            echo 'Error: ' . $e->getMessage();
-        }
-    }
-
-
+ 
     public function  verificarDatasNaUnidade($idUnidade)
     {
         try {
