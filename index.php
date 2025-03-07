@@ -346,7 +346,13 @@ include_once 'includes/head.php';
 
                     if (data.retorno == true) {
                         $('#modalSucesso').foundation('open');
-                        $('#protocoloAgendamento').html('Seu Protocolo de Atendimento: <b>' + $('#comboHorarios').val() + "/2025 </b>")
+                        $('#protocoloAgendamento').html('Seu Protocolo de Atendimento: <b>' + $('#comboHorarios').val() + "/2025 </b><br>Vamos te redirecionar para o Portal do Fáci    l")
+
+                        window.setTimeout(() => {
+                            window.location = "https://portaleducacao.guarulhos.sp.gov.br/wp_site/facil/paginaInicial/#";
+                        }, 4600);
+
+                        //https://portalfacil.guarulhos.sp.gov.br/paginaInicial/
 
                     }
 
