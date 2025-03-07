@@ -70,7 +70,9 @@ class Agendamento
 
 
 
-            $stmt->execute($data);
+            if($stmt->execute($data)){
+                return true;
+            }
         } catch (PDOException $e) {
             echo 'Error: ' . $e->getMessage();
         }

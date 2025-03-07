@@ -9,6 +9,24 @@ include_once 'includes/head.php'
 
 <body>
 
+
+    <div class="full reveal" id="modalSucesso" data-reveal>
+        <div style="display: grid;  justify-content: center; align-content: center; height: 100vh;">
+            <h1>Ótimas Notícias!</h1>
+            <p class="lead">Seu Agendamento foi registrado com Sucesso</p>
+            <p id="protocoloAgendamento"></p>
+
+        </div>
+        <button class="close-button" data-close aria-label="Close modal" type="button">
+            <span aria-hidden="true">&times;</span>
+        </button>
+
+    </div>
+
+  
+
+
+
     <div class="grid-container" style="display: grid; align-items: center; height: 100vh;">
         <div class="grid-x grid-padding-x">
             <div class="auto cell">
@@ -78,11 +96,11 @@ include_once 'includes/head.php'
                             </label>
                         </div>
                         <div class="small-12 cell large-12" id="aparecerDatas">
-                           
+
                         </div>
 
-                       
- 
+
+
 
                         <div class="small-12 medium-12  large-12 cell">
                             Hora
@@ -299,6 +317,8 @@ include_once 'includes/head.php'
         }
 
         function registrarAgendamento() {
+
+
             var formData = {
                 registrarAgendamento: 1,
                 idUsuario: $('#txtIdUsuario').val(),
@@ -313,13 +333,17 @@ include_once 'includes/head.php'
                     type: 'POST',
                     url: 'ajax/agendamentoController.php',
                     data: formData,
-                    dataType: 'html',
+                    dataType: 'json',
                     encode: true
                 })
                 .done(function(data) {
 
-                    console.log(data);
 
+                    if (data.retorno == true) {
+                        $('#modalSucesso').foundation('open');
+                        $('#protocoloAgendamento').html('Seu Protocolo de Atendimento: <b>' + $('#comboHorarios').val() + "/2025 </b>")
+
+                    }
 
 
                 });
@@ -330,7 +354,7 @@ include_once 'includes/head.php'
 
         //retorno das datas disponiveis da unidade
         function datasNaUnidade() {
-                $('#aparecerDatas').html('<h4>Estamos consultando pra você</h4>');
+            $('#aparecerDatas').html('<h4>Estamos consultando pra você</h4>');
 
 
             var formData = {
@@ -349,9 +373,9 @@ include_once 'includes/head.php'
                     console.log(data);
 
                     // <label>Selecione a data de seu agendamento
-                             
-                    
-                    $('#aparecerDatas').html(' <label>Selecione a data de seu agendamento'+ data + "</label>");
+
+
+                    $('#aparecerDatas').html(' <label>Selecione a data de seu agendamento' + data + "</label>");
 
                 });
         }

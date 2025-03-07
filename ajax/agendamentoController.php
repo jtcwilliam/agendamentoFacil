@@ -44,16 +44,11 @@ if (isset($_POST['verificarDuasAgendas'])) {
 if (isset($_POST['registrarAgendamento'])) {
 
 
-    /*  registrarAgendamento:1,
-                idUsuario:    $('#txtIdUsuario').val(),
-                comboHorarios: $('#comboHorarios').val(),
-                idUnidade:$('#unidade').val()*/
-
- 
-         
 
 
-                
+
+
+
     $objAgendamento->setIdPessoas($_POST['idUsuario']);
     $objAgendamento->setIdStatus($_POST['idStatus']);
     $objAgendamento->setIdAgendamento($_POST['comboHorarios']);
@@ -61,7 +56,9 @@ if (isset($_POST['registrarAgendamento'])) {
 
 
 
-    $objAgendamento->registrarAgendamentoUsuario();
+    if ($objAgendamento->registrarAgendamentoUsuario()) {
+        echo json_encode(array('retorno' => true));
+    }
 
 
 
