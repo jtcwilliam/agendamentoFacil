@@ -3,18 +3,22 @@
 
 <?php
 
-include_once 'includes/head.php'
+
+include_once 'includes/head.php';
 
 ?>
 
 <body>
 
 
-    <div class="full reveal" id="modalSucesso" data-reveal>
+    <div class="full reveal" id="modalSucesso" data-reveal style="background-color:#2C255B;">
         <div style="display: grid;  justify-content: center; align-content: center; height: 100vh;">
-            <h1>Ótimas Notícias!</h1>
-            <p class="lead">Seu Agendamento foi registrado com Sucesso</p>
-            <p id="protocoloAgendamento"></p>
+            <center style="color: white;">
+                <h1>Ótimas Notícias!</h1>
+                <p class="lead">Seu Agendamento foi registrado com Sucesso</p>
+                <p id="protocoloAgendamento"></p>
+                <img src="imgs/logoGoverno-1024x240.jpg" style="width: 60%; padding-top: 10em;" />
+            </center>
 
         </div>
         <button class="close-button" data-close aria-label="Close modal" type="button">
@@ -23,7 +27,6 @@ include_once 'includes/head.php'
 
     </div>
 
-  
 
 
 
@@ -173,7 +176,7 @@ include_once 'includes/head.php'
             $('#nomeUsuario').hide();
             $('#formularioAgendamento').hide();
             $('#campoMensagem').hide();
-            comboUnidades();
+
         })
 
 
@@ -246,10 +249,12 @@ include_once 'includes/head.php'
                         $('#nomeUsuario').hide();
                         $('#formularioAgendamento').delay('fast').fadeIn();
 
+
                         $('#txtNome').val(data.retornoCondicao.dados[0].nomePessoa);
                         $('#txtCPF').val(data.retornoCondicao.dados[0].documentoPessoa);
                         $('#txtIdUsuario').val(data.retornoCondicao.dados[0].idPessoas);
                         verificarAgendamentoPrevio(data.retornoCondicao.dados[0].idPessoas);
+                        comboUnidadesComum();
 
 
 

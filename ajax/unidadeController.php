@@ -10,6 +10,21 @@ $objDatasAgendamento = new DatasAgendamento();
 $unidades = $objUnidade->carregarTodasUnidades();
 
 
+if (isset($_POST['unidadesComum'])) {
+
+
+    foreach ($unidades as $key => $value) {
+?>
+
+        <option value="<?= $value['idUnidade'] ?>"><?php echo $value['nomeUnidade']   ?></option>
+
+
+    <?php
+    }
+    exit();
+}
+
+
 
 if (isset($_POST['datasDaUnidade'])) {
 
@@ -17,20 +32,20 @@ if (isset($_POST['datasDaUnidade'])) {
     $dataUnidade = $objDatasAgendamento->verificarDatasNaUnidade($_POST['idUnidade']);
 
 
-?><div class="grid-x grid-padding-x">
-    
-    
-    
-    
-    <?php
+    ?><div class="grid-x grid-padding-x">
 
-                                        foreach ($dataUnidade as $key => $value) { ?>
+
+
+
+        <?php
+
+        foreach ($dataUnidade as $key => $value) { ?>
             <div class="small-6 cell large-3">
-                <a class="button success" style="width: 100%;" onclick="procuraHoras('<?= $value['dia']; ?>')"  > <?= $value['dia']; ?> </a>
+                <a class="button success" style="width: 100%;" onclick="procuraHoras('<?= $value['dia']; ?>')"> <?= $value['dia']; ?> </a>
             </div>
 
         <?php
-                                        }
+        }
 
         ?>
     </div><?php
@@ -47,6 +62,7 @@ if (isset($_POST['datasDaUnidade'])) {
 
 
         session_start();
+
 
 
         if ($_SESSION['usuarioLogado']['dados'][0]['idTipoPessoa'] == 4) {

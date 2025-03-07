@@ -17,6 +17,29 @@
     });
 
 
+    function comboUnidadesComum() {
+
+        var formData = {
+            unidadesComum:1
+        };
+
+        $.ajax({
+                type: 'POST',
+                url: 'ajax/unidadeController.php',
+                data: formData,
+                dataType: 'html',
+                encode: true
+            })
+            .done(function(data) {
+                console.log(data);
+
+
+                $('#selectUnidade').html(data);
+
+            });
+
+    }
+
     //carregar combo das unidades
     function comboUnidades() {
 

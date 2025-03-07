@@ -116,6 +116,7 @@ class Pessoa
             $dados[] = $row;
             $retorno['condicao'] = true;
             $retorno['dados'] = $dados;
+            
         }
         if (!isset($dados)) {
             $retorno['condicao'] = false;
