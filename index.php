@@ -407,74 +407,13 @@ include_once 'includes/head.php';
 
 
 
-        //retorno dos Agendamentos Ativos
-        function agendamentosAtivos(idPessoa) {
-
-
-
-            var formData = {
-                verificarAgendamentosAtivos: 1,
-                idPessoa: idPessoa,
-                idStatus: 3
-
-            };
-            $.ajax({
-                    type: 'POST',
-                    url: 'ajax/agendamentoController.php',
-                    data: formData,
-                    dataType: 'json',
-                    encode: true
-                })
-                .done(function(data) {
-
-
-
-
-                    if (data.qtdeAgendamentos > 2) {
-                        $('#formularioAgendamento').hide();
-                        $('#campoMensagemAgendamentosAtivos').show();
-
-                    }
-
-                    $('#agendamentosRealizadosAtivos').show();
-
-
-                    $('#valorAgendamentos').html('<b>' + data.qtdeAgendamentos + "</b>");
-
-                    $('#exibirAgendamentosAntigos').html(data.agendamentoAntigo);
-                });
-        }
+       
 
 
 
 
         //retorno das datas disponiveis da unidade
-        function datasNaUnidade() {
-            $('#aparecerDatas').html('<h4>Estamos consultando pra você</h4>');
-
-
-            var formData = {
-                datasDaUnidade: 1,
-                idUnidade: $('#selectUnidade').val()
-
-            };
-            $.ajax({
-                    type: 'POST',
-                    url: 'ajax/unidadeController.php',
-                    data: formData,
-                    dataType: 'html',
-                    encode: true
-                })
-                .done(function(data) {
-                    console.log(data);
-
-                    // <label>Selecione a data de seu agendamento
-
-
-                    $('#aparecerDatas').html(' <label>Selecione a data de seu agendamento' + data + "</label>");
-
-                });
-        }
+       
     </script>
 </body>
 
