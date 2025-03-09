@@ -44,22 +44,31 @@ include_once 'includes/head.php';
 
                     <!-- primeiro formulario, consulta cpf -->
                     <div class="grid-x grid-padding-x" id="loginCPF">
+
                         <div class="small-12 large-12 cell">
-                            <label style="font-weight: bold;"> Digite o CPF para Iniciar o Agendamento
-                                <input type="text" placeholder="Digite aqui seu CPF" class="cpf" id="cpf" onkeydown="mudarMascara(this.value)" />
-                            </label>
-                            <a class="button succes" href="#" onclick="consultarCPF()" style="width: 100%;">Consultar</a>
-                            <br>
+                            <form action="#">
+                                <label style="font-weight: bold;"> Digite o CPF para Iniciar o Agendamento
+                                    <input type="text" placeholder="Digite aqui seu CPF" class="cpf" id="cpf"
+                                        onkeydown="mudarMascara(this.value)" required />
+                                </label>
+                                <input type="submit" class="button succes" href="#" onclick="consultarCPF()"
+                                    style="width: 100%;" value="consultar">
+                                <br>
+                            </form>
                         </div>
+
                     </div>
 
                     <!-- segundo formulario, consulta inseere nome-->
                     <div class="grid-x grid-padding-x" id="nomeUsuario">
                         <div class="small-12 large-12 cell">
-                            <label style="font-weight: bold;"> Vamos continuar seu agendamento! Digite seu nome por favor
-                                <input type="text" placeholder="Digite aqui seu Aqui" class="nomeAgendamento" id="nomeAgendamento" />
+                            <label style="font-weight: bold;"> Vamos continuar seu agendamento! Digite seu nome por
+                                favor
+                                <input type="text" placeholder="Digite aqui seu Aqui" class="nomeAgendamento"
+                                    id="nomeAgendamento" />
                             </label>
-                            <a class="button succes" href="#" onclick="inserirUsuario()" style="width: 100%;">Seguir para Agendamento</a>
+                            <a class="button succes" href="#" onclick="inserirUsuario()" style="width: 100%;">Seguir
+                                para Agendamento</a>
                             <br>
                         </div>
                     </div>
@@ -150,7 +159,8 @@ include_once 'includes/head.php';
                         <div class="small-12 cell large-12">
                             <Br>
 
-                            <a class="button  " onclick="registrarAgendamento()" style="width: 100%; background-color: #28536b; color: white;">
+                            <a class="button  " onclick="registrarAgendamento()"
+                                style="width: 100%; background-color: #28536b; color: white;">
                                 Concluir Agendamento
                             </a>
 
@@ -193,7 +203,7 @@ include_once 'includes/head.php';
             $('#nomeUsuario').hide();
             $('#formularioAgendamento').hide();
             $('#campoMensagemAgendamentosAtivos').hide();
-            
+
             $('#agendamentosRealizadosAtivos').hide();
 
         })
@@ -234,11 +244,49 @@ include_once 'includes/head.php';
         }
 
         function consultarCPF() {
+            var cpf = $('#cpf').val();
+
+            if (cpf.length == 0 || cpf.length == 1) {
+                alert('insira o seu cpf ou cnpj');
+                return false;
+            }
+
+
+
+            if (cpf.length != 18 && cpf.length != 14) {
+                alert('Seu Documento está com erro! Tente novamente');
+                return false;
+            }
+
+
+            if (cpf.length == 14) {
+                if (validaCPF(cpf) == false) {
+                    alert('Seu Documento está com erro! Tente novamente');
+                    return false;
+
+                }
+
+
+            } else if (cpf.length == 18) {
+                if (validaCNPJ(cpf) == false) {
+                    alert('Seu Documento está com erro! Tente novamente');
+                    return false;
+
+                }
+            }
+
+
+
+
+
+
+
+
 
 
 
             var formData = {
-                cpf: $('#cpf').val()
+                cpf: cpf
 
             };
             var condicao;
@@ -277,6 +325,9 @@ include_once 'includes/head.php';
                     }
 
                 });
+
+
+
             event.preventDefault();
         }
 
@@ -296,7 +347,7 @@ include_once 'includes/head.php';
                 })
                 .done(function(data) {
 
-                    console.log(data);
+
 
                     if (data.retorno == true) {
                         consultarCPF();
@@ -334,10 +385,12 @@ include_once 'includes/head.php';
                     if (data.retorno == true) {
                         $('#formularioAgendamento').hide();
                         $('#modalSucesso').foundation('open');
-                        $('#protocoloAgendamento').html('Seu Protocolo de Atendimento: <b>' + $('#comboHorarios').val() + "/2025 </b><br>Vamos te redirecionar para o Portal do Fáci    l")
+                        $('#protocoloAgendamento').html('Seu Protocolo de Atendimento: <b>' + $('#comboHorarios')
+                            .val() + "/2025 </b><br>Vamos te redirecionar para o Portal do Fáci    l")
 
                         window.setTimeout(() => {
-                            window.location = "https://portaleducacao.guarulhos.sp.gov.br/wp_site/facil/paginaInicial/#";
+                            window.location =
+                                "https://portaleducacao.guarulhos.sp.gov.br/wp_site/facil/paginaInicial/#";
                         }, 4600);
 
                         //https://portalfacil.guarulhos.sp.gov.br/paginaInicial/
@@ -372,18 +425,18 @@ include_once 'includes/head.php';
                 .done(function(data) {
 
 
-                  
+
 
                     if (data.qtdeAgendamentos > 2) {
                         $('#formularioAgendamento').hide();
                         $('#campoMensagemAgendamentosAtivos').show();
-                        console.log('passou aqui');
+
                     }
 
                     $('#agendamentosRealizadosAtivos').show();
-                 
 
-                    $('#valorAgendamentos').html('<b>'+ data.qtdeAgendamentos + "</b>");
+
+                    $('#valorAgendamentos').html('<b>' + data.qtdeAgendamentos + "</b>");
 
                     $('#exibirAgendamentosAntigos').html(data.agendamentoAntigo);
                 });
