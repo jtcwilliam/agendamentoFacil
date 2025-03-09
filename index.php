@@ -14,10 +14,11 @@ include_once 'includes/head.php';
     <div class="full reveal" id="modalSucesso" data-reveal style="background-color:#2C255B;">
         <div style="display: grid;  justify-content: center; align-content: center; height: 100vh;">
             <center style="color: white;">
-                <h1>Ótimas Notícias!</h1>
-                <p class="lead">Seu Agendamento foi registrado com Sucesso</p>
-                <p id="protocoloAgendamento"></p>
-                <img src="imgs/logoGoverno-1024x240.jpg" style="width: 60%; padding-top: 10em;" />
+                <h2>Ótimas Notícias!Seu Agendamento foi registrado com Sucesso</h2>
+                <h1 id="protocoloAgendamento"></h1>
+                <p class="lead"></p>
+                <h4 style="font-style: italic;"><b>Dica: </b> Tira um print dessa tela e leva no dia do agendamento! Serve de protocolo para o atendimento! </h4>
+                <img src="imgs/logoGoverno-1024x240.jpg" style="width: 60%; padding-top: 10em;" :) />
             </center>
 
         </div>
@@ -385,13 +386,15 @@ include_once 'includes/head.php';
                     if (data.retorno == true) {
                         $('#formularioAgendamento').hide();
                         $('#modalSucesso').foundation('open');
-                        $('#protocoloAgendamento').html('Seu Protocolo de Atendimento: <b>' + $('#comboHorarios')
-                            .val() + "/2025 </b><br>Vamos te redirecionar para o Portal do Fáci    l")
+                        $('#protocoloAgendamento').html('Seu Protocolo: ' + $('#comboHorarios')
+                            .val())
 
+                        /*
                         window.setTimeout(() => {
                             window.location =
                                 "https://portaleducacao.guarulhos.sp.gov.br/wp_site/facil/paginaInicial/#";
                         }, 4600);
+                        */
 
                         //https://portalfacil.guarulhos.sp.gov.br/paginaInicial/
 
