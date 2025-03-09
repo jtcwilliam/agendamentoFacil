@@ -262,7 +262,7 @@ include_once 'includes/head.php';
 
                         $('#loginCPF').hide();
                         $('#nomeUsuario').hide();
-                        $('#formularioAgendamento').delay('fast').fadeIn();
+                        $('#formularioAgendamento').show();
 
 
                         $('#txtNome').val(data.retornoCondicao.dados[0].nomePessoa);
@@ -372,11 +372,12 @@ include_once 'includes/head.php';
                 .done(function(data) {
 
 
-                    console.log(data);
+                  
 
-                    if (data.qtdeAgendamentos >= 2) {
+                    if (data.qtdeAgendamentos > 2) {
                         $('#formularioAgendamento').hide();
                         $('#campoMensagemAgendamentosAtivos').show();
+                        console.log('passou aqui');
                     }
 
                     $('#agendamentosRealizadosAtivos').show();
