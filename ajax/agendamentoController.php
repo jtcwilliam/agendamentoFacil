@@ -62,17 +62,53 @@ if (isset($_POST['verificarHora'])) {
 
 
                 foreach ($comboHoras as $key => $value) {
+
+                  
             ?>
                 <div class="small-12 large-2 cell" style="margin-top: 10px;">
 
-                    <a data-open="exampleModal1" class="button">
-                        <p style="color: white;">
-                            
-                            Hora: <?php echo   $value['hora'] . 'h00';  ?><br>
-                            Protocolo: <?= $value['idAgendamento'] ?><br> 
 
-                        </p>
-                    </a>
+
+                    <?php
+
+                    if ($value['idStatus'] == '3') {
+
+
+                    ?>
+                        <a data-open="exampleModal1" class="button" style="border-radius: 10px; text-align: left; background-color: #ffa405;">
+                            <p style="color: black;">
+                                Status: Agendado
+                                Hora: <?php echo   $value['hora'] . 'h00';  ?><br>
+                                Protocolo: <?= $value['idAgendamento'] ?><br>
+
+                            </p>
+                        </a><?php
+
+                        } else  if ($value['idStatus'] == '0') {
+
+
+                            ?>
+                        <a data-open="exampleModal1" class="button" style="border-radius: 10px; text-align: left; background-color: #06813b;">
+                            <p style="color: white;">
+                            Status: Disponível
+                                Hora: <?php echo   $value['hora'] . 'h00';  ?><br>
+                                Protocolo: <?= $value['idAgendamento'] ?><br>
+
+                            </p>
+                        </a><?php
+
+                        }
+
+
+
+
+
+
+
+
+                            ?>
+
+
 
                 </div><?php
                     } ?>
