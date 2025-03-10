@@ -15,6 +15,7 @@ class Agendamento
     private $idStatus;
     private $idAgendamento;
     private $idUnidade;
+    private $idTipoAgendamento;
 
 
     //mexer na conexão para retornar os dados conexao, usuario e senha
@@ -79,14 +80,16 @@ class Agendamento
             //$pdo = new PDO("mysql:host='" . $host . "' ;dbname='" . $db . "', '" . $user, $password);
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-            $sql = "UPDATE agendamento SET idPessoa = :idPessoa , idStatus = :idStatus ,  idUnidade= :idUnidade  where idAgendamento= :idAgendamento  ";
+            $sql = "UPDATE agendamento SET idPessoa = :idPessoa , idStatus = :idStatus ,  idUnidade= :idUnidade, idTipoAgendamento= :idTipoAgendamento    where idAgendamento= :idAgendamento  ";
 
 
             $data = [
                 ':idPessoa' =>      $this->getIdPessoas(),
                 ':idStatus' =>       $this->getIdStatus(),
                 ':idAgendamento' =>  $this->getIdAgendamento(),
-                ':idUnidade' => $this->getIdUnidade()
+                ':idUnidade' => $this->getIdUnidade(),
+                ':idTipoAgendamento' => $this->getIdTipoAgendamento()
+
             ];
 
             $stmt = $pdo->prepare($sql);
@@ -262,6 +265,26 @@ class Agendamento
     public function setIdUnidade($idUnidade)
     {
         $this->idUnidade = $idUnidade;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of idTipoAgendamento
+     */ 
+    public function getIdTipoAgendamento()
+    {
+        return $this->idTipoAgendamento;
+    }
+
+    /**
+     * Set the value of idTipoAgendamento
+     *
+     * @return  self
+     */ 
+    public function setIdTipoAgendamento($idTipoAgendamento)
+    {
+        $this->idTipoAgendamento = $idTipoAgendamento;
 
         return $this;
     }

@@ -1,9 +1,13 @@
-<script>
+<div class="grid-x grid-padding-x">
+    <div class=" auto cell  ">
+    </div>
+    <div class="small-12 cell large-6">
+        <img src="imgs/logoPrefeitura.png" style="width: 100%;" />
+    </div>
+    <div class=" auto cell ">
+    </div>
 
-
-
-
-</script>
+</div>
 
 <script>
     $(function() {
@@ -17,15 +21,46 @@
     });
 
 
-    function datasNaUnidade() {
+    //carregar combo das unidades
+    function procuraHoras(dia, tipoExibicao) {
+
+        var formData = {
+            dia: dia,
+            verificarHora: 1,
+            tipoExibicao: tipoExibicao
+
+        };
+        $.ajax({
+                type: 'POST',
+                url: 'ajax/agendamentoController.php',
+                data: formData,
+                dataType: 'html',
+                encode: true
+            })
+            .done(function(data) {
+              
+
+                $('.comboHorarios').html(data);
+            });
+    }
+
+    function datasNaUnidade(tipoExibicao, idUnidade) {
         $('#aparecerDatas').html('<h4>Estamos consultando pra você</h4>');
 
 
+        if (idUnidade == 0) {
+            var idUnidade = $('#selectUnidade').val()
+        } else {
+            idUnidade = idUnidade
+        }
+
         var formData = {
             datasDaUnidade: 1,
-            idUnidade: $('#selectUnidade').val()
+            tipoExibicao: tipoExibicao,
+            idUnidade: idUnidade
 
         };
+        
         $.ajax({
                 type: 'POST',
                 url: 'ajax/unidadeController.php',
@@ -34,15 +69,61 @@
                 encode: true
             })
             .done(function(data) {
-                console.log(data);
+                
 
                 // <label>Selecione a data de seu agendamento
+                if (tipoExibicao == 0) {
+                    $('#aparecerDatas').html(' <label>Selecione a data de seu agendamento' + data + "</label>");
+                } else if (tipoExibicao == 1) {
+                    $('#aparecerDatas').html(data);
 
-
-                $('#aparecerDatas').html(' <label>Selecione a data de seu agendamento' + data + "</label>");
+                }
 
             });
     }
+
+
+
+
+    function datasNaUnidadeAdm(tipoExibicao, idUnidade) {
+        $('#aparecerDatas').html('<h4>Estamos consultando pra você</h4>');
+
+        alert('sd');
+        if (idUnidade == 0) {
+            var idUnidade = $('#selectUnidade').val()
+        } else {
+            idUnidade = idUnidade
+        }
+
+        var formData = {
+            datasDaUnidade: 1,
+            tipoExibicao: tipoExibicao,
+            idUnidade: idUnidade
+
+        };
+        
+        $.ajax({
+                type: 'POST',
+                url: 'ajax/unidadeController.php',
+                data: formData,
+                dataType: 'html',
+                encode: true
+            })
+            .done(function(data) {
+                
+
+                // <label>Selecione a data de seu agendamento
+                if (tipoExibicao == 0) {
+                    $('#aparecerDatas').html(' <label>Selecione a data de seu agendamento' + data + "</label>");
+                } else if (tipoExibicao == 1) {
+                    $('#aparecerDatas').html(data);
+
+                }
+
+            });
+    }
+
+
 
     function validaCPF(strCPF) {
         var Soma;
@@ -57,7 +138,7 @@
 
         strCPF = strCPF.replace('-', '');
 
-        console.log(strCPF);
+    
 
 
         if (strCPF == "00000000000") return false;
@@ -118,7 +199,7 @@
                 encode: true
             })
             .done(function(data) {
-                console.log(data);
+         
 
 
                 $('#selectUnidade').html(data);
@@ -142,7 +223,7 @@
                 encode: true
             })
             .done(function(data) {
-                console.log(data);
+           
 
 
                 $('#selectUnidade').html(data);
@@ -151,43 +232,66 @@
 
     }
 
-     //retorno dos Agendamentos Ativos
-     function agendamentosAtivos(idPessoa) {
+    //retorno dos Agendamentos Ativos
+    function agendamentosAtivos(idPessoa) {
 
 
 
-var formData = {
-    verificarAgendamentosAtivos: 1,
-    idPessoa: idPessoa,
-    idStatus: 3
+        var formData = {
+            verificarAgendamentosAtivos: 1,
+            idPessoa: idPessoa,
+            idStatus: 3
 
-};
-$.ajax({
-        type: 'POST',
-        url: 'ajax/agendamentoController.php',
-        data: formData,
-        dataType: 'json',
-        encode: true
-    })
-    .done(function(data) {
-
-
+        };
+        $.ajax({
+                type: 'POST',
+                url: 'ajax/agendamentoController.php',
+                data: formData,
+                dataType: 'json',
+                encode: true
+            })
+            .done(function(data) {
 
 
-        if (data.qtdeAgendamentos > 2) {
-            $('#formularioAgendamento').hide();
-            $('#campoMensagemAgendamentosAtivos').show();
 
-        }
+                //aqui muda as datas
+                if (data.qtdeAgendamentos >= 2) {
+                    $('#formularioAgendamento').hide();
+                    $('#campoMensagemAgendamentosAtivos').show();
 
-        $('#agendamentosRealizadosAtivos').show();
+                }
+
+                $('#agendamentosRealizadosAtivos').show();
 
 
-        $('#valorAgendamentos').html('<b>' + data.qtdeAgendamentos + "</b>");
+                $('#valorAgendamentos').html('<b>' + data.qtdeAgendamentos + "</b>");
 
-        $('#exibirAgendamentosAntigos').html(data.agendamentoAntigo);
-    });
-}
+                $('#exibirAgendamentosAntigos').html(data.agendamentoAntigo);
+            });
+    }
+
+    function comboTipoAgendamento() {
+
+        var formData = {
+            tipo: 1
+        };
+
+        $.ajax({
+                type: 'POST',
+                url: 'ajax/tipoAgendamentoController.php',
+                data: formData,
+                dataType: 'html',
+                encode: true
+            })
+            .done(function(data) {
+            
+
+
+                $('.selectTipoAgendamento').html(data);
+
+            });
+
+    }
 </script>
 
 

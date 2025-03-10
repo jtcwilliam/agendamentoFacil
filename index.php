@@ -12,7 +12,7 @@ include_once 'includes/head.php';
 
 
     <div class="full reveal" id="modalSucesso" data-reveal style="background-color:#2C255B;">
-        <div style="display: grid;  justify-content: center; align-content: center; height: 100vh;">
+        <div style="display: grid;  justify-content: center; align-content: center; height: 100vh; padding-top: 0px;">
             <center style="color: white;">
                 <h2>Ótimas Notícias!Seu Agendamento foi registrado com Sucesso</h2>
                 <h1 id="protocoloAgendamento"></h1>
@@ -128,7 +128,7 @@ include_once 'includes/head.php';
                         <div class="small-12 cell large-12">
                             <label>
                                 Escolha a Unidade para Atendimento
-                                <select id="selectUnidade" onchange="datasNaUnidade()">
+                                <select id="selectUnidade" onchange="datasNaUnidade(0,0)">
 
                                 </select>
                             </label>
@@ -142,7 +142,7 @@ include_once 'includes/head.php';
 
                         <div class="small-12 medium-12  large-12 cell">
                             Hora
-                            <select id="comboHorarios">
+                            <select class="comboHorarios">
 
                             </select>
                         </div>
@@ -150,7 +150,7 @@ include_once 'includes/head.php';
                         <div class="small-12 cell large-12">
                             <label>
                                 Escolha o tipo de Atendimento
-                                <select>
+                                <select class="selectTipoAgendamento">
                                     <option>PMG</option>
                                 </select>
                             </label>
@@ -178,12 +178,17 @@ include_once 'includes/head.php';
 
 
 
-                <img src="imgs/logoPrefeitura.png" />
+
             </div>
 
             <div class="auto cell">
 
             </div>
+            <?php
+
+            include_once 'includes/footer.php';
+
+            ?>
         </div>
 
 
@@ -192,13 +197,10 @@ include_once 'includes/head.php';
 
 
 
+
+
+
     </div>
-
-    <?php
-
-    include_once 'includes/footer.php';
-
-    ?>
     <script>
         $(document).ready(function() {
             $('#nomeUsuario').hide();
@@ -210,27 +212,7 @@ include_once 'includes/head.php';
         })
 
 
-        //carregar combo das unidades
-        function procuraHoras(dia) {
-
-            console.log(dia);
-
-            var formData = {
-                dia: dia,
-                verificarHora: 1
-            };
-            $.ajax({
-                    type: 'POST',
-                    url: 'ajax/agendamentoController.php',
-                    data: formData,
-                    dataType: 'html',
-                    encode: true
-                })
-                .done(function(data) {
-                    console.log(data);
-                    $('#comboHorarios').html(data);
-                });
-        }
+     
 
         function mudarMascara(cpf) {
 
@@ -275,16 +257,6 @@ include_once 'includes/head.php';
 
                 }
             }
-
-
-
-
-
-
-
-
-
-
 
             var formData = {
                 cpf: cpf
@@ -366,8 +338,9 @@ include_once 'includes/head.php';
             var formData = {
                 registrarAgendamento: 1,
                 idUsuario: $('#txtIdUsuario').val(),
-                comboHorarios: $('#comboHorarios').val(),
+                comboHorarios: $('.comboHorarios').val(),
                 selectUnidade: $('#selectUnidade').val(),
+                selectAgendamento: $('.selectTipoAgendamento').val(),
                 idStatus: '3'
 
 
@@ -386,7 +359,7 @@ include_once 'includes/head.php';
                     if (data.retorno == true) {
                         $('#formularioAgendamento').hide();
                         $('#modalSucesso').foundation('open');
-                        $('#protocoloAgendamento').html('Seu Protocolo: ' + $('#comboHorarios')
+                        $('#protocoloAgendamento').html('Seu Protocolo: ' + $('.comboHorarios')
                             .val())
 
                         /*
@@ -405,15 +378,15 @@ include_once 'includes/head.php';
             event.preventDefault();
         }
 
+        comboTipoAgendamento();
 
 
-       
+
 
 
 
 
         //retorno das datas disponiveis da unidade
-       
     </script>
 </body>
 

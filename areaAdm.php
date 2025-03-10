@@ -14,9 +14,27 @@ session_start();
 
 
 
+$dadoTipoPessoa =     $_SESSION['usuarioLogado']['dados'][0]['idTipoPessoa'];
+$responsavelPessoa =   $_SESSION['usuarioLogado']['dados'][0]['idUnidade']
+
+
+
+
 ?>
 
 <body>
+
+    <div class="reveal" id="exampleModal1" data-reveal style="background-color:#2C255B;">
+        <div style="display: grid;  justify-content: center; align-content: center;   padding-top: 0px;">
+             asdasd
+        </div>
+        <button class="close-button" data-close aria-label="Close modal" type="button">
+            <span aria-hidden="true">&times;</span>
+        </button>
+
+    </div>
+
+ 
 
     <div class="grid-container" style="display: grid; align-items: center; height: 100vh;">
         <div class="grid-x grid-padding-x">
@@ -27,7 +45,18 @@ session_start();
                     <div class="grid-x grid-padding-x">
                         <div class="small-12 large-4 cell">
                             <label for="selectUnidade"> Unidade
-                                <select id="selectUnidade" style="height: 2.8em;"> </select>
+                                <?php
+                                if ($dadoTipoPessoa == 4) {
+                                ?>
+                                    <select id="selectUnidade" onchange="datasNaUnidade(1,0);" style="height: 2.8em;"> </select>
+                                <?php
+                                } else { ?>
+
+                                    <select id="selectUnidade" style="height: 2.8em;"> </select>
+
+                                <?php
+                                }
+                                ?>
                             </label>
                         </div>
                     </div>
@@ -59,7 +88,7 @@ session_start();
 
                         <div class="small-12 large-2 cell">
                             <label for="selectTipoAgendamento">Tipo Agendamento
-                                <select id="selectTipoAgendamento" style="height: 2.8em;"> </select>
+                                <select id="selectTipoAgendamento" class="selectTipoAgendamento" style="height: 2.8em;"> </select>
                             </label>
                         </div>
 
@@ -69,6 +98,26 @@ session_start();
                             </label>
                         </div>
                     </div>
+                </fieldset>
+
+                <fieldset class="fieldset">
+                    <legend>Administração das Senhas do dia</legend>
+
+                    <select id="aparecerDatas" onchange="procuraHoras($('#aparecerDatas').val(), 1 )">
+
+                    </select>
+
+                    <div class="small-12 large-12 cell">
+
+                        <fieldset class="fieldset">
+                            <legend>Senhas</legend>
+
+                            <div class="comboHorarios">
+
+                            </div>
+                        </fieldset>
+                    </div>
+
                 </fieldset>
 
             </div>
@@ -84,10 +133,9 @@ session_start();
     ?>
     <script>
         $(document).ready(function() {
-            // $('#confirmacao').hide();
-
-
-
+            comboUnidades();
+            comboTipoAgendamento();
+            datasNaUnidadeAdm(1, <?= $responsavelPessoa ?>);
         })
 
 
@@ -102,7 +150,7 @@ session_start();
                 ultimoHorario: $('#ultimoHorario').val(),
                 qtdeMesas: $('#qtdeMesas').val(),
                 selectUnidade: $('#selectUnidade').val(),
-                selectTipoAgendamento: $('#selectTipoAgendamento').val()
+                selectTipoAgendamento: $('.selectTipoAgendamento').val()
             };
             var condicao;
             $.ajax({
@@ -128,7 +176,7 @@ session_start();
             var formData = {
                 tipo: 1
             };
-         
+
             $.ajax({
                     type: 'POST',
                     url: 'ajax/unidadeController.php',
@@ -143,34 +191,8 @@ session_start();
                     $('#selectUnidade').html(data);
 
                 });
-             
+
         }
-
-        function comboTipoAgendamento() {
-
-            var formData = {
-                tipo: 1
-            };
-         
-            $.ajax({
-                    type: 'POST',
-                    url: 'ajax/tipoAgendamentoController.php',
-                    data: formData,
-                    dataType: 'html',
-                    encode: true
-                })
-                .done(function(data) {
-                    console.log(data);
-
-
-                    $('#selectTipoAgendamento').html(data);
-
-                });
-          
-        }
-
-        comboUnidades();
-        comboTipoAgendamento();
     </script>
 
 

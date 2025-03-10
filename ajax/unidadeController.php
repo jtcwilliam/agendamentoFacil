@@ -29,30 +29,51 @@ if (isset($_POST['unidadesComum'])) {
 if (isset($_POST['datasDaUnidade'])) {
 
 
-    $dataUnidade = $objDatasAgendamento->verificarDatasNaUnidade($_POST['idUnidade']);
+    if ($_POST['tipoExibicao'] == 0) {
+        $dataUnidade = $objDatasAgendamento->verificarDatasNaUnidade($_POST['idUnidade']);
+    }else  if ($_POST['tipoExibicao'] == 1) {
+        $dataUnidade = $objDatasAgendamento->verificarDatasNaUnidadeADM($_POST['idUnidade']);
+    } 
+
 
 
     ?><div class="grid-x grid-padding-x">
 
+        <?php
 
+        if ($_POST['tipoExibicao'] == 0) {
+            foreach ($dataUnidade as $key => $value) {
+
+        ?>
+                <div class="small-6 cell large-3">
+                    <a class="button success" style="width: 100%;" onclick="procuraHoras('<?= $value['dia']; ?>',0)"> <?= $value['dia']; ?> </a>
+                </div>
+
+            <?php
+
+            }
+        } else  
+        if ($_POST['tipoExibicao'] == 1) {
+
+            echo '<option>Clique aqui para Selecionar</option>';
+
+            foreach ($dataUnidade as $key => $value) {
+
+ 
+
+            ?>
+
+
+
+                <option id="procuraHoras('<?= $value['dia']; ?>')"> <?= $value['dia']; ?> </option>
 
 
         <?php
-
-        foreach ($dataUnidade as $key => $value) { ?>
-            <div class="small-6 cell large-3">
-                <a class="button success" style="width: 100%;" onclick="procuraHoras('<?= $value['dia']; ?>')"> <?= $value['dia']; ?> </a>
-            </div>
-
-        <?php
+            }
         }
 
         ?>
     </div><?php
-
-    
-
-
             exit();
         }
 
