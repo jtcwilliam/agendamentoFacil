@@ -2,7 +2,7 @@
     <div class=" auto cell  ">
     </div>
     <div class="small-12 cell large-6">
-        <img src="imgs/logoPrefeitura.png" style="width: 100%;" />
+         
     </div>
     <div class=" auto cell ">
     </div>

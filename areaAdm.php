@@ -121,7 +121,7 @@ $responsavelPessoa =   $_SESSION['usuarioLogado']['dados'][0]['idUnidade']
                 </fieldset>
 
             </div>
-            <img src="imgs/logoPrefeitura.png" />
+          
         </div>
 
     </div>
