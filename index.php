@@ -14,7 +14,7 @@ include_once 'includes/head.php';
     <div class="full reveal" id="modalSucesso" data-reveal style="background-color:#2C255B;">
         <div style="display: grid;  justify-content: center; align-content: center; height: 100vh; padding-top: 0px;">
             <center style="color: white;">
-                <h2>Ótimas Notícias!Seu Agendamento foi registrado com Sucesso</h2>
+                <h2>Ótimas Notícias! Seu Agendamento foi registrado com Sucesso</h2>
                 <h1 class="protocoloAgendamento"></h1>
                 <p class="lead"></p>
                 <h4 style="font-style: italic;"><b>Dica: </b>Anote o Número <span class='protocoloAgendamento'></span>, ou tire um print dessa tela e leve no dia do agendamento! Serve de protocolo para o atendimento! </h4>
@@ -84,20 +84,6 @@ include_once 'includes/head.php';
                         </div>
                     </div>
 
-                    <div class="grid-x grid-padding-x" id="agendamentosRealizadosAtivos">
-                        <div class="small-12 cell large-12">
-                            <fieldset class="fieldset">
-                                <Legend style="font-weight: 800;">Seus Agendamentos Ativos</Legend>
-
-                                <div class="grid-x grid-padding-x" id="exibirAgendamentosAntigos"></div>
-
-
-
-                        </div>
-                        </fieldset>
-                    </div>
-
-
 
                     <!-- aqui faz o agendamento -->
 
@@ -126,7 +112,7 @@ include_once 'includes/head.php';
                         <div class="small-12 cell large-12">
                             <label> Em qual Unidade você deseja ser atendido? </label>
 
-                            <select id="selectUnidade" onchange="datasNaUnidade(0,0)">
+                            <select id="selectUnidade" onchange=" $('.comboHorarios').html('<option value=\'0\'>Selecione o dia acima para ver os horários</option>')   ;datasNaUnidade(0,0)">
 
                             </select>
 
@@ -141,16 +127,17 @@ include_once 'includes/head.php';
                         <div class="small-12 medium-12  large-12 cell">
                             <label> Hora</label>
                             <select class="comboHorarios">
+                                <option value="0">Não Há horários para selecionar</option>
 
                             </select>
                         </div>
 
                         <div class="small-12 cell large-12">
-                            <label>   Escolha o tipo de Atendimento   </label>
-                                <select class="selectTipoAgendamento">
-                                    <option>PMG</option>
-                                </select>
-                         
+                            <label> Escolha o tipo de Atendimento </label>
+                            <select class="selectTipoAgendamento">
+                                <option>PMG</option>
+                            </select>
+
                         </div>
 
 
@@ -162,12 +149,35 @@ include_once 'includes/head.php';
                                 Concluir Agendamento
                             </a>
 
+                            <a class="button  " onclick="$('#agendamentosRealizadosAtivos').toggle()"
+                                style="width: 100%; background-color:rgb(58, 34, 3); color: white;">
+                                Exibir meus próximos agendamentos
+                            </a>
+
                         </div>
 
 
 
 
                     </div>
+
+
+
+
+                    <div class="grid-x grid-padding-x" id="agendamentosRealizadosAtivos">
+                        <div class="small-12 cell large-12">
+                            <fieldset class="fieldset">
+                                <Legend style="font-weight: 800;">Seus Agendamentos Ativos</Legend>
+
+                                <div class="grid-x grid-padding-x" id="exibirAgendamentosAntigos"></div>
+
+
+
+                        </div>
+                        </fieldset>
+                    </div>
+
+
 
 
                 </div>
@@ -205,6 +215,8 @@ include_once 'includes/head.php';
             $('#campoMensagemAgendamentosAtivos').hide();
 
             $('#agendamentosRealizadosAtivos').hide();
+
+
 
         })
 
@@ -330,49 +342,42 @@ include_once 'includes/head.php';
 
 
         function registrarAgendamento() {
+            var comboHorarios = $('.comboHorarios').val();
+            var selectUnidade = $('#selectUnidade').val();
 
-
-            var formData = {
-                registrarAgendamento: 1,
-                idUsuario: $('#txtIdUsuario').val(),
-                comboHorarios: $('.comboHorarios').val(),
-                selectUnidade: $('#selectUnidade').val(),
-                selectAgendamento: $('.selectTipoAgendamento').val(),
-                idStatus: '3'
-
-
-            };
-            var condicao;
-            $.ajax({
-                    type: 'POST',
-                    url: 'ajax/agendamentoController.php',
-                    data: formData,
-                    dataType: 'json',
-                    encode: true
-                })
-                .done(function(data) {
-
-
-                    if (data.retorno == true) {
-                        $('#formularioAgendamento').hide();
-                        $('#modalSucesso').foundation('open');
-                        $('.protocoloAgendamento').html('Seu Protocolo: ' + $('.comboHorarios')
-                            .val())
-
-                        /*
-                        window.setTimeout(() => {
-                            window.location =
-                                "https://portaleducacao.guarulhos.sp.gov.br/wp_site/facil/paginaInicial/#";
-                        }, 4600);
-                        */
-
-                        //https://portalfacil.guarulhos.sp.gov.br/paginaInicial/
-
-                    }
-
-
-                });
-            event.preventDefault();
+            if (selectUnidade != 0) {
+                if (comboHorarios != 0) {
+                    var formData = {
+                        registrarAgendamento: 1,
+                        idUsuario: $('#txtIdUsuario').val(),
+                        comboHorarios: comboHorarios,
+                        selectUnidade: selectUnidade,
+                        selectAgendamento: $('.selectTipoAgendamento').val(),
+                        idStatus: '3'
+                    };
+                    var condicao;
+                    $.ajax({
+                            type: 'POST',
+                            url: 'ajax/agendamentoController.php',
+                            data: formData,
+                            dataType: 'json',
+                            encode: true
+                        })
+                        .done(function(data) {
+                            if (data.retorno == true) {
+                                $('#formularioAgendamento').hide();
+                                $('#modalSucesso').foundation('open');
+                                $('.protocoloAgendamento').html('Seu Protocolo: ' + $('.comboHorarios')
+                                    .val())
+                            }
+                        });
+                    event.preventDefault();
+                } else {
+                    alert("Você deve selecionar um horário para seu atendimento");
+                }
+            } else {
+                alert("Você deve selecionar uma unidade para seu atendimento");
+            }
         }
 
         comboTipoAgendamento();
@@ -380,7 +385,14 @@ include_once 'includes/head.php';
 
 
 
+        /*
+                           window.setTimeout(() => {
+                               window.location =
+                                   "https://portaleducacao.guarulhos.sp.gov.br/wp_site/facil/paginaInicial/#";
+                           }, 4600);
+                           */
 
+        //https://portalfacil.guarulhos.sp.gov.br/paginaInicial/
 
 
         //retorno das datas disponiveis da unidade

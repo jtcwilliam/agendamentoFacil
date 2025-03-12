@@ -50,8 +50,12 @@ if (isset($_POST['datasDaUnidade'])) {
             if ($dataUnidade['retorno'] == 0) { ?>
 
                 <div class="small-6 cell large-12">
-                    <a class="button " style="width: 100%; border-radius: 10px; background-color: red; color: while; font-weight: bold;"  >  Não Há datas disponíveis para agendamento</a>
+                    <a class="button " style="width: 100%; border-radius: 10px; background-color: red; color: while; font-weight: bold;">
+                        Não Há datas disponíveis para agendamento</a>
                 </div>
+                <script>
+                   $('.comboHorarios').html('<option>Não Há horários</option')
+                </script>
 
                 <?php
 
@@ -62,7 +66,7 @@ if (isset($_POST['datasDaUnidade'])) {
 
                 ?>
                     <div class="small-6 cell large-3">
-                        <a class="button " style="width: 100%; border-radius: 10px;" onclick="procuraHoras('<?= $value['dia']; ?>',0)"> <?= $value['dia']; ?> </a>
+                        <a class="button " style="width: 100%; border-radius: 10px;" onclick="$('.comboHorarios').html('<option>Aguarde por favor</option>')    ;procuraHoras('<?= $value['dia']; ?>',0)"> <?= $value['dia']; ?> </a>
                     </div>
 
                 <?php

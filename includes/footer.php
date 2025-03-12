@@ -10,6 +10,7 @@
 </div>
 
 <script>
+   
     $(function() {
         $(".datepicker").datepicker({
             showOn: "focus",
@@ -197,7 +198,7 @@
          
 
 
-                $('#selectUnidade').html('<option>Selecione uma Unidade</option>'+ data);
+                $('#selectUnidade').html('<option value="0">Selecione uma Unidade</option>'+ data);
 
             });
 
@@ -250,7 +251,7 @@
 
 
                 //aqui muda as datas
-                if (data.qtdeAgendamentos >= 10) {
+                if (data.qtdeAgendamentos >= 2) {
                     $('#formularioAgendamento').hide();
                     $('#campoMensagemAgendamentosAtivos').show();
 
