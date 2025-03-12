@@ -49,19 +49,19 @@ class DatasAgendamento
             $pdo = new PDO($this->getDns(), $this->getUser(), $this->getPwd(), array(
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
                 PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"
-              ));
-            
+            ));
+
             $stmt = $pdo->prepare("SELECT * FROM agendamento WHERE dia=:diaAgendamento      and idStatus in (0 ,6, 3)   order by hora asc ");
             $stmt->execute(array('diaAgendamento' => $data));
-    
+
             $user = $stmt->fetchAll();
- 
+
             return $user;
         } catch (PDOException $e) {
             echo 'Error: ' . $e->getMessage();
         }
     }
- 
+
     public function  verificarDatasNaUnidade($idUnidade)
     {
         try {
@@ -69,14 +69,17 @@ class DatasAgendamento
             $pdo = new PDO($this->getDns(), $this->getUser(), $this->getPwd(), array(
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
                 PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"
-              ));
+            ));
             $stmt = $pdo->prepare("SELECT dia,   idunidade  FROM agendamento where idunidade = :idunidade and idPessoa is null  group by (dia) ");
             $stmt->execute(array('idunidade' => $idUnidade));
             $datasDisponiveis = $stmt->fetchAll();
 
-        
-
-            return $datasDisponiveis;
+            if (empty($datasDisponiveis)) {
+                return array('retorno' => '0');
+            } else {
+                $datasDisponiveis['retorno'] = '1';
+                return $datasDisponiveis;
+            }
         } catch (PDOException $e) {
             echo 'Error: ' . $e->getMessage();
         }
@@ -91,19 +94,19 @@ class DatasAgendamento
             $pdo = new PDO($this->getDns(), $this->getUser(), $this->getPwd(), array(
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
                 PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"
-              ));
-            
+            ));
+
             $stmt = $pdo->prepare("SELECT * FROM agendamento WHERE dia=:diaAgendamento      and idStatus in (0 ,6, 3)   order by hora asc ");
             $stmt->execute(array('diaAgendamento' => $data));
-    
+
             $user = $stmt->fetchAll();
- 
+
             return $user;
         } catch (PDOException $e) {
             echo 'Error: ' . $e->getMessage();
         }
     }
- 
+
     //consultas da area administrativa
     public function  verificarDatasNaUnidadeADM($idUnidade)
     {
@@ -112,12 +115,12 @@ class DatasAgendamento
             $pdo = new PDO($this->getDns(), $this->getUser(), $this->getPwd(), array(
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
                 PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"
-              ));
+            ));
             $stmt = $pdo->prepare("SELECT dia,   idunidade  FROM agendamento where idunidade = :idunidade   group by (dia) ");
             $stmt->execute(array('idunidade' => $idUnidade));
             $datasDisponiveis = $stmt->fetchAll();
 
-        
+
 
             return $datasDisponiveis;
         } catch (PDOException $e) {

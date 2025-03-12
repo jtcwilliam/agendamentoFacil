@@ -15,9 +15,9 @@ include_once 'includes/head.php';
         <div style="display: grid;  justify-content: center; align-content: center; height: 100vh; padding-top: 0px;">
             <center style="color: white;">
                 <h2>Ótimas Notícias!Seu Agendamento foi registrado com Sucesso</h2>
-                <h1 id="protocoloAgendamento"></h1>
+                <h1 class="protocoloAgendamento"></h1>
                 <p class="lead"></p>
-                <h4 style="font-style: italic;"><b>Dica: </b> Tira um print dessa tela e leva no dia do agendamento! Serve de protocolo para o atendimento! </h4>
+                <h4 style="font-style: italic;"><b>Dica: </b>Anote o Número <span class='protocoloAgendamento'></span>, ou tire um print dessa tela e leve no dia do agendamento! Serve de protocolo para o atendimento! </h4>
                 <img src="imgs/logoGoverno-1024x240.jpg" style="width: 60%; padding-top: 10em;" :) />
             </center>
 
@@ -104,34 +104,32 @@ include_once 'includes/head.php';
                     <div class="grid-x grid-padding-x" id="formularioAgendamento">
                         <div class="small-12 cell large-12">
                             <br>
-                            <label>
-                                CPF
-                                <input type="text" name="txtCPF" id="txtCPF" readonly />
-                            </label>
+                            <label class="labels"> CPF</label>
+                            <input type="text" name="txtCPF" id="txtCPF" readonly />
+
                         </div>
 
                         <div class="small-12 cell large-12" style="display: none;">
                             <br>
-                            <label>
-                                idUsuario
-                                <input type="text" name="txtIdUsuario" id="txtIdUsuario" readonly />
-                            </label>
+                            <label>idUsuario</label>
+                            <input type="text" name="txtIdUsuario" id="txtIdUsuario" readonly />
+
                         </div>
 
                         <div class="small-12 cell large-12">
-                            <label>
-                                Nome
-                                <input type="text" name="txtNome" id="txtNome" value="" readonly />
-                            </label>
+                            <label> Nome </label>
+
+                            <input type="text" name="txtNome" id="txtNome" value="" readonly />
+
                         </div>
 
                         <div class="small-12 cell large-12">
-                            <label>
-                                Escolha a Unidade para Atendimento
-                                <select id="selectUnidade" onchange="datasNaUnidade(0,0)">
+                            <label> Em qual Unidade você deseja ser atendido? </label>
 
-                                </select>
-                            </label>
+                            <select id="selectUnidade" onchange="datasNaUnidade(0,0)">
+
+                            </select>
+
                         </div>
                         <div class="small-12 cell large-12" id="aparecerDatas">
 
@@ -141,19 +139,18 @@ include_once 'includes/head.php';
 
 
                         <div class="small-12 medium-12  large-12 cell">
-                            Hora
+                            <label> Hora</label>
                             <select class="comboHorarios">
 
                             </select>
                         </div>
 
                         <div class="small-12 cell large-12">
-                            <label>
-                                Escolha o tipo de Atendimento
+                            <label>   Escolha o tipo de Atendimento   </label>
                                 <select class="selectTipoAgendamento">
                                     <option>PMG</option>
                                 </select>
-                            </label>
+                         
                         </div>
 
 
@@ -212,7 +209,7 @@ include_once 'includes/head.php';
         })
 
 
-     
+
 
         function mudarMascara(cpf) {
 
@@ -359,7 +356,7 @@ include_once 'includes/head.php';
                     if (data.retorno == true) {
                         $('#formularioAgendamento').hide();
                         $('#modalSucesso').foundation('open');
-                        $('#protocoloAgendamento').html('Seu Protocolo: ' + $('.comboHorarios')
+                        $('.protocoloAgendamento').html('Seu Protocolo: ' + $('.comboHorarios')
                             .val())
 
                         /*

@@ -29,11 +29,14 @@ if (isset($_POST['unidadesComum'])) {
 if (isset($_POST['datasDaUnidade'])) {
 
 
-    if ($_POST['tipoExibicao'] == 0) {
+
+    $tipoExibicao = $_POST['tipoExibicao'];
+
+    if ($tipoExibicao == '0') {
         $dataUnidade = $objDatasAgendamento->verificarDatasNaUnidade($_POST['idUnidade']);
-    }else  if ($_POST['tipoExibicao'] == 1) {
+    } else  if ($tipoExibicao == 1) {
         $dataUnidade = $objDatasAgendamento->verificarDatasNaUnidadeADM($_POST['idUnidade']);
-    } 
+    }
 
 
 
@@ -42,15 +45,29 @@ if (isset($_POST['datasDaUnidade'])) {
         <?php
 
         if ($_POST['tipoExibicao'] == 0) {
-            foreach ($dataUnidade as $key => $value) {
 
-        ?>
-                <div class="small-6 cell large-3">
-                    <a class="button success" style="width: 100%;" onclick="procuraHoras('<?= $value['dia']; ?>',0)"> <?= $value['dia']; ?> </a>
+
+            if ($dataUnidade['retorno'] == 0) { ?>
+
+                <div class="small-6 cell large-12">
+                    <a class="button " style="width: 100%; border-radius: 10px; background-color: red; color: while; font-weight: bold;"  >  Não Há datas disponíveis para agendamento</a>
                 </div>
 
-            <?php
+                <?php
 
+            } else {
+                echo '<div class="small-6 cell large-12"><label><b>Selecione a Data do seu agendamento</b></label></div>';
+                foreach ($dataUnidade as $key => $value) {
+
+
+                ?>
+                    <div class="small-6 cell large-3">
+                        <a class="button " style="width: 100%; border-radius: 10px;" onclick="procuraHoras('<?= $value['dia']; ?>',0)"> <?= $value['dia']; ?> </a>
+                    </div>
+
+                <?php
+
+                }
             }
         } else  
         if ($_POST['tipoExibicao'] == 1) {
@@ -59,9 +76,9 @@ if (isset($_POST['datasDaUnidade'])) {
 
             foreach ($dataUnidade as $key => $value) {
 
- 
 
-            ?>
+
+                ?>
 
 
 

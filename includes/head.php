@@ -19,7 +19,12 @@
         body {
 
             background-color:rgb(231, 228, 220);
+            
         }
+        label{
+            font-weight: 700;
+        }
+
     </style>
 
 

@@ -73,7 +73,7 @@
 
                 // <label>Selecione a data de seu agendamento
                 if (tipoExibicao == 0) {
-                    $('#aparecerDatas').html(' <label>Selecione a data de seu agendamento' + data + "</label>");
+                    $('#aparecerDatas').html(data);
                 } else if (tipoExibicao == 1) {
                     $('#aparecerDatas').html(data);
 
@@ -81,9 +81,6 @@
 
             });
     }
-
-
-
 
     function datasNaUnidadeAdm(tipoExibicao, idUnidade) {
         $('#aparecerDatas').html('<h4>Estamos consultando pra você</h4>');
@@ -122,8 +119,6 @@
 
             });
     }
-
-
 
     function validaCPF(strCPF) {
         var Soma;
@@ -202,7 +197,7 @@
          
 
 
-                $('#selectUnidade').html(data);
+                $('#selectUnidade').html('<option>Selecione uma Unidade</option>'+ data);
 
             });
 
@@ -255,7 +250,7 @@
 
 
                 //aqui muda as datas
-                if (data.qtdeAgendamentos >= 2) {
+                if (data.qtdeAgendamentos >= 10) {
                     $('#formularioAgendamento').hide();
                     $('#campoMensagemAgendamentosAtivos').show();
 

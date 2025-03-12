@@ -20,7 +20,7 @@ if (isset($_POST['verificarAgendamentosAtivos'])) {
     $agendamentosAntigos = '';
 
     foreach ($agendamentos as $key => $value) {
-        $agendamentosAntigos .=  "<div class='small-12 cell large-12'> <label> <b>Protocolo: </b>" . $value['idAgendamento'] . "<br> <b> Dia e Hora: </b>" . $value['dia'] . "  às " . $value['hora'] . "h00 no <b>" . $value['nomeUnidade'] . "</b></label>   <hr> </div> ";
+        $agendamentosAntigos .=  "<div class='small-12 cell large-12'> <div> <b>Protocolo: </b>" . $value['idAgendamento'] . "<br> <b> Dia e Hora: </b>" . $value['dia'] . "  às " . $value['hora'] . "h00 no <b>" . $value['nomeUnidade'] . "</b></div>   <hr> </div> ";
     }
 
     echo  json_encode(array('qtdeAgendamentos' => $qtdeAgendamentos, 'agendamentoAntigo' => $agendamentosAntigos, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT |  JSON_UNESCAPED_UNICODE));
