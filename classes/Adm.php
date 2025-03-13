@@ -48,25 +48,20 @@ class Adm
         try {
 
 
- 
+
             $pdo = new PDO($this->getDns(), $this->getUser(), $this->getPwd());
 
             //$pdo = new PDO("mysql:host='" . $host . "' ;dbname='" . $db . "', '" . $user, $password);
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-
-
-            $sql = ('INSERT INTO   agendamento  ( dia ,  hora ,  idUnidade ,    idStatus ,  protocolo ,   idTipoAgendamento ) 
-                                                        VALUES(:dia, :hora, :idUnidade,  :idStatus, :protocolo, :idTipoAgendamento )');
+            $sql = ('INSERT INTO   agendamento  ( dia ,  hora ,  idUnidade ,    idStatus ,    idTipoAgendamento ) 
+                                                        VALUES(:dia, :hora, :idUnidade,  :idStatus,  :idTipoAgendamento )');
 
             $stmt = $pdo->prepare($sql);
-
-
 
             $qtdeElementos = sizeof($todos);
 
             $contador = 0;
-
 
             foreach ($todos as $key => $value) {
                 $stmt->bindValue(':dia', $value['data'], PDO::PARAM_STR);
@@ -74,7 +69,6 @@ class Adm
                 $stmt->bindValue(':idUnidade', $value['unidade'], PDO::PARAM_STR);
 
                 $stmt->bindValue(':idStatus', $value['status'], PDO::PARAM_STR);
-                $stmt->bindValue(':protocolo', $value['protocolo'], PDO::PARAM_STR);
                 $stmt->bindValue(':idTipoAgendamento', $value['agendamento'], PDO::PARAM_STR);
                 if ($stmt->execute()) {
                     $contador++;
@@ -84,11 +78,11 @@ class Adm
                 }
             }
             if ($contador == $qtdeElementos) {
-                echo $contador . '    ' . $qtdeElementos;
+              
                 return true;
             } else {
-                echo $contador . '    ' . $qtdeElementos;
-                echo 'não saiu';
+                // echo $contador . '    ' . $qtdeElementos;
+                return false;
             }
         } catch (PDOException $e) {
             echo 'Error: ' . $e->getMessage();
@@ -113,7 +107,7 @@ class Adm
 
 
 
-  
+
 
     /**
      * Get the value of dns

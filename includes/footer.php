@@ -86,7 +86,7 @@
     function datasNaUnidadeAdm(tipoExibicao, idUnidade) {
         $('#aparecerDatas').html('<h4>Estamos consultando pra você</h4>');
 
-        alert('sd');
+        
         if (idUnidade == 0) {
             var idUnidade = $('#selectUnidade').val()
         } else {

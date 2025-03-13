@@ -46,4 +46,6 @@ while ($i <= $qtdeMesas) {
 
 
 //aqui manda para a classe do banco inserir
-$objAdm->inserirAgendamento($envio);
+if ($objAdm->inserirAgendamento($envio) == true) {
+    echo json_encode(array('retorno' => true));
+}

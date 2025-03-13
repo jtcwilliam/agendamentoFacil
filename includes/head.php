@@ -24,6 +24,9 @@
         label{
             font-weight: 700;
         }
+        .fundoBotoesTopo{
+            background-color: #28536b;
+        }
 
     </style>
 

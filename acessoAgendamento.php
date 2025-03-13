@@ -59,11 +59,8 @@ include_once 'includes/verificadorADM.php';
                                 ?>
                                     <select id="selectUnidade" onchange="datasNaUnidade(1,0);" style="height: 2.8em;"> </select>
                                 <?php
-                                } else {
-                                    
-                                    //retira este trecho aqui
-                                    ?>
-                                
+                                } else { ?>
+
                                     <select id="selectUnidade" style="height: 2.8em;"> </select>
 
                                 <?php
@@ -97,7 +94,13 @@ include_once 'includes/verificadorADM.php';
                                 <input type="number" id="qtdeMesas" style="height: 2.8em;" />
                             </label>
                         </div>
- 
+
+                        <div class="small-12 large-2 cell">
+                            <label for="selectTipoAgendamento">Tipo Agendamento
+                                <select id="selectTipoAgendamento" class="selectTipoAgendamento" style="height: 2.8em;"> </select>
+                            </label>
+                        </div>
+
                         <div class="small-12 large-2 cell">
                             <label for="qtdeMesas">&nbsp;<br>
                                 <a class="success button" style="height: 3em; width: 100%; color: white; font-weight: bold;" onclick="preencherHorarios()">Cadastrar</a>
@@ -106,7 +109,25 @@ include_once 'includes/verificadorADM.php';
                     </div>
                 </fieldset>
 
-              
+                <fieldset class="fieldset">
+                    <legend>Administração das Senhas do dia</legend>
+
+                    <select id="aparecerDatas" onchange="procuraHoras($('#aparecerDatas').val(), 1 )">
+
+                    </select>
+
+                    <div class="small-12 large-12 cell">
+
+                        <fieldset class="fieldset">
+                            <legend>Senhas</legend>
+
+                            <div class="comboHorarios">
+
+                            </div>
+                        </fieldset>
+                    </div>
+
+                </fieldset>
 
             </div>
 
@@ -138,21 +159,18 @@ include_once 'includes/verificadorADM.php';
                 ultimoHorario: $('#ultimoHorario').val(),
                 qtdeMesas: $('#qtdeMesas').val(),
                 selectUnidade: $('#selectUnidade').val(),
-                selectTipoAgendamento: '1'
+                selectTipoAgendamento: $('.selectTipoAgendamento').val()
             };
             var condicao;
             $.ajax({
                     type: 'POST',
                     url: 'ajax/horarioController.php',
                     data: formData,
-                    dataType: 'json',
+                    dataType: 'html',
                     encode: true
                 })
                 .done(function(data) {
-                 if(data.retorno == true)
-                 {
-                    alert('Horários Cadastrados com sucesso!');
-                 }
+                    console.log(data);
 
 
                 });
