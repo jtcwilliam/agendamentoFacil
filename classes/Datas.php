@@ -80,6 +80,8 @@ class DatasAgendamento
 
             $user = $stmt->fetchAll();
 
+            print_r($stmt);
+
             return $user;
         } catch (PDOException $e) {
             echo 'Error: ' . $e->getMessage();
