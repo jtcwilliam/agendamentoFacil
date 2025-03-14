@@ -18,8 +18,13 @@ include_once 'includes/verificadorADM.php';
 
 <body>
 
-    <div class="reveal" id="exampleModal1" data-reveal style="background-color:#2C255B;">
+    <div class="reveal" id="adm_das_datas" data-reveal style="background-color:ivory">
         <div style="display: grid;  justify-content: center; align-content: center;   padding-top: 0px;">
+            verificar testes
+
+            <div class="grid-x grid-padding-x" id="inforDatas">
+
+            </div>
 
         </div>
         <button class="close-button" data-close aria-label="Close modal" type="button">
@@ -35,11 +40,11 @@ include_once 'includes/verificadorADM.php';
     ////
     include_once 'includes/linksAdm.php';
 
-?>
+    ?>
 
     <div class="grid-container">
         <div class="grid-x grid-padding-x">
- 
+
 
 
             <div class="small-12 large-12 cell">
@@ -49,64 +54,76 @@ include_once 'includes/verificadorADM.php';
 
 
 
+
+                <!-- liberação de datas para agendamento -->
                 <fieldset class="fieldset">
-                    <legend>Ola <b><?php echo $_SESSION['usuarioLogado']['dados'][0]['nome']   ?> </b></legend>
-                    <div class="grid-x grid-padding-x">
-                        <div class="small-12 large-4 cell">
-                            <label for="selectUnidade"> Unidade
-                                <?php
-                                if ($dadoTipoPessoa == 4) {
-                                ?>
-                                    <select id="selectUnidade" onchange="datasNaUnidade(1,0);" style="height: 2.8em;"> </select>
-                                <?php
-                                } else {
-                                    
-                                    //retira este trecho aqui
-                                    ?>
-                                
-                                    <select id="selectUnidade" style="height: 2.8em;"> </select>
+                    <legend> <label>Criar Horários para Atendimento</label></legend>
 
-                                <?php
-                                }
-                                ?>
-                            </label>
-                        </div>
-                    </div>
+                    <form action="#">
+                        <div class="grid-x grid-padding-x">
 
-                    <div class="grid-x grid-padding-x">
-                        <div class="small-12 large-2 cell">
-                            <label for="dataAgendamento"> Data
-                                <input type="text" class="datepicker" id="dataAgendamento" style="height: 2.8em;" />
-                            </label>
-                        </div>
+                            <div class="small-12 large-2 cell">
+                                <label for="selectUnidade"> Unidade</label>
+                                <select id="selectUnidade" style="height: 2.8em;"> </select>
 
-                        <div class="small-12 large-2 cell">
-                            <label for="primeiroHorario"> Primeiro Horário
-                                <input type="number" class="" id="primeiroHorario" style="height: 2.8em;" />
-                            </label>
-                        </div>
+                            </div>
 
-                        <div class="small-12 large-2 cell">
-                            <label for="ultimoHorario">Ultimo Horário
-                                <input type="number" class="" id="ultimoHorario" style="height: 2.8em;" />
-                            </label>
-                        </div>
 
-                        <div class="small-12 large-2 cell">
-                            <label for="qtdeMesas">Quantas Mesas
-                                <input type="number" id="qtdeMesas" style="height: 2.8em;" />
-                            </label>
+                            <div class="small-12 large-2 cell">
+                                <label for="dataAgendamento"> Data
+                                    <input type="text" class="datepicker" id="dataAgendamento" style="height: 2.8em;" required />
+                                </label>
+                            </div>
+
+                            <div class="small-12 large-2 cell">
+                                <label for="primeiroHorario"> Primeiro Horário
+                                    <input type="number" class="" id="primeiroHorario" style="height: 2.8em;" required />
+                                </label>
+                            </div>
+
+                            <div class="small-12 large-2 cell">
+                                <label for="ultimoHorario">Ultimo Horário
+                                    <input type="number" class="" id="ultimoHorario" style="height: 2.8em;" required />
+                                </label>
+                            </div>
+
+                            <div class="small-12 large-2 cell">
+                                <label for="qtdeMesas">Quantas Mesas
+                                    <input type="number" id="qtdeMesas" style="height: 2.8em;" />
+                                </label>
+                            </div>
+
+                            <div class="small-12 large-2 cell">
+                                <label for="qtdeMesas">&nbsp;<br>
+                                    <input type="submit" class="button fundoBotoesTopo "
+                                        style="height: 3em; width: 100%; color: white; font-weight: bold;" id="enviarHorarios" onclick="preencherHorarios()" value="Cadastrar" />
+                                </label>
+                            </div>
+
                         </div>
- 
-                        <div class="small-12 large-2 cell">
-                            <label for="qtdeMesas">&nbsp;<br>
-                                <a class="success button" style="height: 3em; width: 100%; color: white; font-weight: bold;" onclick="preencherHorarios()">Cadastrar</a>
-                            </label>
-                        </div>
-                    </div>
+                    </form>
                 </fieldset>
 
-              
+
+
+
+                <!-- todas as datas do agendamento disponível -->
+                <fieldset class="fieldset">
+                    <legend> <label>Analítico das Agendas</label></legend>
+
+                    <form action="#">
+                        <div class="grid-x grid-padding-x" id="analiseAgendas">
+
+
+
+
+
+                        </div>
+                    </form>
+                </fieldset>
+
+
+
 
             </div>
 
@@ -124,12 +141,31 @@ include_once 'includes/verificadorADM.php';
             comboUnidades();
             comboTipoAgendamento();
             datasNaUnidadeAdm(1, <?= $responsavelPessoa ?>);
+
+            listasDataUnidadeADM(<?= $_SESSION['usuarioLogado']['dados']['0']['idUnidade']   ?>)
         })
 
 
 
         //parte para preencher os horários
         function preencherHorarios() {
+
+            $('#enviarHorarios').prop('disabled', true);
+
+            var horario = $('#ultimoHorario').val();
+
+            var dataAgendamento = $('#dataAgendamento').val();
+
+            var primeiroHorario = $('#primeiroHorario').val();
+
+            var qtdeMesas = $('#qtdeMesas').val();
+
+            if (horario.length == 0 || dataAgendamento.length == 0 || primeiroHorario.length == 0 || qtdeMesas.length == 0) {
+
+                alert("Por Favor, preencha todos os dados");
+
+                return false;
+            }
 
             var formData = {
                 inserirHorarios: 1,
@@ -149,13 +185,35 @@ include_once 'includes/verificadorADM.php';
                     encode: true
                 })
                 .done(function(data) {
-                 if(data.retorno == true)
-                 {
-                    alert('Horários Cadastrados com sucesso!');
-                 }
+                    console.log(data);
+                    if (data.retorno == true) {
+
+
+
+
+                        $('#ultimoHorario').val('');
+
+                        $('#dataAgendamento').val('');
+
+                        $('#primeiroHorario').val('');
+
+                        $('#qtdeMesas').val('');
+
+                        alert('Agendamentos Liberados para a data mencionada');
+
+
+                    } else {
+                        alert('Tente novamente em poucos minutos');
+                    }
+                    setTimeout(() => {
+                        $('#enviarHorarios').attr("disabled", false);
+                    }, 3600);
+
 
 
                 });
+
+
             event.preventDefault();
 
         }

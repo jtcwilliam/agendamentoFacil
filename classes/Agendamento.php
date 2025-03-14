@@ -48,23 +48,47 @@ class Agendamento
         $this->setPwd($objConectar->getPwd());
     }
 
-    public function  verificarAgendamentosAtivos($idPessoa, $idStatus)
+
+
+    public function  verificarAgendamentosUnidadeData($idUnidade, $datas)
     {
         try {
-
             $pdo = new PDO($this->getDns(), $this->getUser(), $this->getPwd(), array(
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
                 PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"
-              ));
-            $stmt = $pdo->prepare(" SELECT * from agendamento ag inner join pessoas ps on ps.idpessoas = ag.idpessoa inner join
-             unidade un on un.idUnidade = ag.idUnidade  where idpessoa = :idPessoa and ag.idStatus = :idStatus order by ag.dia asc  ");
-            $stmt->execute(array('idPessoa' => $idPessoa, 'idStatus' => $idStatus ));
-            $datasDisponiveis = $stmt->fetchAll();
+            ));
+            $stmt = $pdo->prepare(" SELECT  count(ag.idstatus) as qtde, ag.idstatus, st.descricaoStatus from agendamento  ag inner join status st on ag.idstatus = st.idstatus  
+            where   date_format(dia, '%d/%m/%Y')  = :diaAgendamento  and  idunidade = :idUnidade  and ag.idstatus in(7,3)  group by idstatus order by ag.idstatus asc  ");
 
+            $stmt->execute(array('idUnidade' => $idUnidade, ':diaAgendamento' => $datas));
+
+
+            $datasDisponiveis = $stmt->fetchAll();
  
 
-        
+            return $datasDisponiveis;
+        } catch (PDOException $e) {
+            echo 'Error: ' . $e->getMessage();
+        }
+    }
 
+
+
+
+
+
+
+    public function  verificarAgendamentosAtivos($idPessoa, $idStatus)
+    {
+        try {
+            $pdo = new PDO($this->getDns(), $this->getUser(), $this->getPwd(), array(
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"
+            ));
+            $stmt = $pdo->prepare(" SELECT *, date_format(dia, '%d/%m/%Y')   as dia from agendamento ag inner join pessoas ps on ps.idpessoas = ag.idpessoa inner join
+             unidade un on un.idUnidade = ag.idUnidade  where idpessoa = :idPessoa and ag.idStatus = :idStatus order by ag.dia asc  ");
+            $stmt->execute(array('idPessoa' => $idPessoa, 'idStatus' => $idStatus));
+            $datasDisponiveis = $stmt->fetchAll();
             return $datasDisponiveis;
         } catch (PDOException $e) {
             echo 'Error: ' . $e->getMessage();
@@ -96,7 +120,7 @@ class Agendamento
 
 
 
-            if($stmt->execute($data)){
+            if ($stmt->execute($data)) {
                 return true;
             }
         } catch (PDOException $e) {
@@ -271,7 +295,7 @@ class Agendamento
 
     /**
      * Get the value of idTipoAgendamento
-     */ 
+     */
     public function getIdTipoAgendamento()
     {
         return $this->idTipoAgendamento;
@@ -281,7 +305,7 @@ class Agendamento
      * Set the value of idTipoAgendamento
      *
      * @return  self
-     */ 
+     */
     public function setIdTipoAgendamento($idTipoAgendamento)
     {
         $this->idTipoAgendamento = $idTipoAgendamento;

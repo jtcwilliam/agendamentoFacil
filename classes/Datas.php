@@ -43,6 +43,29 @@ class DatasAgendamento
         $this->setPwd($objConectar->getPwd());
     }
 
+
+    public function  trazerHorariosAdmPorUnidade($data)
+    {
+        try {
+            $pdo = new PDO($this->getDns(), $this->getUser(), $this->getPwd(), array(
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"
+            ));
+
+            $stmt = $pdo->prepare("SELECT date_format(dia, '%d/%m/%Y')   as dia  FROM agendamento where idStatus in (7 ,6, 3) and idUnidade= :idUnidade group by dia  ");
+            $stmt->execute(array('idUnidade' => $data));
+
+             
+
+            $user = $stmt->fetchAll();
+
+            return $user;
+        } catch (PDOException $e) {
+            echo 'Error: ' . $e->getMessage();
+        }
+    }
+
+
     public function  trazerHorarios($data)
     {
         try {
@@ -51,7 +74,8 @@ class DatasAgendamento
                 PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"
             ));
 
-            $stmt = $pdo->prepare("SELECT * FROM agendamento WHERE dia=:diaAgendamento      and idStatus in (0 ,6, 3)   order by hora asc ");
+            $stmt = $pdo->prepare("SELECT *,  date_format(dia, '%d/%m/%Y')   as dia  FROM agendamento WHERE date_format(dia, '%d/%m/%Y') = :diaAgendamento    
+              and idStatus in (7 ,6, 3)   order by hora asc ");
             $stmt->execute(array('diaAgendamento' => $data));
 
             $user = $stmt->fetchAll();
@@ -70,7 +94,7 @@ class DatasAgendamento
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
                 PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"
             ));
-            $stmt = $pdo->prepare("SELECT dia,   idunidade  FROM agendamento where idunidade = :idunidade and idPessoa is null  group by (dia) ");
+            $stmt = $pdo->prepare("SELECT DATE_FORMAT(dia , '%d/%m/%Y') as dia,   idunidade  FROM agendamento where idunidade = :idunidade and idPessoa is null  group by (dia) ");
             $stmt->execute(array('idunidade' => $idUnidade));
             $datasDisponiveis = $stmt->fetchAll();
 

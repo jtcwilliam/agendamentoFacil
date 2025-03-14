@@ -43,7 +43,7 @@ if (isset($_POST['verificarHora'])) {
             <div class="small-12 large-12 cell">
                 <?php
 
-                if ($value['idStatus'] == 0) {
+                if ($value['idStatus'] == 7) {
                 ?>
                     <option value="<?= $value['idAgendamento'] ?>"><?php echo $value['dia'] .  ' às ' . $value['hora'] . 'h00'   ?></option>
                 <?php

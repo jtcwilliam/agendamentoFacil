@@ -64,7 +64,11 @@ class Adm
             $contador = 0;
 
             foreach ($todos as $key => $value) {
-                $stmt->bindValue(':dia', $value['data'], PDO::PARAM_STR);
+
+
+                $data = implode('-', array_reverse(explode('/', $value['data'])));
+
+                $stmt->bindValue(':dia', $data, PDO::PARAM_STR);
                 $stmt->bindValue(':hora', $value['hora'], PDO::PARAM_STR);
                 $stmt->bindValue(':idUnidade', $value['unidade'], PDO::PARAM_STR);
 
@@ -78,7 +82,7 @@ class Adm
                 }
             }
             if ($contador == $qtdeElementos) {
-              
+
                 return true;
             } else {
                 // echo $contador . '    ' . $qtdeElementos;

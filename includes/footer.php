@@ -2,7 +2,7 @@
     <div class=" auto cell  ">
     </div>
     <div class="small-12 cell large-6">
-         
+
     </div>
     <div class=" auto cell ">
     </div>
@@ -10,7 +10,6 @@
 </div>
 
 <script>
-   
     $(function() {
         $(".datepicker").datepicker({
             showOn: "focus",
@@ -39,7 +38,7 @@
                 encode: true
             })
             .done(function(data) {
-              
+
 
                 $('.comboHorarios').html(data);
             });
@@ -61,7 +60,7 @@
             idUnidade: idUnidade
 
         };
-        
+
         $.ajax({
                 type: 'POST',
                 url: 'ajax/unidadeController.php',
@@ -70,7 +69,7 @@
                 encode: true
             })
             .done(function(data) {
-                
+
 
                 // <label>Selecione a data de seu agendamento
                 if (tipoExibicao == 0) {
@@ -86,7 +85,7 @@
     function datasNaUnidadeAdm(tipoExibicao, idUnidade) {
         $('#aparecerDatas').html('<h4>Estamos consultando pra você</h4>');
 
-        
+
         if (idUnidade == 0) {
             var idUnidade = $('#selectUnidade').val()
         } else {
@@ -99,7 +98,7 @@
             idUnidade: idUnidade
 
         };
-        
+
         $.ajax({
                 type: 'POST',
                 url: 'ajax/unidadeController.php',
@@ -108,7 +107,7 @@
                 encode: true
             })
             .done(function(data) {
-                
+
 
                 // <label>Selecione a data de seu agendamento
                 if (tipoExibicao == 0) {
@@ -134,7 +133,7 @@
 
         strCPF = strCPF.replace('-', '');
 
-    
+
 
 
         if (strCPF == "00000000000") return false;
@@ -195,10 +194,10 @@
                 encode: true
             })
             .done(function(data) {
-         
 
 
-                $('#selectUnidade').html('<option value="0">Selecione uma Unidade</option>'+ data);
+
+                $('#selectUnidade').html('<option value="0">Selecione uma Unidade</option>' + data);
 
             });
 
@@ -219,7 +218,7 @@
                 encode: true
             })
             .done(function(data) {
-           
+
 
 
                 $('#selectUnidade').html(data);
@@ -267,7 +266,6 @@
     }
 
     function comboTipoAgendamento() {
-
         var formData = {
             tipo: 1
         };
@@ -280,13 +278,50 @@
                 encode: true
             })
             .done(function(data) {
-            
+
 
 
                 $('.selectTipoAgendamento').html(data);
 
             });
 
+    }
+
+    function listasDataUnidadeADM(unidadeUsuario) {
+        var formData = {
+            verificarDatasPorUnidade: 1,
+            unidadeUsuario: unidadeUsuario
+        };
+        $.ajax({
+                type: 'POST',
+                url: 'ajax/areaAdmController.php',
+                data: formData,
+                dataType: 'html',
+                encode: true
+            })
+            .done(function(data) {
+                console.log(data);
+                $('#analiseAgendas').html(data);
+            });
+    }
+
+    function verificarDatasUnidadeADM(unidadeUsuario, dataDaUnidade) {
+        var formData = {
+            datasUnidadesADM: 1,
+            unidadeUsuario: unidadeUsuario,
+            dataDaUnidade: dataDaUnidade
+        };
+        $.ajax({
+                type: 'POST',
+                url: 'ajax/areaAdmController.php',
+                data: formData,
+                dataType: 'html',
+                encode: true
+            })
+            .done(function(data) {
+                console.log(data);
+                $('#inforDatas').html(data);
+            });
     }
 </script>
 
