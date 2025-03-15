@@ -49,7 +49,7 @@
                 encode: true
             })
             .done(function(data) {
-
+                console.log(data);
 
                 $('.comboHorarios').html(data);
             });

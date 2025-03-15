@@ -358,7 +358,10 @@ include_once 'includes/head.php';
                                 $('#formularioAgendamento').hide();
                                 $('#modalSucesso').foundation('open');
                                 $('.protocoloAgendamento').html('Seu Protocolo: ' + $('.comboHorarios')
-                                    .val())
+                                    .val());
+                                agendamentosAtivos($('#txtIdUsuario').val());
+
+
                             }
                         });
                     event.preventDefault();
