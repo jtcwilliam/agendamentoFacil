@@ -35,21 +35,33 @@ if (isset($_POST['datasUnidadesADM'])) {
 
     $agendas = $objAgendamento->verificarAgendamentosUnidadeData($_POST['unidadeUsuario'], $_POST['dataDaUnidade']);
 
+    ?>
+    <div class="small-12 large-12 cell">
+        <label style="color: #555;">Síntese dos agendamentos do dia <span style="color: black; "><br> <?= $_POST['dataDaUnidade'] ?></span></label><br>
+    </div>
+
+
+
+    <?php
+
+
 
     foreach ($agendas as $key => $value) {
     ?>
         <div class="small-12 large-12 cell">
-            <?php
+            <?php echo '<label  style="color: #555;"> ' . $value['descricaoStatus'] . '<br> <span style="color: black"> ' . $value['qtde'] . '</label> <br>';  ?>
 
-
-            echo '<label> '.$value['descricaoStatus'] . ': </label> ' . $value['qtde'];
-
-
-
-
-            ?>
         </div>
+    <?php
+    } ?>
+
+    <div class="small-12 large-12 cell">
+        <a class="button " style="width: 100%;   "   href="analiticoDias.php?dataUnidade=<?= $_POST['dataDaUnidade']?>&idUnidade=<?=$_POST['unidadeUsuario']?> " > Gestão das Senhas do dia</a>
+
+    </div>
+
+
 <?php
-    }
+
     exit();
 }

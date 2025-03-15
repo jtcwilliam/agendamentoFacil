@@ -50,6 +50,57 @@ class Agendamento
 
 
 
+
+
+    //metodo que retorna os agendamentos de cada dia em 1 unidade (visivel para responsavel da unidade e o gestor da rede (super usuaario))
+    public function  verificarAgendamentoParaBaixaADM($dado)
+    {
+        try {
+            $pdo = new PDO($this->getDns(), $this->getUser(), $this->getPwd(), array(
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"
+            ));
+    
+            $stmt = $pdo->prepare(" SELECT  *,  date_format(dia, '%d/%m/%Y') as dia from agendamento ag left join pessoas ps on ps.idPessoas = ag.idPessoa left join unidade un on ag.idUnidade = un.idUnidade
+                                        where  ps.documentoPessoa = :docPessoa || idAgendamento = :docPessoa ");
+
+            $stmt->execute(array(':docPessoa' => $dado ));
+
+            $datasDisponiveis = $stmt->fetchAll();
+           
+
+            return $datasDisponiveis;
+        } catch (PDOException $e) {
+            echo 'Error: ' . $e->getMessage();
+        }
+    }
+
+    //metodo que retorna os agendamentos de cada dia em 1 unidade (visivel para responsavel da unidade e o gestor da rede (super usuaario))
+    public function  verificarTodosAgendamentosUnidadeAdmDeUnidade($idUnidade, $datas)
+    {
+        try {
+            $pdo = new PDO($this->getDns(), $this->getUser(), $this->getPwd(), array(
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"
+            ));
+            $stmt = $pdo->prepare(" SELECT  * from agendamento ag left join pessoas ps on ps.idPessoas = ag.idPessoa left join unidade un on ag.idUnidade = un.idUnidade
+                                    where date_format(dia, '%d/%m/%Y') =  :diaAgendamento  and ag.idUnidade = :idUnidade ");
+
+            $stmt->execute(array('idUnidade' => $idUnidade, ':diaAgendamento' => $datas));
+
+
+            $datasDisponiveis = $stmt->fetchAll();
+
+
+            return $datasDisponiveis;
+        } catch (PDOException $e) {
+            echo 'Error: ' . $e->getMessage();
+        }
+    }
+
+
+
+
     public function  verificarAgendamentosUnidadeData($idUnidade, $datas)
     {
         try {
@@ -64,7 +115,7 @@ class Agendamento
 
 
             $datasDisponiveis = $stmt->fetchAll();
- 
+
 
             return $datasDisponiveis;
         } catch (PDOException $e) {

@@ -20,7 +20,7 @@ include_once 'includes/verificadorADM.php';
 
     <div class="reveal" id="adm_das_datas" data-reveal style="background-color:ivory">
         <div style="display: grid;  justify-content: center; align-content: center;   padding-top: 0px;">
-            verificar testes
+            
 
             <div class="grid-x grid-padding-x" id="inforDatas">
 

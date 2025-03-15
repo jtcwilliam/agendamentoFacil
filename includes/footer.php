@@ -20,6 +20,17 @@
         });
     });
 
+    function mudarMascara(cpf) {
+
+
+        var tamanho = cpf.length;
+        if (tamanho >= 15) {
+            $('.cpf').mask('00.000.000/0000-00');
+        } else {
+            $('.cpf').mask('000.000.000-000');
+        }
+
+    }
 
     //carregar combo das unidades
     function procuraHoras(dia, tipoExibicao) {
