@@ -62,7 +62,7 @@ class Agendamento
             ));
     
             $stmt = $pdo->prepare(" SELECT  *,  date_format(dia, '%d/%m/%Y') as dia from agendamento ag left join pessoas ps on ps.idPessoas = ag.idPessoa left join unidade un on ag.idUnidade = un.idUnidade
-                                        where  ps.documentoPessoa = :docPessoa || idAgendamento = :docPessoa ");
+                                        where  ps.documentoPessoa = :docPessoa || idAgendamento = :docPessoa  order by  date_format(dia, '%d/%m/%Y') asc ");
 
             $stmt->execute(array(':docPessoa' => $dado ));
 

@@ -67,8 +67,8 @@ include_once 'includes/verificadorADM.php';
 
 
                             <div class="small-12 large-3 cell">
-                                <label for="dadosEntrada">Protocolo, CPF OU CNPJ
-                                    <input type="text" class="cpf" onkeydown="mudarMascara(this.value)" style="height: 2.8em;" value="306.911.807-80" />
+                                <label for="dadosEntrada">CPF OU CNPJ do Cidadão
+                                    <input type="text" class="cpf" onkeydown="mudarMascara(this.value)" style="height: 2.8em;" value="326.890.658-35" />
                                 </label>
                             </div>
 
