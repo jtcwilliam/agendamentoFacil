@@ -116,7 +116,7 @@ class Agendamento
                 PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"
             ));
             $stmt = $pdo->prepare(" SELECT  * from agendamento ag left join pessoas ps on ps.idPessoas = ag.idPessoa left join unidade un on ag.idUnidade = un.idUnidade
-                                    where date_format(dia, '%d/%m/%Y') =  :diaAgendamento  and ag.idUnidade = :idUnidade  and idStatus in(3,6,7)  ");
+                                    where date_format(dia, '%d/%m/%Y') =  :diaAgendamento  and ag.idUnidade = :idUnidade  and idStatus in(3,6,7, 8)  ");
 
             $stmt->execute(array('idUnidade' => $idUnidade, ':diaAgendamento' => $datas));
 

@@ -199,6 +199,7 @@ include_once 'includes/verificadorADM.php';
 
                         $('#qtdeMesas').val('');
 
+                        listasDataUnidadeADM(<?= $_SESSION['usuarioLogado']['dados']['0']['idUnidade']   ?>)
                         alert('Agendamentos Liberados para a data mencionada');
 
 

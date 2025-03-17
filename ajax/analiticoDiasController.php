@@ -13,7 +13,7 @@ $objAgendamento  = new Agendamento();
 // esse controle serve para trazer os agendamentos da pessoa digitada (cpf ou cnpj)
 if (isset($_POST['analiseDeDias_pesquisa'])) {
 
-    
+
 
     $dadosAgendamento = $objAgendamento->verificarAgendamentoParaBaixaADM_pesquisa($_POST['docPessoa'], $_POST['idAgendamento']);
 
@@ -264,6 +264,11 @@ if (isset($_POST['datasAnaliticoAdmSintetico'])) {
                 $texto = 'white';
                 break;
 
+            case '8':
+                $color = 'background-color:rgb(120, 3, 81);';
+                $texto = 'white';
+                break;
+
             default:
                 # code...
                 break;
@@ -272,7 +277,7 @@ if (isset($_POST['datasAnaliticoAdmSintetico'])) {
 
 
         <div class="   small-12 large-3 cell">
-            <a onclick="consultarDados_individual('<?= $value['documentoPessoa'] ?>',  '<?=$value['idAgendamento']  ?> ')" class="button" href="#" style="width: 100%; <?= $color ?>; text-align: left; color: <?= $texto ?>">
+            <a onclick="consultarDados_individual('<?= $value['documentoPessoa'] ?>',  '<?= $value['idAgendamento']  ?> ')" class="button" href="#" style="width: 100%; <?= $color ?>; text-align: left; color: <?= $texto ?>">
                 <?php echo  'Protocolo: ' . $value['idAgendamento']  ?><br><br>
                 <?php echo  'Hora: ' . $value['hora'] . 'h00'  ?><br><br>
                 <?php echo  'Documento: ' . $value['documentoPessoa']  ?>
