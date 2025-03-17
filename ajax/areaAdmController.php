@@ -56,7 +56,7 @@ if (isset($_POST['datasUnidadesADM'])) {
     } ?>
 
     <div class="small-12 large-12 cell">
-        <a class="button " style="width: 100%;   "   href="analiticoDias.php?dataUnidade=<?= $_POST['dataDaUnidade']?>&idUnidade=<?=$_POST['unidadeUsuario']?> " > Gestão das Senhas do dia</a>
+        <a class="button " style="width: 100%;   "   href="analiticoDias.php?dataUnidade='<?= $_POST['dataDaUnidade']?>'&idUnidade=<?=$_POST['unidadeUsuario']?> " > Gestão das Senhas do dia</a>
 
     </div>
 

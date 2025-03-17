@@ -11,6 +11,91 @@ $objAgendamento  = new Agendamento();
 
 
 // esse controle serve para trazer os agendamentos da pessoa digitada (cpf ou cnpj)
+if (isset($_POST['analiseDeDias_pesquisa'])) {
+
+    
+
+    $dadosAgendamento = $objAgendamento->verificarAgendamentoParaBaixaADM_pesquisa($_POST['docPessoa'], $_POST['idAgendamento']);
+
+    $diaDeHoje = date('d/m/Y');
+
+
+    $cor = '';
+    $mensagem = 'Não Atender!';
+
+    $tamanho = sizeof($dadosAgendamento);
+
+    if ($tamanho == 0) {
+?>
+
+        <div class="   large-12 cell">
+            <center>
+                <h5>Não há agendamentos para este documento</h5>
+            </center>
+        </div>
+
+
+    <?php
+
+    }
+
+    foreach ($dadosAgendamento as $key => $value) {
+
+
+
+        if ($diaDeHoje == $value['dia']) {
+            $cor = 'background-color:rgb(79, 212, 3)';
+            $corTexto = ' color: black;';
+            $mensagem = 'Atendimento Permitido';
+        } else {
+            $cor = 'background-color:rgb(179, 42, 0)';
+            $corTexto = ' color: white;';
+            $mensagem = 'Não Atender!';
+        }
+    ?>
+
+        <div class="   large-6 cell">
+            <div class="button" style="width: 100%; text-align: left; border-radius: 10px;  <?= $cor ?>  ;  <?= $corTexto ?>  ">
+                <p><b>Protocolo</b>: <?= $value['idAgendamento']   ?><br>
+                <h6><b>Nome</b>: <?= $value['nomePessoa']   ?><br></h6>
+
+                <h6><b>Hora</b>: <?= $value['hora'] . 'h00'   ?></h6>
+                <h6><b>Dia</b>: <?= $value['dia']   ?><br></h6>
+                <h6><b>Doc</b>: <?= $value['documentoPessoa'] ?></h6>
+
+                </p>
+            </div>
+
+
+            <div class="   large-6 cell">
+                <a class=" button" onclick="alterarStatusAgendamento(<?= $value['idAgendamento']   ?>, '4') " style=" background-color:rgb(179, 42, 0); width: 100%;">Cancelar Atendimento</a>
+
+                <a class=" button" onclick="alterarStatusAgendamento(<?= $value['idAgendamento']   ?>, '6') " style=" background-color:rgb(41, 77, 0); width: 100%;">Iniciar Atendimento</a>
+            </div>
+
+
+        </div>
+
+
+    <?php
+        # code...
+    }
+
+    exit();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+// esse controle serve para trazer os agendamentos da pessoa digitada (cpf ou cnpj)
 if (isset($_POST['analiseDeDias'])) {
 
     $dadosAgendamento = $objAgendamento->verificarAgendamentoParaBaixaADM($_POST['envioDados']);
@@ -21,43 +106,210 @@ if (isset($_POST['analiseDeDias'])) {
     $cor = '';
     $mensagem = 'Não Atender!';
 
+    $tamanho = sizeof($dadosAgendamento);
+
+    if ($tamanho == 0) {
+    ?>
+
+        <div class="   large-12 cell">
+            <center>
+                <h5>Não há agendamentos para este documento</h5>
+            </center>
+        </div>
+
+
+    <?php
+
+    }
 
     foreach ($dadosAgendamento as $key => $value) {
 
- 
+
 
         if ($diaDeHoje == $value['dia']) {
             $cor = 'background-color:rgb(79, 212, 3)';
+            $corTexto = ' color: black;';
             $mensagem = 'Atendimento Permitido';
         } else {
-            $cor = 'background-color:rgb(181, 182, 180)';
+            $cor = 'background-color:rgb(179, 42, 0)';
+            $corTexto = ' color: white;';
+            $mensagem = 'Não Atender!';
         }
-?>
+    ?>
 
         <div class="   large-6 cell">
-            <div class="button" style="width: 100%; text-align: left; border-radius: 10px;  <?=$cor?>  ; color: black; ">
+            <div class="button" style="width: 100%; text-align: left; border-radius: 10px;  <?= $cor ?>  ;  <?= $corTexto ?>  ">
                 <p><b>Protocolo</b>: <?= $value['idAgendamento']   ?><br>
-                    <b>Nome</b>: <?= $value['nomePessoa']   ?><br>
-                    <b>Dia</b>: <?= $value['dia']   ?><br>
-                    <b>Hora</b>: <?= $value['hora']   ?>
-                    <h6><b>Aviso: <?=  $mensagem  ?> </b></h6>
+                <h6><b>Nome</b>: <?= $value['nomePessoa']   ?><br></h6>
 
+                <h6><b>Hora</b>: <?= $value['hora'] . 'h00'   ?></h6>
+                <h6><b>Dia</b>: <?= $value['dia']   ?><br></h6>
+                <h6><b>Doc</b>: <?= $value['documentoPessoa'] ?></h6>
 
                 </p>
             </div>
 
 
             <div class="   large-6 cell">
-                <a class=" button" style=" background-color:rgb(4, 29, 46); width: 100%;">Cancelar Atendimento</a>
+                <a class=" button" onclick="alterarStatusAgendamento(<?= $value['idAgendamento']   ?>, '4') " style=" background-color:rgb(179, 42, 0); width: 100%;">Cancelar Atendimento</a>
 
-                <a class=" button" style=" background-color:rgb(41, 77, 0); width: 100%;">Iniciar Atendimento</a>
+                <a class=" button" onclick="alterarStatusAgendamento(<?= $value['idAgendamento']   ?>, '6') " style=" background-color:rgb(41, 77, 0); width: 100%;">Iniciar Atendimento</a>
             </div>
 
 
         </div>
 
 
-<?php
+    <?php
         # code...
     }
+
+    exit();
+}
+
+
+
+
+
+if (isset($_POST['datasAnaliticoAdmSintetico'])) {
+
+
+
+
+    $agendas = $objAgendamento->verificarTodosAgendamentosUnidadeAdmDeUnidade($_POST['unidadeUsuario'], $_POST['dataDaUnidade']);
+
+    $agendaDisponiveis = 0;
+    $agendasAtendidas = 0;
+    $agendadas = 0;
+
+    $totalizadores =  count($agendas);
+
+
+    foreach ($agendas as $key => $value) {
+
+        switch ($value['idStatus']) {
+            case '7':
+                $agendaDisponiveis++;
+                break;
+            case '6':
+                $agendasAtendidas++;
+                break;
+            case '3':
+                $agendadas++;
+                break;
+
+            default:
+                # code...
+                break;
+        }
+    }
+
+
+
+    ?>
+
+
+    <div class="small-12 large-12 cell">
+        <fieldset class="fieldset">
+            <legend>Números totais de agendamento</legend>
+            <div class="grid-x grid-padding-x">
+
+                <div class="small-12 large-3 cell">
+                    <a class="button" style="color: white; width: 100%; background-color:rgb(90, 42, 20)">Agendamentos do dia <br><?= $totalizadores ?> </a><br>
+                </div>
+
+                <div class="small-12 large-3 cell">
+                    <a class="button" style="color: #555; width: 100%; background-color:rgb(160, 208, 231)">Agendas Disponíveis<br><?= $agendaDisponiveis ?> </a><br>
+                </div>
+
+                <div class="small-12 large-3 cell">
+                    <a class="button" style="color: black; width: 100%;background-color:rgb(252, 202, 37); ">Aguardando Atendimento<br><?= $agendadas ?> </a><br>
+                </div>
+
+                <div class="small-12 large-3 cell">
+                    <a class="button" style="color: white; width: 100%; background-color:rgb(60, 133, 0);">Atendidos<br><?= $agendasAtendidas ?> </a><br>
+                </div>
+
+            </div>
+        </fieldset>
+    </div>
+    <div class="   small-12 large- cell">
+        <br>
+        <label>Agendas disponibilizadas </label>
+
+    </div>
+
+
+    <?php
+
+    $color = '';
+
+
+
+
+    foreach ($agendas as $key => $value) {
+        switch ($value['idStatus']) {
+            case '7':
+                $color = 'background-color:rgb(160, 208, 231);';
+                $texto = 'white';
+                break;
+
+            case '3':
+                $color = 'background-color:rgb(252, 202, 37)';
+                $texto = 'black';
+                break;
+
+            case '6':
+                $color = 'background-color:rgb(60, 133, 0);';
+                $texto = 'white';
+                break;
+
+            default:
+                # code...
+                break;
+        }
+    ?>
+
+
+        <div class="   small-12 large-3 cell">
+            <a onclick="consultarDados_individual('<?= $value['documentoPessoa'] ?>',  '<?=$value['idAgendamento']  ?> ')" class="button" href="#" style="width: 100%; <?= $color ?>; text-align: left; color: <?= $texto ?>">
+                <?php echo  'Protocolo: ' . $value['idAgendamento']  ?><br><br>
+                <?php echo  'Hora: ' . $value['hora'] . 'h00'  ?><br><br>
+                <?php echo  'Documento: ' . $value['documentoPessoa']  ?>
+            </a>
+
+
+
+        </div>
+    <?php
+    } ?>
+
+
+
+
+<?php
+
+    exit();
+}
+
+
+
+
+if (isset($_POST['alterarStatusAgendamento'])) {
+
+
+    $objAgendamento->setIdAgendamento($_POST['idAgendamento']);
+    $objAgendamento->setIdStatus($_POST['idAcao']);
+
+
+
+    if ($objAgendamento->mudarStatusoAgendamentoPeloAdm() == true) {
+        echo json_encode(array('retorno' => true));
+    }
+
+
+
+
+
+    exit();
 }

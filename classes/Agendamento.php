@@ -27,6 +27,8 @@ class Agendamento
         //criar uma instancia de conexao;
         $objConectar = new Conexao();
 
+        setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
+        date_default_timezone_set('America/Sao_Paulo');
 
 
         //  $dsn = 'mysql:dbname=dbagenddev;host=dbagenddev.mysql.dbaas.com.br';
@@ -52,6 +54,34 @@ class Agendamento
 
 
 
+
+    //metodo que retorna o agendamento da pessoa a partir do clique dela no agendamento clicado
+    public function  verificarAgendamentoParaBaixaADM_pesquisa($docPessoa, $idAgendamento)
+    {
+        try {
+            $pdo = new PDO($this->getDns(), $this->getUser(), $this->getPwd(), array(
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"
+            ));
+
+            $stmt = $pdo->prepare(" SELECT  *,  date_format(dia, '%d/%m/%Y') as dia from agendamento ag left join pessoas ps on ps.idPessoas = ag.idPessoa left join unidade un on ag.idUnidade = un.idUnidade
+                                     where   ps.documentoPessoa = :docPessoa  and ag.idAgendamento=:idAgendamento          and idstatus in(3)  order by  date_format(dia, '%d/%m/%Y') asc ");
+
+            $stmt->execute(array(':docPessoa' => $docPessoa, ':idAgendamento' => $idAgendamento ));
+
+
+
+            $datasDisponiveis = $stmt->fetchAll();
+
+
+            return $datasDisponiveis;
+        } catch (PDOException $e) {
+            echo 'Error: ' . $e->getMessage();
+        }
+    }
+
+
+
     //metodo que retorna os agendamentos de cada dia em 1 unidade (visivel para responsavel da unidade e o gestor da rede (super usuaario))
     public function  verificarAgendamentoParaBaixaADM($dado)
     {
@@ -60,14 +90,16 @@ class Agendamento
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
                 PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"
             ));
-    
-            $stmt = $pdo->prepare(" SELECT  *,  date_format(dia, '%d/%m/%Y') as dia from agendamento ag left join pessoas ps on ps.idPessoas = ag.idPessoa left join unidade un on ag.idUnidade = un.idUnidade
-                                        where  ps.documentoPessoa = :docPessoa || idAgendamento = :docPessoa  order by  date_format(dia, '%d/%m/%Y') asc ");
 
-            $stmt->execute(array(':docPessoa' => $dado ));
+            $stmt = $pdo->prepare(" SELECT  *,  date_format(dia, '%d/%m/%Y') as dia from agendamento ag left join pessoas ps on ps.idPessoas = ag.idPessoa left join unidade un on ag.idUnidade = un.idUnidade
+                                        where  ( ps.documentoPessoa = :docPessoa || idAgendamento = :docPessoa )   and idstatus in(3)  order by  date_format(dia, '%d/%m/%Y') asc ");
+
+            $stmt->execute(array(':docPessoa' => $dado));
+
+
 
             $datasDisponiveis = $stmt->fetchAll();
-           
+
 
             return $datasDisponiveis;
         } catch (PDOException $e) {
@@ -84,7 +116,7 @@ class Agendamento
                 PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"
             ));
             $stmt = $pdo->prepare(" SELECT  * from agendamento ag left join pessoas ps on ps.idPessoas = ag.idPessoa left join unidade un on ag.idUnidade = un.idUnidade
-                                    where date_format(dia, '%d/%m/%Y') =  :diaAgendamento  and ag.idUnidade = :idUnidade ");
+                                    where date_format(dia, '%d/%m/%Y') =  :diaAgendamento  and ag.idUnidade = :idUnidade  and idStatus in(3,6,7)  ");
 
             $stmt->execute(array('idUnidade' => $idUnidade, ':diaAgendamento' => $datas));
 
@@ -178,6 +210,39 @@ class Agendamento
             echo 'Error: ' . $e->getMessage();
         }
     }
+
+    public function  mudarStatusoAgendamentoPeloAdm()
+    {
+        try {
+
+            $pdo = new PDO($this->getDns(), $this->getUser(), $this->getPwd());
+
+            //$pdo = new PDO("mysql:host='" . $host . "' ;dbname='" . $db . "', '" . $user, $password);
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+            $sql = "UPDATE agendamento SET  idStatus = :idStatus     where idAgendamento= :idAgendamento  ";
+
+
+            $data = [
+
+                ':idStatus' =>       $this->getIdStatus(),
+                ':idAgendamento' =>  $this->getIdAgendamento(),
+
+
+            ];
+
+            $stmt = $pdo->prepare($sql);
+
+
+
+            if ($stmt->execute($data)) {
+                return true;
+            }
+        } catch (PDOException $e) {
+            echo 'Error: ' . $e->getMessage();
+        }
+    }
+
 
 
 

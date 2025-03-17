@@ -2,7 +2,7 @@
 <html class="no-js" lang="en" dir="ltr">
 
 <?php
-
+ 
 
 include_once 'includes/head.php';
 

@@ -334,6 +334,30 @@
                 $('#inforDatas').html(data);
             });
     }
+
+
+
+    function verificarDatasAnaliticosDaUnidade(unidadeUsuario, dataDaUnidade) {
+
+        //funciona melhor para o arquivo analitico dias
+       
+        var formData = {
+            datasAnaliticoAdmSintetico: 1,
+            unidadeUsuario: unidadeUsuario,
+            dataDaUnidade: dataDaUnidade
+        };
+        $.ajax({
+                type: 'POST',
+                url: 'ajax/analiticoDiasController.php',
+                data: formData,
+                dataType: 'html',
+                encode: true
+            })
+            .done(function(data) {
+                
+                $('#analiseAgendas').html(data);
+            });
+    }
 </script>
 
 

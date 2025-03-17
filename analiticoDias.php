@@ -2,7 +2,8 @@
 <html class="no-js" lang="en" dir="ltr">
 
 <?php
-
+setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
+date_default_timezone_set('America/Sao_Paulo');
 include_once 'includes/head.php';
 
 session_start();
@@ -23,7 +24,7 @@ include_once 'includes/verificadorADM.php';
 
 
             <div class="grid-x grid-padding-x" id="inforDatas">
-
+                asd
             </div>
 
         </div>
@@ -57,7 +58,7 @@ include_once 'includes/verificadorADM.php';
 
                 <!-- liberação de datas para agendamento -->
                 <fieldset class="fieldset">
-                    <legend> <label>Criar Horários para Atendimento</label></legend>
+                    <legend> <label>Registrar Atendimento ao cidadão</label></legend>
 
                     <form action="#">
                         <div class="grid-x grid-padding-x">
@@ -68,7 +69,7 @@ include_once 'includes/verificadorADM.php';
 
                             <div class="small-12 large-3 cell">
                                 <label for="dadosEntrada">CPF OU CNPJ do Cidadão
-                                    <input type="text" class="cpf" onkeydown="mudarMascara(this.value)" style="height: 2.8em;" value="326.890.658-35" />
+                                    <input type="text" class="cpf" onkeydown="mudarMascara(this.value)" style="height: 2.8em;" placeholder="Digite o CPF ou CNPJ" />
                                 </label>
                             </div>
 
@@ -76,7 +77,7 @@ include_once 'includes/verificadorADM.php';
                                 <label for="qtdeMesas">&nbsp;<br>
                                     <input type="submit" class="button fundoBotoesTopo "
                                         style="height: 3em; width: 100%; color: white; font-weight: bold;"
-                                        id="enviarHorarios" onclick="consultarDados($('.cpf').val())" value="Cadastrar" />
+                                        id="enviarHorarios" onclick="consultarDados($('.cpf').val())" value="Consultar" />
                                 </label>
                             </div>
 
@@ -96,9 +97,12 @@ include_once 'includes/verificadorADM.php';
                 </fieldset>
                 <!-- todas as datas do agendamento disponível -->
                 <fieldset class="fieldset">
-                    <legend> <label>Analítico das Agendas</label></legend>
+                    <legend> <label>Agendamentos do dia <?php $dia = str_replace('\'', '', $_GET['dataUnidade']);
+                                                        echo $dia; ?></label></legend>
 
                     <form action="#">
+
+
                         <div class="grid-x grid-padding-x" id="analiseAgendas">
 
                         </div>
@@ -117,20 +121,16 @@ include_once 'includes/verificadorADM.php';
     ?>
     <script>
         $(document).ready(function() {
-            comboUnidades();
-            comboTipoAgendamento();
-            datasNaUnidadeAdm(1, <?= $responsavelPessoa ?>);
 
-            listasDataUnidadeADM(<?= $_SESSION['usuarioLogado']['dados']['0']['idUnidade']   ?>)
+
+            
+            verificarDatasAnaliticosDaUnidade(<?= $_GET['idUnidade']  ?>, <?= $_GET['dataUnidade']  ?>)
         })
 
 
 
-        //parte para preencher os horários
+        //função que o agendamento do usuario pesquisado por cpf ou cnpj
         function consultarDados(pesquisa) {
-
-
-
             var formData = {
                 analiseDeDias: 1,
                 envioDados: pesquisa,
@@ -146,10 +146,67 @@ include_once 'includes/verificadorADM.php';
                     encode: true
                 })
                 .done(function(data) {
-                    console.log(data);
+                    $('#agendamentosAtivosNoDia').html(data);
+                });
 
+
+            event.preventDefault();
+
+        }
+
+        function consultarDados_individual(docPessoa, idAgendamento) {
+            var formData = {
+                analiseDeDias_pesquisa: 1,
+                docPessoa: docPessoa,
+                idAgendamento: idAgendamento,
+
+                selectTipoAgendamento: '1'
+            };
+            var condicao;
+            $.ajax({
+                    type: 'POST',
+                    url: 'ajax/analiticoDiasController.php',
+                    data: formData,
+                    dataType: 'html',
+                    encode: true
+                })
+                .done(function(data) {
                     $('#agendamentosAtivosNoDia').html(data);
 
+                });
+
+
+            event.preventDefault();
+
+        }
+
+
+
+        //função que o agendamento do usuario pesquisado por cpf ou cnpj
+        function alterarStatusAgendamento(idAgendamento, idAcao) {
+            var formData = {
+                alterarStatusAgendamento: 1,
+                idAgendamento: idAgendamento,
+                idAcao: idAcao
+            };
+            var condicao;
+            $.ajax({
+                    type: 'POST',
+                    url: 'ajax/analiticoDiasController.php',
+                    data: formData,
+                    dataType: 'json',
+                    encode: true
+                })
+                .done(function(data) {
+
+                    if (data.retorno == true) {
+
+                        alert('Senha Baixada com Sucesso');
+                        
+
+                        $('#agendamentosAtivosNoDia').html('<center><h4>Entregue a senha e encaminhe o cidadão ao atendimento</h4></center>');
+                        verificarDatasAnaliticosDaUnidade(<?= $_GET['idUnidade']  ?>, <?= $_GET['dataUnidade']  ?>)
+                    }
 
 
                 });
@@ -158,6 +215,7 @@ include_once 'includes/verificadorADM.php';
             event.preventDefault();
 
         }
+
 
 
         //carregar combo das unidades
