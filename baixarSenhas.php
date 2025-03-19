@@ -92,7 +92,7 @@ include_once 'includes/verificadorADM.php';
 
                             <div class="small-12 large-7 cell">
                                 <br>
-                                <h5>Check-In do Cidadão</h5>
+                               
                                 <div class="grid-x grid-padding-x" id="agendamentosAtivosNoDia">
 
                                 </div>
@@ -169,7 +169,7 @@ include_once 'includes/verificadorADM.php';
                     encode: true
                 })
                 .done(function(data) {
-                    $('#agendamentosAtivosNoDia').html(data);
+                    $('#agendamentosAtivosNoDia').html();
 
                 });
 

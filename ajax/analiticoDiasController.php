@@ -39,6 +39,7 @@ if (isset($_POST['analiseDeDias_pesquisa'])) {
 
     }
 
+
     foreach ($dadosAgendamento as $key => $value) {
 
 
@@ -100,11 +101,6 @@ if (isset($_POST['analiseDeDias'])) {
 
     $dadosAgendamento = $objAgendamento->verificarAgendamentoParaBaixaADM($_POST['envioDados']);
 
-    $diaDeHoje = date('d/m/Y');
-
-
-    $cor = '';
-    $mensagem = 'Não Atender!';
 
     $tamanho = sizeof($dadosAgendamento);
 
@@ -122,46 +118,35 @@ if (isset($_POST['analiseDeDias'])) {
 
     }
 
+
+    //
+    echo "<div class='   large-12 cell'> <h3> Agendamentos ativos </h3></div>";
+
+
     foreach ($dadosAgendamento as $key => $value) {
 
 
-
-        if ($diaDeHoje == $value['dia']) {
-            $cor = 'background-color:rgb(79, 212, 3)';
-            $corTexto = ' color: black;';
-            $mensagem = 'Atendimento Permitido';
-        } else {
-            $cor = 'background-color:rgb(179, 42, 0)';
-            $corTexto = ' color: white;';
-            $mensagem = 'Não Atender!';
-        }
     ?>
 
         <div class="   large-6 cell">
-            <div class="button" style="width: 100%; text-align: left; border-radius: 10px;  <?= $cor ?>  ;  <?= $corTexto ?>  ">
+            <div class="button" style="width: 100%; text-align: left; border-radius: 10px; background-color:#28536b ; color: white;  ">
                 <p><b>Protocolo</b>: <?= $value['idAgendamento']   ?><br>
                 <h6><b>Nome</b>: <?= $value['nomePessoa']   ?><br></h6>
-
                 <h6><b>Hora</b>: <?= $value['hora'] . 'h00'   ?></h6>
                 <h6><b>Dia</b>: <?= $value['dia']   ?><br></h6>
                 <h6><b>Doc</b>: <?= $value['documentoPessoa'] ?></h6>
-
+                <h5><b>Unidade: <?= $value['nomeUnidade'] ?></b></h5>
                 </p>
             </div>
-
-
             <div class="   large-6 cell">
-                <a class=" button" onclick="alterarStatusAgendamento(<?= $value['idAgendamento']   ?>, '4') " style=" background-color:rgb(179, 42, 0); width: 100%;">Cancelar Atendimento</a>
+                <a class=" button" onclick="alterarStatusAgendamento(<?= $value['idAgendamento']   ?>, '6') " style="border-radius: 10px;  background-color:rgb(79, 212, 3); width: 100%; color: black; font-weight: 600;">Iniciar Atendimento</a>
+                <a class=" button" onclick="alterarStatusAgendamento(<?= $value['idAgendamento']   ?>, '4') " style="border-radius: 10px; background-color:rgb(179, 42, 0); width: 100%;">Cancelar Agendamento</a>
 
-                <a class=" button" onclick="alterarStatusAgendamento(<?= $value['idAgendamento']   ?>, '6') " style=" background-color:rgb(41, 77, 0); width: 100%;">Iniciar Atendimento</a>
+
             </div>
-
-
         </div>
-
-
     <?php
-        # code...
+
     }
 
     exit();
