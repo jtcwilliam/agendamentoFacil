@@ -101,6 +101,29 @@ include_once 'includes/head.php'
 
 
                     condicao = data.retorno;
+                    tipoPessoa = data.dadosUsuario.dados[0]['idTipoPessoa'];
+
+
+                    switch (tipoPessoa) {
+                        case '5':
+                            endereco = "areaSuperAdm.php";
+                            break;
+                        case '4':
+                            endereco = "areaAdm.php";
+                            break;
+                            case '3':
+                            endereco = "baixarSenhas.php";
+                            break;
+
+                        default:
+
+                            endereco = "areaAdm.php";
+
+                    }
+
+
+
+
                     if (condicao == false) {
                         //condição retornou false, a pessoa não ta cadastrada, abre o nome para gravar
                         $('#loginCPF').hide();
@@ -116,8 +139,10 @@ include_once 'includes/head.php'
                         $('#mensagemConfirmacao').html('<b>Olá.</b> <br>Vamos te redirecionar para<br> a Área Administrativa');
 
                         window.setTimeout(() => {
-                            window.location = "areaAdm.php";
+                            window.location = endereco;
                         }, 3600);
+
+
 
                     }
 

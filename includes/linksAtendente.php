@@ -1,6 +1,4 @@
 <?php
- 
- 
 
 
 $tipoPessoa = $_SESSION['usuarioLogado']['dados'][0]['tipoPessoa'];
@@ -11,9 +9,6 @@ switch ($tipoPessoa) {
         $link = 'areaSuperAdm.php';
         break;
 
-        case '4':
-            $link = 'areaAdm.php';
-            break;
     default:
         $link = 'areaSuperAdm.php';
         break;
@@ -30,9 +25,8 @@ switch ($tipoPessoa) {
         <a class="button fundoBotoesTopo"><?php echo 'Usuario: ' . $_SESSION['usuarioLogado']['dados'][0]['nome']     ?></a>
 
 
-
-        <a class="button fundoBotoesTopo" href="<?= $link ?>"> Calendário de Agendas </b></a>
         <a class="button fundoBotoesTopo" href="baixarSenhas.php">Check in Atendimento</a>
+        <a class="button fundoBotoesTopo" href="agendaTelefonico.php">Agendamento Telefonico</a>
 
     </div>
 

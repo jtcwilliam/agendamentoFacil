@@ -39,7 +39,7 @@ if (isset($_POST['verificarHora'])) {
 
 
     if ($tipoExibicao == 0) {
-        print_r($comboHoras);
+        
         foreach ($comboHoras as $key => $value) { ?>
             <div class="small-12 large-12 cell">
                 <?php

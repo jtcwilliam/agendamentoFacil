@@ -90,9 +90,9 @@ class TipoAgendamento
 
     public function  carregartipoAgendamento()
     {
-        $sql = "SELECT * FROM  tipoAgendamento";
+        $sql = "SELECT * FROM  tipoAgendamento where idTipoAgendamento in (1,2,4)";
 
-        echo $sql;
+ 
 
 
         $executar = mysqli_query($this->getConexao(), $sql);

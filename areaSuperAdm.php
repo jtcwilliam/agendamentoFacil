@@ -12,8 +12,34 @@ $responsavelPessoa =   $_SESSION['usuarioLogado']['dados'][0]['idUnidade'];
 
 
 
+if (!isset($_SESSION)) {
+    session_start();
+}
 
-include_once 'includes/verificadorADM.php';
+
+
+if ($_SESSION['usuarioLogado']['dados'][0]['idTipoPessoa'] != 5) {
+    echo '<center><h1>Acesso Negado</h1> <h4>Você será redirecionado para a pagina inicial</h4></center>';
+
+
+?>
+
+    <script>
+        window.setTimeout(() => {
+            window.location =
+                "logar.php";
+        }, 4600);
+    </script>
+
+<?php
+
+
+    exit();
+}
+
+
+
+//include_once 'includes/verificadorADM.php';
 
 
 
@@ -23,7 +49,7 @@ include_once 'includes/verificadorADM.php';
 
     <div class="reveal" id="adm_das_datas" data-reveal style="background-color:ivory">
         <div style="display: grid;  justify-content: center; align-content: center;   padding-top: 0px;">
-            
+
 
             <div class="grid-x grid-padding-x" id="inforDatas">
 
@@ -67,12 +93,7 @@ include_once 'includes/verificadorADM.php';
 
                             <div class="small-12 large-2 cell">
                                 <label for="selectUnidade"> Unidade</label>
-                                <select id="selectUnidade" style="height: 2.8em;">
-                                    
-                                        <option value="<?=$_SESSION['usuarioLogado']['dados'][0]['idUnidade']   ?>">
-                                            <?=$_SESSION['usuarioLogado']['dados'][0]['nomeUnidade']   ?>
-                                           </option>
-                                </select>
+                                <select id="selectUnidade" style="height: 2.8em;"> </select>
 
                             </div>
 
@@ -117,7 +138,7 @@ include_once 'includes/verificadorADM.php';
 
                 <!-- todas as datas do agendamento disponível -->
                 <fieldset class="fieldset">
-                    <legend> <label>Clique no link do dia que deseja analisar!</label></legend>
+                    <legend> <label>Clique no link do dia que deseja analisar! </label></legend>
 
                     <form action="#">
                         <div class="grid-x grid-padding-x" id="analiseAgendas">
@@ -146,11 +167,11 @@ include_once 'includes/verificadorADM.php';
     ?>
     <script>
         $(document).ready(function() {
-            
+            comboUnidades();
             comboTipoAgendamento();
             datasNaUnidadeAdm(1, <?= $responsavelPessoa ?>);
 
-            listasDataUnidadeADM(<?= $_SESSION['usuarioLogado']['dados']['0']['idUnidade']   ?>)
+            listasDataUnidadeSuperAdm(<?= $_SESSION['usuarioLogado']['dados']['0']['idUnidade']   ?>)
         })
 
 
@@ -207,8 +228,12 @@ include_once 'includes/verificadorADM.php';
 
                         $('#qtdeMesas').val('');
 
-                        listasDataUnidadeADM(<?= $_SESSION['usuarioLogado']['dados']['0']['idUnidade']   ?>)
-                        alert('Agendamentos Liberados para a data mencionada');
+
+                        alert('Agendamentos Liberados para a data mencionada. Vamos Atualzar a Tela');
+
+                        window.setTimeout(() => {
+                            window.location = 'areaSuperAdm.php';
+                        }, 600);
 
 
                     } else {
@@ -228,7 +253,29 @@ include_once 'includes/verificadorADM.php';
         }
 
 
-   
+        //carregar combo das unidades
+        function comboUnidades() {
+
+            var formData = {
+                unidadesComum: 1
+            };
+
+            $.ajax({
+                    type: 'POST',
+                    url: 'ajax/unidadeController.php',
+                    data: formData,
+                    dataType: 'html',
+                    encode: true
+                })
+                .done(function(data) {
+                    console.log(data);
+
+
+                    $('#selectUnidade').html(data);
+
+                });
+
+        }
     </script>
 
 

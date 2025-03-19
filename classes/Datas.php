@@ -52,7 +52,8 @@ class DatasAgendamento
                 PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"
             ));
 
-            $stmt = $pdo->prepare("SELECT date_format(dia, '%d/%m/%Y')   as dia  FROM agendamento where idStatus in (7 ,6, 3) and idUnidade= :idUnidade group by dia  ");
+            $stmt = $pdo->prepare("SELECT date_format(dia, '%d/%m/%Y')   as dia  FROM agendamento 
+            where idStatus in (7 ,6, 3)  and dia >= CURDATE()   and idUnidade= :idUnidade group by dia  ");
             $stmt->execute(array('idUnidade' => $data));
 
              
@@ -64,6 +65,9 @@ class DatasAgendamento
             echo 'Error: ' . $e->getMessage();
         }
     }
+
+
+    
 
 
     public function  trazerHorarios($data)
@@ -96,7 +100,7 @@ class DatasAgendamento
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
                 PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"
             ));
-            $stmt = $pdo->prepare("SELECT DATE_FORMAT(dia , '%d/%m/%Y') as dia,   idunidade  FROM agendamento where idunidade = :idunidade and idPessoa is null  group by (dia) ");
+            $stmt = $pdo->prepare("SELECT DATE_FORMAT(dia , '%d/%m/%Y') as dia,   idunidade  FROM agendamento where dia >= CURDATE()   and  idunidade = :idunidade and idPessoa is null  group by (dia) ");
             $stmt->execute(array('idunidade' => $idUnidade));
             $datasDisponiveis = $stmt->fetchAll();
 

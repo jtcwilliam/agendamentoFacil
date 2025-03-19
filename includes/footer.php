@@ -261,7 +261,7 @@
 
 
                 //aqui muda as datas
-                if (data.qtdeAgendamentos >= 2) {
+                if (data.qtdeAgendamentos >= 9) {
                     $('#formularioAgendamento').hide();
                     $('#campoMensagemAgendamentosAtivos').show();
 
@@ -316,6 +316,27 @@
             });
     }
 
+
+    function listasDataUnidadeSuperAdm(unidadeUsuario) {
+        var formData = {
+            trazerHorariosTodasUnidadesSuperAdm: 1,
+            unidadeUsuario: unidadeUsuario
+        };
+
+        
+        $.ajax({
+                type: 'POST',
+                url: 'ajax/areaSuperAdmController.php',
+                data: formData,
+                dataType: 'html',
+                encode: true
+            })
+            .done(function(data) {
+                console.log(data);
+                $('#analiseAgendas').html(data);
+            });
+    }
+
     function verificarDatasUnidadeADM(unidadeUsuario, dataDaUnidade) {
         var formData = {
             datasUnidadesADM: 1,
@@ -325,6 +346,26 @@
         $.ajax({
                 type: 'POST',
                 url: 'ajax/areaAdmController.php',
+                data: formData,
+                dataType: 'html',
+                encode: true
+            })
+            .done(function(data) {
+                console.log(data);
+                $('#inforDatas').html(data);
+            });
+    }
+
+
+    function verificarDatasUnidadeSuperAdm(unidadeUsuario, dataDaUnidade) {
+        var formData = {
+            datasUnidadesADM: 1,
+            unidadeUsuario: unidadeUsuario,
+            dataDaUnidade: dataDaUnidade
+        };
+        $.ajax({
+                type: 'POST',
+                url: 'ajax/areaSuperAdmController.php',
                 data: formData,
                 dataType: 'html',
                 encode: true

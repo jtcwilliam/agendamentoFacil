@@ -2,7 +2,7 @@
 <html class="no-js" lang="en" dir="ltr">
 
 <?php
- 
+
 
 include_once 'includes/head.php';
 
@@ -135,7 +135,8 @@ include_once 'includes/head.php';
                         <div class="small-12 cell large-12">
                             <label> Escolha o tipo de Atendimento </label>
                             <select class="selectTipoAgendamento">
-                                <option>PMG</option>
+                                <option value='1'>Atendimento da Prefeitura</option>
+                                <option value='2'>Atendimento para Profissionais </option>
                             </select>
 
                         </div>
@@ -223,7 +224,7 @@ include_once 'includes/head.php';
 
 
 
-      
+
 
         function consultarCPF() {
             var cpf = $('#cpf').val();
@@ -373,7 +374,7 @@ include_once 'includes/head.php';
             }
         }
 
-        comboTipoAgendamento();
+
 
 
 

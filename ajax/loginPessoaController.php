@@ -18,15 +18,15 @@ if ($dadosPessoa = $objPessoaMovimentar->logarPessoa()) {
  
 
 
+
+
     //se condição true, pode logar
 
     if ($dadosPessoa['condicao']) {
         session_start();
         $_SESSION['usuarioLogado'] = $dadosPessoa;
-        echo json_encode(array('retorno' => true, 'dadosUsuario'=>$dadosPessoa));
-
- 
-    }else{
+        echo json_encode(array('retorno' => true, 'dadosUsuario' => $dadosPessoa));
+    } else {
         echo json_encode(array('retorno' => false));
     }
 

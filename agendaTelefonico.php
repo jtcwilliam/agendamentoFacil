@@ -2,9 +2,33 @@
 <html class="no-js" lang="en" dir="ltr">
 
 <?php
- 
+
 
 include_once 'includes/head.php';
+session_start();
+
+$dadoTipoPessoa =     $_SESSION['usuarioLogado']['dados'][0]['idTipoPessoa'];
+$responsavelPessoa =   $_SESSION['usuarioLogado']['dados'][0]['idUnidade'];
+
+if ($_SESSION['usuarioLogado']['dados'][0]['idTipoPessoa'] != 5  &&  $_SESSION['usuarioLogado']['dados'][0]['idTipoPessoa'] != 4 && $_SESSION['usuarioLogado']['dados'][0]['idTipoPessoa'] != 3) {
+    echo '<center><h1>Acesso Negado</h1> <h4>Você será redirecionado para a pagina inicial</h4></center>';
+
+
+?>
+
+    <script>
+        window.setTimeout(() => {
+            window.location =
+                "logar.php";
+        }, 4600);
+    </script>
+
+<?php
+
+
+    exit();
+}
+
 
 ?>
 
@@ -29,6 +53,19 @@ include_once 'includes/head.php';
     </div>
 
 
+    
+    <?php
+
+    $tipoUsuario = $_SESSION['usuarioLogado']['dados']['0']['tipoPessoa'];
+
+    if ($tipoUsuario == '3') {
+        include_once 'includes/linksAtendente.php';
+    } else {
+        include_once 'includes/linksAdm.php';
+    }
+
+    ?>
+
 
 
     <div class="grid-container" style="display: grid; align-items: center; height: 100vh;">
@@ -48,7 +85,7 @@ include_once 'includes/head.php';
 
                         <div class="small-12 large-12 cell">
                             <form action="#">
-                                <label style="font-weight: bold;"> Digite o CPF para  o Agendamento Telefonico
+                                <label style="font-weight: bold;"> Digite o CPF para o Agendamento Telefonico
                                     <input type="text" placeholder="Digite aqui seu CPF" class="cpf" id="cpf"
                                         onkeydown="mudarMascara(this.value)" required />
                                 </label>
@@ -135,7 +172,8 @@ include_once 'includes/head.php';
                         <div class="small-12 cell large-12">
                             <label> Escolha o tipo de Atendimento </label>
                             <select class="selectTipoAgendamento">
-                                <option>PMG</option>
+                                <option value='1'>Atendimento da Prefeitura</option>
+                                <option value='2'>Atendimento para Profissionais </option>
                             </select>
 
                         </div>
@@ -223,7 +261,7 @@ include_once 'includes/head.php';
 
 
 
-      
+
 
         function consultarCPF() {
             var cpf = $('#cpf').val();
@@ -373,7 +411,6 @@ include_once 'includes/head.php';
             }
         }
 
-        comboTipoAgendamento();
 
 
 

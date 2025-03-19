@@ -15,7 +15,7 @@ $dadosTipoAgendamento = $objTipoAgendamento->carregartipoAgendamento();
 foreach ($dadosTipoAgendamento as $key => $value) {
 ?>
 
-    <option value="<?= $value['idTipoAgendamento'] ?>"><?php echo $value['tipoAtendamento']   ?></option>
+    <option value="<?= $value['idTipoAgendamento'] ?>"><?php echo $value['tipoAtendimento']   ?></option>
 
 
 <?php
