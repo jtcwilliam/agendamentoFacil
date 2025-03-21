@@ -66,7 +66,7 @@ if (isset($_POST['datasDaUnidade'])) {
 
                 ?>
                     <div class="small-6 cell large-3">
-                        <a class="button " style="width: 100%; border-radius: 10px;" onclick="$('.comboHorarios').html('<option>Aguarde por favor</option>')    ;procuraHoras('<?= $value['dia']; ?>',0)"> <?= $value['dia']; ?> </a>
+                        <a class="button " style="width: 100%; border-radius: 10px;" onclick="$('.comboHorarios').html('<option>Aguarde por favor</option>')    ;procuraHoras('<?= $value['dia']; ?>',0,<?=$_POST['idUnidade']?>)"> <?= $value['dia']; ?> </a>
                     </div>
 
                 <?php

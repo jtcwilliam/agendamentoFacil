@@ -33,7 +33,7 @@ if (isset($_POST['verificarAgendamentosAtivos'])) {
 
 if (isset($_POST['verificarHora'])) {
 
-    $comboHoras = $objDatas->trazerHorarios($_POST['dia']);
+    $comboHoras = $objDatas->trazerHorarios($_POST['dia'], $_POST['idUnidade'] );
 
     $tipoExibicao = $_POST['tipoExibicao'];
 
@@ -46,7 +46,7 @@ if (isset($_POST['verificarHora'])) {
 
                 if ($value['idStatus'] == 7) {
                 ?>
-                    <option value="<?= $value['idAgendamento'] ?>"><?php echo $value['dia'] .  ' às ' . $value['hora'] . 'h00'   ?></option>
+                  <option value="<?= $value['idAgendamento'] ?>"><?php echo $value['dia'] .  ' às ' . $value['hora'] . 'h00'   ?></option> 
                 <?php
                 } ?>
 

@@ -17,7 +17,7 @@ if (!isset($_SESSION)) {
 
 
 
-if ($_SESSION['usuarioLogado']['dados'][0]['idTipoPessoa'] != 5  ) {
+if ($_SESSION['usuarioLogado']['dados'][0]['idTipoPessoa'] != 5) {
     echo '<center><h1>Acesso Negado</h1> <h4>Você será redirecionado para a pagina inicial</h4></center>';
 
 
@@ -54,6 +54,14 @@ if ($_SESSION['usuarioLogado']['dados'][0]['idTipoPessoa'] != 5  ) {
         </div>
         <button class="close-button" data-close aria-label="Close modal" type="button">
             <span aria-hidden="true">&times;</span>
+        </button>
+
+    </div>
+
+    <div class="reveal" id="openCheckin" data-reveal style="background-color: black; border-color: black;   " >
+         
+        <button class="close-button" data-close aria-label="Close modal" type="button">
+            <span aria-hidden="true" style="color: white;">Fechar</span>
         </button>
 
     </div>
@@ -106,7 +114,7 @@ if ($_SESSION['usuarioLogado']['dados'][0]['idTipoPessoa'] != 5  ) {
                             </div>
 
                             <div class="small-12 large-7 cell">
-                                <div class="grid-x grid-padding-x" id="agendamentosAtivosNoDia">
+                                <div class="grid-x grid-padding-x" id=" ">
 
                                 </div>
 
@@ -195,7 +203,12 @@ if ($_SESSION['usuarioLogado']['dados'][0]['idTipoPessoa'] != 5  ) {
                     encode: true
                 })
                 .done(function(data) {
-                    $('#agendamentosAtivosNoDia').html(data);
+
+                
+
+                    $('#openCheckin').foundation('open');
+
+                    $('#openCheckin').html(data);
 
                 });
 
@@ -229,6 +242,7 @@ if ($_SESSION['usuarioLogado']['dados'][0]['idTipoPessoa'] != 5  ) {
 
 
                         $('#agendamentosAtivosNoDia').html('<center><h4>Entregue a senha e encaminhe o cidadão ao atendimento</h4></center>');
+                        $('#openCheckin').html('<center><h4 style="color:white">Entregue a senha e encaminhe o cidadão ao atendimento</h4></center>');
                         verificarDatasAnaliticosDaUnidade(<?= $_GET['idUnidade']  ?>, <?= $_GET['dataUnidade']  ?>)
                     }
 
