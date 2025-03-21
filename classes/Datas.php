@@ -53,7 +53,7 @@ class DatasAgendamento
             ));
 
             $stmt = $pdo->prepare("SELECT date_format(dia, '%d/%m/%Y')   as dia  FROM agendamento 
-            where idStatus in (7 ,6, 3)  and dia >= CURDATE()   and idUnidade= :idUnidade group by dia  ");
+            where idStatus in (7 , 3)  and dia >= CURDATE()   and idUnidade= :idUnidade group by dia  ");
             $stmt->execute(array('idUnidade' => $data));
 
              
@@ -70,7 +70,7 @@ class DatasAgendamento
     
 
 
-    public function  trazerHorarios($data)
+    public function  trazerHorarios($data, $idUnidade)
     {
         try {
             $pdo = new PDO($this->getDns(), $this->getUser(), $this->getPwd(), array(
@@ -79,14 +79,14 @@ class DatasAgendamento
             ));
 
             $stmt = $pdo->prepare("SELECT *,  date_format(dia, '%d/%m/%Y')   as dia  FROM agendamento WHERE date_format(dia, '%d/%m/%Y') = :diaAgendamento    
-              and idStatus in (7 ,6, 3)   order by hora asc ");
-            $stmt->execute(array('diaAgendamento' => $data));
+              and idStatus in (7)   and idUnidade= :idUnidade  order by hora asc ");
+            $stmt->execute(array('diaAgendamento' => $data, 'idUnidade'=> $idUnidade));
 
             $user = $stmt->fetchAll();
 
-            print_r($stmt);
+           
 
-            return $user;
+             return $user;
         } catch (PDOException $e) {
             echo 'Error: ' . $e->getMessage();
         }
@@ -100,9 +100,12 @@ class DatasAgendamento
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
                 PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"
             ));
-            $stmt = $pdo->prepare("SELECT DATE_FORMAT(dia , '%d/%m/%Y') as dia,   idunidade  FROM agendamento where dia >= CURDATE()   and  idunidade = :idunidade and idPessoa is null  group by (dia) ");
+            $stmt = $pdo->prepare("SELECT DATE_FORMAT(dia , '%d/%m/%Y') as dia,   idunidade  FROM agendamento where dia >= CURDATE() 
+              and  idunidade = :idunidade and idPessoa is null  group by (dia) ");
             $stmt->execute(array('idunidade' => $idUnidade));
             $datasDisponiveis = $stmt->fetchAll();
+
+ 
 
             if (empty($datasDisponiveis)) {
                 return array('retorno' => '0');

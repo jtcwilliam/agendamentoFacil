@@ -34,6 +34,14 @@ include_once 'includes/verificadorADM.php';
 
     </div>
 
+    <div class="reveal" id="openCheckin" data-reveal style="background-color: black; border-color: black;   ">
+
+        <button class="close-button" data-close aria-label="Close modal" type="button">
+            <span aria-hidden="true">&times;</span>
+        </button>
+
+    </div>
+
 
 
     <?php
@@ -123,7 +131,7 @@ include_once 'includes/verificadorADM.php';
         $(document).ready(function() {
 
 
-            
+
             verificarDatasAnaliticosDaUnidade(<?= $_GET['idUnidade']  ?>, <?= $_GET['dataUnidade']  ?>)
         })
 
@@ -171,7 +179,10 @@ include_once 'includes/verificadorADM.php';
                     encode: true
                 })
                 .done(function(data) {
-                    $('#agendamentosAtivosNoDia').html(data);
+
+                    $('#openCheckin').foundation('open');
+
+                    $('#openCheckin').html(data);
 
                 });
 
@@ -202,9 +213,10 @@ include_once 'includes/verificadorADM.php';
                     if (data.retorno == true) {
 
                         alert('Senha Baixada com Sucesso');
-                        
+
 
                         $('#agendamentosAtivosNoDia').html('<center><h4>Entregue a senha e encaminhe o cidadão ao atendimento</h4></center>');
+                        $('#openCheckin').html('<center><h4 style="color:white">Entregue a senha e encaminhe o cidadão ao atendimento</h4></center>');
                         verificarDatasAnaliticosDaUnidade(<?= $_GET['idUnidade']  ?>, <?= $_GET['dataUnidade']  ?>)
                     }
 

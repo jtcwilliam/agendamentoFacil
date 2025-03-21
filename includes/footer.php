@@ -33,12 +33,13 @@
     }
 
     //carregar combo das unidades
-    function procuraHoras(dia, tipoExibicao) {
+    function procuraHoras(dia, tipoExibicao, idUnidade) {
 
         var formData = {
             dia: dia,
             verificarHora: 1,
-            tipoExibicao: tipoExibicao
+            tipoExibicao: tipoExibicao,
+            idUnidade: idUnidade
 
         };
         $.ajax({
@@ -49,7 +50,7 @@
                 encode: true
             })
             .done(function(data) {
-                console.log(data);
+                console.log(idUnidade);
 
                 $('.comboHorarios').html(data);
             });
@@ -81,6 +82,7 @@
             })
             .done(function(data) {
 
+             
 
                 // <label>Selecione a data de seu agendamento
                 if (tipoExibicao == 0) {
@@ -89,6 +91,8 @@
                     $('#aparecerDatas').html(data);
 
                 }
+
+                
 
             });
     }
