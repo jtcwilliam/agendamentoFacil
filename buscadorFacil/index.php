@@ -49,34 +49,7 @@ $dados = $objservico->trazerServicos();
 
 <body>
 
-
-  <div class="grid-x grid-padding-x " style="background-color: #4845A0; color: white;">
-    <div class="medium-12 cell " style="background-color: #4845A0;">
-
-      <div class="top-bar" style="background-color: #4845A0; color: white">
-        <div class="grid-container">
-
-          <ul class=" menu" menu style="background-color: #4845A0; color: white;">
-
-            <li>
-              <a style="color: white;" href="#">Prefeitura</a>
-
-            </li>
-            <li><a style="color: white;" href="#">Agendamentos</a></li>
-            <li><a style="color: white;" href="#">Endereços</a></li>
-            <li><a style="color: white;" href="#">Consulta de Processos</a></li>
-            <li><a style="color: white;" href="#">Guia de Serviços</a></li>
-
-
-
-          </ul>
-        </div>
-
-
-      </div>
-    </div>
-  </div>
-
+ 
 
 
 

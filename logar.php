@@ -30,7 +30,7 @@ include_once 'includes/head.php'
 
                     <div class="small-12 large-12 cell">
                         <label style="font-weight: bold;">
-                            <input type="text" placeholder="Digite sua Senha" id="pwd" />
+                            <input type="password" placeholder="Digite sua Senha" id="pwd" />
                         </label>
                         <a class="button succes" href="#" onclick="consultarAcesso()" style="width: 100%;">Acessar Area Administrativa</a>
                         <br>

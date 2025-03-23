@@ -18,6 +18,7 @@ include_once 'includes/head.php';
                 <h1 class="protocoloAgendamento"></h1>
                 <p class="lead"></p>
                 <h4 style="font-style: italic;"><b>Dica: </b>Anote o Número <span class='protocoloAgendamento'></span>, ou tire um print dessa tela e leve no dia do agendamento! Serve de protocolo para o atendimento! </h4>
+                <h4 style="font-style: italic;"><b> Não esqueça de levar seu documento com foto pra gente te identificar!</h4>
                 <img src="imgs/logoGoverno-1024x240.jpg" style="width: 60%; padding-top: 10em;" :) />
             </center>
 
@@ -31,7 +32,20 @@ include_once 'includes/head.php';
 
 
 
-    <div class="grid-container" style="display: grid; align-items: center; height: 100vh;">
+    <div class="grid-container" >
+
+
+        <div class="grid-x grid-padding-x">
+            <div class="auto cell"></div>
+            <div class="small-12 cell large-3">
+                <img src="imgs/logoFacilTransparente.png" style="width: 70%; margin-top: 30px;" />
+                
+
+            </div>
+            <div class="auto cell"></div>
+        </div>
+
+
         <div class="grid-x grid-padding-x">
             <div class="auto cell">
 
@@ -40,6 +54,7 @@ include_once 'includes/head.php';
 
 
             <div class="small-12 large-6 cell" id="exibiAgendamento">
+            <br>
 
                 <div id="todosContainers">
 
@@ -207,8 +222,8 @@ include_once 'includes/head.php';
 
 
 
-
     </div>
+
     <script>
         $(document).ready(function() {
             $('#nomeUsuario').hide();
