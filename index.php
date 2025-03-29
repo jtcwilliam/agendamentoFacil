@@ -11,14 +11,15 @@ include_once 'includes/head.php';
 <body>
 
 
+<h1>TESTESSS</h1>
     <div class="full reveal" id="modalSucesso" data-reveal style="background-color:#2C255B;">
         <div style="display: grid;  justify-content: center; align-content: center; height: 100vh; padding-top: 0px;">
             <center style="color: white;">
-                <h2>Ótimas Notícias! Seu Agendamento foi registrado com Sucesso</h2>
+                <h2>Ótimas Notícias!<br> Seu Agendamento foi registrado com Sucesso</h2>
                 <h1 class="protocoloAgendamento"></h1>
                 <p class="lead"></p>
-                <h4 style="font-style: italic;"><b>Dica: </b>Anote o Número <span class='protocoloAgendamento'></span>, ou tire um print dessa tela e leve no dia do agendamento! Serve de protocolo para o atendimento! </h4>
-                <h4 style="font-style: italic;"><b> Não esqueça de levar seu documento com foto pra gente te identificar!</h4>
+                <h4 style="font-style: italic;"><b>Dica: </b>Anote o Número <span class='protocoloAgendamento'></span>, ou tire um print dessa tela e leve no dia do agendamento! Ela Serve de protocolo para o atendimento! </h4>
+                <h4 style="font-style: italic;"><b> Não esqueça de levar seu documento com foto para identificação!</h4>
                 <img src="imgs/logoGoverno-1024x240.jpg" style="width: 60%; padding-top: 10em;" :) />
             </center>
 
@@ -37,7 +38,7 @@ include_once 'includes/head.php';
 
         <div class="grid-x grid-padding-x">
             <div class="auto cell"></div>
-            <div class="small-12 cell large-3">
+            <div class="small-4 cell large-2">
                 <img src="imgs/logoFacilTransparente.png" style="width: 70%; margin-top: 30px;" />
                 
 
@@ -150,8 +151,7 @@ include_once 'includes/head.php';
                         <div class="small-12 cell large-12">
                             <label> Escolha o tipo de Atendimento </label>
                             <select class="selectTipoAgendamento">
-                                <option value='1'>Atendimento da Prefeitura</option>
-                                <option value='2'>Atendimento para Profissionais </option>
+                                 
                             </select>
 
                         </div>
@@ -286,9 +286,12 @@ include_once 'includes/head.php';
                     encode: true
                 })
                 .done(function(data) {
+                    
+                    console.log(data);
+                    
 
                     condicao = data.retornoCondicao.condicao;
-                    if (condicao == false) {
+                    if (condicao != true) {
                         //condição retornou false, a pessoa não ta cadastrada, abre o nome para gravar
                         $('#loginCPF').hide();
                         $('#nomeUsuario').delay('fast').fadeIn();
@@ -307,8 +310,6 @@ include_once 'includes/head.php';
 
                         comboUnidadesComum();
                         agendamentosAtivos(data.retornoCondicao.dados[0].idPessoas);
-
-
 
                     }
 
@@ -330,11 +331,12 @@ include_once 'includes/head.php';
                     type: 'POST',
                     url: 'ajax/inserirController.php',
                     data: formData,
-                    dataType: 'json',
+                    dataType: 'html',
                     encode: true
                 })
                 .done(function(data) {
 
+                    console.log(data);
 
 
                     if (data.retorno == true) {
@@ -390,7 +392,7 @@ include_once 'includes/head.php';
         }
 
 
-
+        comboTipoAgendamento();
 
 
 

@@ -265,7 +265,7 @@
 
 
                 //aqui muda as datas
-                if (data.qtdeAgendamentos >= 9) {
+                if (data.qtdeAgendamentos >= 2) {
                     $('#formularioAgendamento').hide();
                     $('#campoMensagemAgendamentosAtivos').show();
 
@@ -294,7 +294,8 @@
             })
             .done(function(data) {
 
-
+                console.log(data);
+                
 
                 $('.selectTipoAgendamento').html(data);
 
