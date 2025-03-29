@@ -110,6 +110,7 @@ class TipoAgendamento
 
 
     //arquivo atualizado//
+//  finalizando //
 
 
     public function  carregartipoAgendamento()
