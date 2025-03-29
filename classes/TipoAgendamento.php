@@ -109,6 +109,8 @@ class TipoAgendamento
     
 
 
+    //arquivo atualizado//
+
 
     public function  carregartipoAgendamento()
     {
