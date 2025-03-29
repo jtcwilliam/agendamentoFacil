@@ -98,6 +98,8 @@ if (isset($_POST['analiseDeDias_pesquisa'])) {
 // esse controle serve para trazer os agendamentos da pessoa digitada (cpf ou cnpj)
 if (isset($_POST['analiseDeDias'])) {
 
+
+    
     $dadosAgendamento = $objAgendamento->verificarAgendamentoParaBaixaADM($_POST['envioDados']);
 
 

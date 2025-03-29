@@ -58,8 +58,8 @@ if ($_SESSION['usuarioLogado']['dados'][0]['idTipoPessoa'] != 5) {
 
     </div>
 
-    <div class="reveal" id="openCheckin" data-reveal style="background-color: black; border-color: black;   " >
-         
+    <div class="reveal" id="openCheckin" data-reveal style="background-color: black; border-color: black;   ">
+
         <button class="close-button" data-close aria-label="Close modal" type="button">
             <span aria-hidden="true" style="color: white;">Fechar</span>
         </button>
@@ -178,7 +178,11 @@ if ($_SESSION['usuarioLogado']['dados'][0]['idTipoPessoa'] != 5) {
                     encode: true
                 })
                 .done(function(data) {
-                    $('#agendamentosAtivosNoDia').html(data);
+                     
+
+                    $('#openCheckin').foundation('open');
+
+                    $('#openCheckin').html(data);
                 });
 
 
@@ -204,7 +208,7 @@ if ($_SESSION['usuarioLogado']['dados'][0]['idTipoPessoa'] != 5) {
                 })
                 .done(function(data) {
 
-                
+
 
                     $('#openCheckin').foundation('open');
 
