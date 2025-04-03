@@ -9,10 +9,10 @@ $objTipoAgendamento = new TipoAgendamento();
 
 $dadosTipoAgendamento = $objTipoAgendamento->carregartipoAgendamento();
 
- 
+//print_r($dadosTipoAgendamento) ;
 
 
-foreach ($dadosTipoAgendamento['dados'] as $key => $value) {
+foreach ($dadosTipoAgendamento as $key => $value) {
 ?>
 
     <option value="<?= $value['idTipoAgendamento'] ?>"><?php echo $value['tipoAtendimento']   ?></option>

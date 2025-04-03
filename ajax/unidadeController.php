@@ -1,13 +1,18 @@
 <?php
 
 
-
+ 
 include_once '../classes/Unidade.php';
 include_once '../classes/Datas.php';
 $objUnidade = new Unidade();
 
 $objDatasAgendamento = new DatasAgendamento();
 $unidades = $objUnidade->carregarTodasUnidades();
+
+
+
+
+
 
 
 if (isset($_POST['unidadesComum'])) {
@@ -38,6 +43,8 @@ if (isset($_POST['datasDaUnidade'])) {
         $dataUnidade = $objDatasAgendamento->verificarDatasNaUnidadeADM($_POST['idUnidade']);
     }
 
+ 
+
 
 
     ?><div class="grid-x grid-padding-x">
@@ -47,26 +54,34 @@ if (isset($_POST['datasDaUnidade'])) {
         if ($_POST['tipoExibicao'] == 0) {
 
 
-            if ($dataUnidade['retorno'] == 0) { ?>
+            
+
+
+            if ($dataUnidade == false) { ?>
 
                 <div class="small-6 cell large-12">
                     <a class="button " style="width: 100%; border-radius: 10px; background-color: red; color: while; font-weight: bold;">
                         Não Há datas disponíveis para agendamento</a>
                 </div>
                 <script>
-                   $('.comboHorarios').html('<option>Não Há horários</option')
+                    $('.comboHorarios').html('<option>Não Há horários</option')
                 </script>
 
                 <?php
 
             } else {
-                echo '<div class="small-6 cell large-12"><label><b>Selecione a Data do seu agendamento</b></label></div>';
+                echo '<div class="small-12 cell large-12"><label><b>Clique no botão azul para selecionar o dia  do seu agendamento</b></label></div><br>';
                 foreach ($dataUnidade as $key => $value) {
 
-
+ 
                 ?>
                     <div class="small-6 cell large-3">
-                        <a class="button " style="width: 100%; border-radius: 10px;" onclick="$('.comboHorarios').html('<option>Aguarde por favor</option>')    ;procuraHoras('<?= $value['dia']; ?>',0,<?=$_POST['idUnidade']?>)"> <?= $value['dia']; ?> </a>
+
+
+                        <a class="button " style="width: 100%; border-radius: 10px;" onclick="$('.comboHorarios').html('<option>Aguarde por favor</option>')   
+                         ;procuraHoras('<?= $value['dia']; ?>',0,<?=$_POST['idUnidade']?>)"> <?=$value['dia']; ?> </a>
+
+
                     </div>
 
                 <?php

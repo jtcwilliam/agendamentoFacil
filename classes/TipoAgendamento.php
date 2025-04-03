@@ -15,7 +15,7 @@ class TipoAgendamento
     private $idTipoAgendamento;
     private $tipoAtendamentocol;
 
-    private $pdoConn;
+  
 
  
     private $dns;
@@ -24,6 +24,7 @@ class TipoAgendamento
 
 
 
+    private $pdoConn;
     function __construct()
     {
         include_once 'conecaoPDO.php';
@@ -31,26 +32,9 @@ class TipoAgendamento
         $objConectar = new Conexao();
 
         //chamar o metdo conectar
-        $banco = $objConectar->Conectar();
+        $objbanco = $objConectar->ConectarPDO();
 
-        $dns = 'mysql:dbname=' . $objConectar->getDb() . ';host=' . $objConectar->getHost();
-
-        //criar uma instancia dessa nova conexao
-        $this->setConexao($banco);
-
-        $this->setDns($dns);
-
-        $this->setUser($objConectar->getUser());
-
-        $this->setPwd($objConectar->getPwd());
-
-        $pdo = new PDO($this->getDns(), $this->getUser(), $this->getPwd(), array(
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-            PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"
-        ));
-
-
-        $this->setPdoConn($pdo);
+        $this->setPdoConn($objbanco);
 
     }
 
@@ -110,6 +94,7 @@ class TipoAgendamento
 
 
     //arquivo atualizado//
+//  finalizando //
 
 
     public function  carregartipoAgendamento()
@@ -120,7 +105,7 @@ class TipoAgendamento
 
             $pdo = $this->getPdoConn();
 
-            $stmt = $pdo->prepare(" SELECT * FROM  tipoAgendamento where idTipoAgendamento in (1,2,4) ");
+            $stmt = $pdo->prepare(" SELECT * FROM  tipoAgendamento where idTipoAgendamento in (1,2) ");
 
             $stmt->execute();
 

@@ -18,10 +18,10 @@ class Conexao
             
         
 
-            $this->setUser('agendaf');
-            $this->setPwd('agendaf');
-            $this->setDb('agendaf');
-            $this->setHost('akuma.guarulhos.sp.gov.br');
+            $this->setUser('dbagenddev');
+            $this->setPwd('Sge@4@5');
+            $this->setDb('dbagenddev');
+            $this->setHost('dbagenddev.mysql.dbaas.com.br');
         } catch (Exception $exc) {
             echo $exc->getTraceAsString();
         }

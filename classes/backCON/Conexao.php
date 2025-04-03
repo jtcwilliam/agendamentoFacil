@@ -10,30 +10,14 @@ class Conexao
 
          
 
-//desenvolvimento local
-  /* 
+//desenvolvimento WEB
+                $user = 'dbagenddev';
+                $password = 'Sge@4@5';
+                $db = 'dbagenddev';
+                $host = 'dbagenddev.mysql.dbaas.com.br';
 
-                $user = 'root';
-                $password = '';
-                $db = 'gramulhabanc';
-                $host = '127.0.0.1';
-
-     */  
-   
-  
-            //Produção
-
-            $user = 'gramulhabanc';
-            $password = 'M@r1@He1en@';
-            $db = 'gramulhabanc';
-            $host = 'gramulhabanc.mysql.dbaas.com.br';
-
-
-
-
-            //desenvolvimento online
-
-
+      
+    
 
 
 

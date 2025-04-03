@@ -11,7 +11,6 @@ include_once 'includes/head.php';
 <body>
 
 
-<h1>TESTESSS</h1>
     <div class="full reveal" id="modalSucesso" data-reveal style="background-color:#2C255B;">
         <div style="display: grid;  justify-content: center; align-content: center; height: 100vh; padding-top: 0px;">
             <center style="color: white;">
@@ -33,14 +32,14 @@ include_once 'includes/head.php';
 
 
 
-    <div class="grid-container" >
+    <div class="grid-container">
 
 
         <div class="grid-x grid-padding-x">
             <div class="auto cell"></div>
             <div class="small-4 cell large-2">
                 <img src="imgs/logoFacilTransparente.png" style="width: 70%; margin-top: 30px;" />
-                
+
 
             </div>
             <div class="auto cell"></div>
@@ -55,7 +54,7 @@ include_once 'includes/head.php';
 
 
             <div class="small-12 large-6 cell" id="exibiAgendamento">
-            <br>
+                <br>
 
                 <div id="todosContainers">
 
@@ -126,9 +125,10 @@ include_once 'includes/head.php';
                         </div>
 
                         <div class="small-12 cell large-12">
+                            
                             <label> Em qual Unidade você deseja ser atendido? </label>
 
-                            <select id="selectUnidade" onchange=" $('.comboHorarios').html('<option value=\'0\'>Selecione o dia acima para ver os horários</option>')   ;datasNaUnidade(0,0)">
+                            <select id="selectUnidade" onchange="$('.comboHorarios').html('<option value=\'0\'>Selecione o dia acima para ver os horários</option>')   ;datasNaUnidade(0,0)">
 
                             </select>
 
@@ -140,18 +140,20 @@ include_once 'includes/head.php';
 
 
 
-                        <div class="small-12 medium-12  large-12 cell">
-                            <label> Hora</label>
-                            <select class="comboHorarios">
+                        <div class="small-12 medium-12  large-12 cell" id="horaDIV">
+                            <label>Que bom! Agora selecione a hora do seu Atendimento.</label>
+                            <select class="comboHorarios" onchange="$('#tipoAgendamentoDiv').show();     $('#concluirDIV').show();">
                                 <option value="0">Não Há horários para selecionar</option>
 
                             </select>
                         </div>
 
-                        <div class="small-12 cell large-12">
+                        <div class="small-12 cell large-12" id="tipoAgendamentoDiv">
                             <label> Escolha o tipo de Atendimento </label>
                             <select class="selectTipoAgendamento">
-                                 
+                                <option value='1'>Atendimento da Prefeitura</option>
+                                <option value='2'>Atendimento da Profissionais</option>
+
                             </select>
 
                         </div>
@@ -160,15 +162,12 @@ include_once 'includes/head.php';
                         <div class="small-12 cell large-12">
                             <Br>
 
-                            <a class="button  " onclick="registrarAgendamento()"
+                            <a class="button  " onclick="registrarAgendamento()"  id="concluirDIV"
                                 style="width: 100%; background-color: #28536b; color: white;">
                                 Concluir Agendamento
                             </a>
 
-                            <a class="button  " onclick="$('#agendamentosRealizadosAtivos').toggle()"
-                                style="width: 100%; background-color:rgb(58, 34, 3); color: white;">
-                                Exibir meus próximos agendamentos
-                            </a>
+                          
 
                         </div>
 
@@ -231,6 +230,9 @@ include_once 'includes/head.php';
             $('#campoMensagemAgendamentosAtivos').hide();
 
             $('#agendamentosRealizadosAtivos').hide();
+            $('#horaDIV').hide();
+            $('#tipoAgendamentoDiv').hide();
+            $('#concluirDIV').hide();
 
 
 
@@ -286,12 +288,9 @@ include_once 'includes/head.php';
                     encode: true
                 })
                 .done(function(data) {
-                    
-                    console.log(data);
-                    
 
                     condicao = data.retornoCondicao.condicao;
-                    if (condicao != true) {
+                    if (condicao == false) {
                         //condição retornou false, a pessoa não ta cadastrada, abre o nome para gravar
                         $('#loginCPF').hide();
                         $('#nomeUsuario').delay('fast').fadeIn();
@@ -311,6 +310,8 @@ include_once 'includes/head.php';
                         comboUnidadesComum();
                         agendamentosAtivos(data.retornoCondicao.dados[0].idPessoas);
 
+
+
                     }
 
                 });
@@ -321,29 +322,42 @@ include_once 'includes/head.php';
         }
 
         function inserirUsuario() {
-            var formData = {
-                cpf: $('#cpf').val(),
-                nomeUsuario: $('#nomeAgendamento').val()
 
-            };
-            var condicao;
-            $.ajax({
-                    type: 'POST',
-                    url: 'ajax/inserirController.php',
-                    data: formData,
-                    dataType: 'html',
-                    encode: true
-                })
-                .done(function(data) {
-
-                    console.log(data);
+            var nomeUsuario = $('#nomeAgendamento').val();
 
 
-                    if (data.retorno == true) {
-                        consultarCPF();
-                    }
 
-                });
+            if (nomeUsuario.length < 3) {
+
+                alert('Por Favor, insira um nome Válido!');
+
+            } else {
+
+
+
+                var formData = {
+                    cpf: $('#cpf').val(),
+                    nomeUsuario: nomeUsuario
+
+                };
+                var condicao;
+                $.ajax({
+                        type: 'POST',
+                        url: 'ajax/inserirController.php',
+                        data: formData,
+                        dataType: 'json',
+                        encode: true
+                    })
+                    .done(function(data) {
+
+
+
+                        if (data.retorno == true) {
+                            consultarCPF();
+                        }
+
+                    });
+            }
             event.preventDefault();
         }
 
@@ -392,7 +406,7 @@ include_once 'includes/head.php';
         }
 
 
-        comboTipoAgendamento();
+
 
 
 

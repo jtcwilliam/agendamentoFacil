@@ -108,9 +108,11 @@ class DatasAgendamento
  
 
             if (empty($datasDisponiveis)) {
-                return array('retorno' => '0');
+
+                return false;
+                
             } else {
-                $datasDisponiveis['retorno'] = '1';
+               
                 return $datasDisponiveis;
             }
         } catch (PDOException $e) {

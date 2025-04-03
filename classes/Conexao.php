@@ -11,10 +11,13 @@ class Conexao
          
 
 //desenvolvimento WEB
-                $user = 'dbagenddev';
-                $password = 'Sge@4@5';
-                $db = 'dbagenddev';
-                $host = 'dbagenddev.mysql.dbaas.com.br';
+
+
+
+                $user = 'agendaf';
+                $password = 'agendaf';
+                $db = 'agendaf';
+                $host = 'akuma.guarulhos.sp.gov.br';
 
       
     
